@@ -1,0 +1,7 @@
+syntax: glob
+build/
+LostPass.xcodeproj/*.mode1v3
+LostPass.xcodeproj/*.pbxuser
+
+cURL-SSL-for-iOS/
+account.dump
