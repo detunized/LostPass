@@ -125,27 +125,21 @@ void LastPass::parse_ACCT(char const *data, size_t size)
 
 vector<uint8_t> LastPass::decrypt_aes256_ecb(char const *data, size_t size)
 {
-	AES_KEY key;
-	AES_set_decrypt_key(&key_[0], key_.size() * 8, &key);
-	uint8_t in[16] = {0};
-	uint8_t out[16] = {0};
-	memcpy(in, data, std::min((size_t)16, size));
-	AES_decrypt((uint8_t const *)data, out, &key);
-	return vector<uint8_t>(out, out + std::min((size_t)16, size));
-}
+	EVP_CIPHER_CTX context;
+	EVP_CIPHER_CTX_init(&context);
+	EVP_DecryptInit(&context, EVP_aes_256_ecb(), &key_[0], 0);
+	
+	vector<uint8_t> out(size + EVP_MAX_BLOCK_LENGTH);
+	int decrypted_size = 0;
+	EVP_DecryptUpdate(&context, &out[0], &decrypted_size, (uint8_t const *)data, size);
+	
+	int final_size = 0;
+	EVP_DecryptFinal(&context, &out[decrypted_size], &final_size);
+	
+	EVP_CIPHER_CTX_cleanup(&context);
+	
+	//cout << "'" << string(&out[0], &out[decrypted_size + final_size]) << "' " << size << ", " << decrypted_size << ", " << final_size << endl;
 
-#if 0
-unsigned char *aes_decrypt(EVP_CIPHER_CTX *e, unsigned char *ciphertext, int *len)
-{
-  /* plaintext will always be equal to or lesser than length of ciphertext*/
-  int p_len = *len, f_len = 0;
-  unsigned char *plaintext = malloc(p_len);
-  
-  EVP_DecryptInit_ex(e, NULL, NULL, NULL, NULL);
-  EVP_DecryptUpdate(e, plaintext, &p_len, ciphertext, *len);
-  EVP_DecryptFinal_ex(e, plaintext+p_len, &f_len);
-
-  *len = p_len + f_len;
-  return plaintext;
+	out.resize(decrypted_size + final_size);
+	return out;
 }
-#endif
