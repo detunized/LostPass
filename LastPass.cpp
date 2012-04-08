@@ -86,14 +86,14 @@ void LastPass::parse()
 		
 		i += 8 + chunk_size;
 
-		cout 
-			<< (char)((chunk_id >> 24) & 0xff) 
-			<< (char)((chunk_id >> 16) & 0xff) 
-			<< (char)((chunk_id >> 8) & 0xff) 
-			<< (char)(chunk_id & 0xff) 
-			<< "\n" 
-			<< chunk_size 
-			<< endl;
+//		cout 
+//			<< (char)((chunk_id >> 24) & 0xff) 
+//			<< (char)((chunk_id >> 16) & 0xff) 
+//			<< (char)((chunk_id >> 8) & 0xff) 
+//			<< (char)(chunk_id & 0xff) 
+//			<< "\n" 
+//			<< chunk_size 
+//			<< endl;
 			
 		switch (chunk_id)
 		{
@@ -119,6 +119,12 @@ void LastPass::parse_ACCT(char const *data, size_t size)
 		{
 			vector<uint8_t> name = decrypt_aes256_ecb(item_data, item_size);
 			accounts_.push_back(string(name.begin(), name.end()));
+			cout << accounts_.back() << endl;
+		}
+		else if (id == 7 || id == 8)
+		{
+			vector<uint8_t> decrypted = decrypt_aes256_ecb(item_data, item_size);
+			cout << "\t" << string(decrypted.begin(), decrypted.end()) << endl;
 		}
 	}
 }

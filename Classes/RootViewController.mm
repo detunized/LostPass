@@ -82,6 +82,7 @@
     }
     
 	cell.textLabel.text = [NSString stringWithUTF8String:lastPass->get_accounts()[indexPath.row].c_str()];
+	cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 
     return cell;
 }
