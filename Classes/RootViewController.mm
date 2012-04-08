@@ -67,7 +67,7 @@
 
 // Customize the number of rows in the table view.
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 0;
+    return lastPass->get_accounts().size();
 }
 
 
@@ -81,7 +81,7 @@
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
     
-	// Configure the cell.
+	cell.textLabel.text = [NSString stringWithUTF8String:lastPass->get_accounts()[indexPath.row].c_str()];
 
     return cell;
 }
