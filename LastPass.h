@@ -17,4 +17,5 @@ private:
 	std::vector<char> data_;
 	std::string username_;
 	std::string password_;
+	std::vector<std::string> accounts_;
 };

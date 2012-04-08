@@ -93,4 +93,12 @@ void LastPass::parse()
 
 void LastPass::parse_ACCT(char const *data, size_t size)
 {
+	size_t i = 0;
+	while (i + 4 <= size)
+	{
+		uint32_t item_size = OSReadBigInt32(data, i);
+		char const *item_data = data + i + 4;
+		
+		i += 4 + item_size;
+	}
 }
