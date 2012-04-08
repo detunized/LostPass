@@ -5,3 +5,4 @@ LostPass.xcodeproj/*.pbxuser
 
 cURL-SSL-for-iOS/
 account.dump
+credentials.txt

@@ -18,6 +18,7 @@
 		6085ECBD1530D3B800912BE4 /* LastPass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6085ECBC1530D3B800912BE4 /* LastPass.cpp */; };
 		6085ECF11530D6DD00912BE4 /* account.dump in Resources */ = {isa = PBXBuildFile; fileRef = 6085ECF01530D6DD00912BE4 /* account.dump */; };
 		6085ED6B1530E8BA00912BE4 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6085ED6A1530E8BA00912BE4 /* libcrypto.a */; };
+		6085EDDA153119EE00912BE4 /* credentials.txt in Resources */ = {isa = PBXBuildFile; fileRef = 6085EDD9153119EE00912BE4 /* credentials.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +38,7 @@
 		6085ECBC1530D3B800912BE4 /* LastPass.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LastPass.cpp; sourceTree = "<group>"; };
 		6085ECF01530D6DD00912BE4 /* account.dump */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = account.dump; sourceTree = "<group>"; };
 		6085ED6A1530E8BA00912BE4 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = "cURL-SSL-for-iOS/OpenSSL/libcrypto.a"; sourceTree = "<group>"; };
+		6085EDD9153119EE00912BE4 /* credentials.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = credentials.txt; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* LostPass-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "LostPass-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -101,9 +103,10 @@
 			isa = PBXGroup;
 			children = (
 				6085ECF01530D6DD00912BE4 /* account.dump */,
-				28F335F01007B36200424DE2 /* RootViewController.xib */,
-				28AD735F0D9D9599002E5188 /* MainWindow.xib */,
+				6085EDD9153119EE00912BE4 /* credentials.txt */,
 				8D1107310486CEB800E47090 /* LostPass-Info.plist */,
+				28AD735F0D9D9599002E5188 /* MainWindow.xib */,
+				28F335F01007B36200424DE2 /* RootViewController.xib */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -172,6 +175,7 @@
 				28AD73600D9D9599002E5188 /* MainWindow.xib in Resources */,
 				28F335F11007B36200424DE2 /* RootViewController.xib in Resources */,
 				6085ECF11530D6DD00912BE4 /* account.dump in Resources */,
+				6085EDDA153119EE00912BE4 /* credentials.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

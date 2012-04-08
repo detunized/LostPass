@@ -20,7 +20,10 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 	
-	lastPass = new LastPass([[[NSBundle mainBundle] pathForResource:@"account" ofType:@"dump"] UTF8String]);
+	lastPass = new LastPass(
+		[[[NSBundle mainBundle] pathForResource:@"account" ofType:@"dump"] UTF8String],
+		[[[NSBundle mainBundle] pathForResource:@"credentials" ofType:@"txt"] UTF8String]
+	);
 }
 
 /*

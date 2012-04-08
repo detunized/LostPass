@@ -8,7 +8,16 @@
 
 using namespace std;
 
-LastPass::LastPass(char const *filename)
+LastPass::LastPass(char const *dump_filename, char const *credentials_filename)
+{
+	vector<char> dump;
+	load_file(dump_filename, dump);
+	decode_base64(dump, data_);
+
+	load_credentials(credentials_filename);
+}
+
+void LastPass::load_file(char const *filename, std::vector<char> &data_out)
 {
 	ifstream in(filename);
 
@@ -16,37 +25,31 @@ LastPass::LastPass(char const *filename)
 	size_t length = in.tellg();
 	in.seekg(0, ios::beg);
 
-	data_.resize(length);
-	in.read(&data_[0], length);
-
-	cout << data_.size() << endl;
-	
-	decode();
+	data_out.resize(length);
+	in.read(&data_out[0], length);
 }
 
-void LastPass::decode()
+void LastPass::decode_base64(vector<char> &encoded, vector<char> &decoded_out)
 {
-	decoded_data_.clear();
-
-    // Construct an OpenSSL context
-    BIO *command = BIO_new(BIO_f_base64());
-    BIO *context = BIO_new_mem_buf(&data_[0], data_.size());
-         
-    // Tell the context to encode base64
-    context = BIO_push(command, context);
- 
+    BIO *context = BIO_push(BIO_new(BIO_f_base64()), BIO_new_mem_buf(&encoded[0], encoded.size()));
 	BIO_set_flags(context, BIO_FLAGS_BASE64_NO_NL);
  
-	size_t const BUFFSIZE = 256;
-    int len;
-    char inbuf[BUFFSIZE];
-    while ((len = BIO_read(context, inbuf, BUFFSIZE)) > 0)
+	decoded_out.clear();
+
+	size_t const BUFFER_SIZE = 256;
+    int bytes_read;
+    char buffer[BUFFER_SIZE];
+    while ((bytes_read = BIO_read(context, buffer, BUFFER_SIZE)) > 0)
     {
-		cout << "len: " << len << endl;
-		decoded_data_.insert(decoded_data_.end(), inbuf, inbuf + len);
+		decoded_out.insert(decoded_out.end(), buffer, buffer + bytes_read);
     }
  
     BIO_free_all(context);
-	
-	cout << decoded_data_.size() << endl << &decoded_data_[0] << endl;
+}
+
+void LastPass::load_credentials(char const *filename)
+{
+	ifstream in(filename);
+	in >> username_ >> password_;
+	cout << username_ << ":" << password_ << endl;
 }
