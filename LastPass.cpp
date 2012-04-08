@@ -51,5 +51,4 @@ void LastPass::load_credentials(char const *filename)
 {
 	ifstream in(filename);
 	in >> username_ >> password_;
-	cout << username_ << ":" << password_ << endl;
 }
