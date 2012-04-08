@@ -3,6 +3,8 @@
 #include <iostream>
 #include <fstream>
 
+#include <libkern/OSByteOrder.h>
+
 #include "openssl/bio.h"
 #include "openssl/evp.h"
 
@@ -15,6 +17,8 @@ LastPass::LastPass(char const *dump_filename, char const *credentials_filename)
 	decode_base64(dump, data_);
 
 	load_credentials(credentials_filename);
+	
+	parse();
 }
 
 void LastPass::load_file(char const *filename, std::vector<char> &data_out)
@@ -51,4 +55,42 @@ void LastPass::load_credentials(char const *filename)
 {
 	ifstream in(filename);
 	in >> username_ >> password_;
+}
+
+void LastPass::parse()
+{
+	size_t i = 0;
+	char const *data = &data_[0];
+	size_t size = data_.size();
+
+	while (i + 8 <= size)
+	{
+		uint32_t chunk_id = OSReadBigInt32(data, i);
+		uint32_t chunk_size = OSReadBigInt32(data, i + 4);
+		char const *chunk_data = data + i + 8;
+		
+		i += 8 + chunk_size;
+
+		cout 
+			<< (char)((chunk_id >> 24) & 0xff) 
+			<< (char)((chunk_id >> 16) & 0xff) 
+			<< (char)((chunk_id >> 8) & 0xff) 
+			<< (char)(chunk_id & 0xff) 
+			<< "\n" 
+			<< chunk_size 
+			<< endl;
+			
+		switch (chunk_id)
+		{
+		case 'ACCT':
+			parse_ACCT(chunk_data, chunk_size);
+			break;
+		default:
+			break;
+		}
+	}
+}
+
+void LastPass::parse_ACCT(char const *data, size_t size)
+{
 }

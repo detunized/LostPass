@@ -11,6 +11,8 @@ private:
 	static void decode_base64(std::vector<char> &encoded, std::vector<char> &decoded_out);
 	
 	void load_credentials(char const *filename);
+	void parse();
+	void parse_ACCT(char const *data, size_t size);
 
 	std::vector<char> data_;
 	std::string username_;
