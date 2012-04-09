@@ -1,59 +1,13 @@
 #import "AccountViewController.h"
 
-
 @implementation AccountViewController
 
 @synthesize account = account_;
-
-#pragma mark -
-#pragma mark View lifecycle
-
-/*
-- (void)viewDidLoad {
-    [super viewDidLoad];
-
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-}
-*/
-
-/*
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-}
-*/
-/*
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-}
-*/
-/*
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-}
-*/
-/*
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-}
-*/
-/*
-// Override to allow orientations other than the default portrait orientation.
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    // Return YES for supported orientations.
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-*/
-
-
-#pragma mark -
-#pragma mark Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
 	return 1;
 }
-
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -65,67 +19,60 @@
     static NSString *CellIdentifier = @"Cell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil)
+    if (!cell)
 	{
 		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:CellIdentifier] autorelease];
     }
 	
-	cell.selectionStyle = UITableViewCellSelectionStyleNone;
+	SEL copyAction = nil;
+	NSString *name = nil;
+	std::string const *value = 0;
 
 	switch (indexPath.row)
 	{
 	case 0:
-		cell.textLabel.text = @"Name";
-		cell.detailTextLabel.text = [NSString stringWithUTF8String:self.account->name().c_str()];
+		name = @"Name";
+		value = &self.account->name();
 		break;
 	case 1:
-		cell.textLabel.text = @"Username";
-		cell.detailTextLabel.text = [NSString stringWithUTF8String:self.account->username().c_str()];
+		name = @"Username";
+		value = &self.account->username();
+		copyAction = @selector(copyUsername:);
 		break;
 	case 2:
-		cell.textLabel.text = @"Password";
-		cell.detailTextLabel.text = [NSString stringWithUTF8String:self.account->password().c_str()];
+		name = @"Password";
+		value = &self.account->password();
+		copyAction = @selector(copyPassword:);
 		break;
+	}
+	
+	cell.textLabel.text = name;
+	cell.detailTextLabel.text = [NSString stringWithUTF8String:value->c_str()];
+	cell.selectionStyle = UITableViewCellSelectionStyleNone;
+
+	if (copyAction)
+	{
+		UIButton *button = [UIButton buttonWithType:UIButtonTypeContactAdd];
+		[button addTarget:self action:copyAction forControlEvents:UIControlEventTouchUpInside];
+		cell.accessoryView = button;
 	}
     
     return cell;
 }
 
-#if 0
--(void)tableView:(UITableView*)tableView performAction:(SEL)action forRowAtIndexPath:(NSIndexPath*)indexPath withSender:(id)sender
+- (void)copyToClipboard:(std::string const &)text
 {
-	if (action == @selector(copy:))
-	{
-		[UIPasteboard generalPasteboard].string = [NSString stringWithUTF8String:self.account->password().c_str()];
-	}
+	[UIPasteboard generalPasteboard].string = [NSString stringWithUTF8String:text.c_str()];
 }
 
--(BOOL)tableView:(UITableView*)tableView canPerformAction:(SEL)action forRowAtIndexPath:(NSIndexPath*)indexPath withSender:(id)sender
+- (void)copyUsername:(id)sender
 {
-	return action == @selector(copy:);
+	[self copyToClipboard:self.account->username()];
 }
 
--(BOOL)tableView:(UITableView*)tableView shouldShowMenuForRowAtIndexPath:(NSIndexPath*)indexPath
+- (void)copyPassword:(id)sender
 {
-	return YES;
-}
-#endif
-
-#pragma mark -
-#pragma mark Memory management
-
-- (void)didReceiveMemoryWarning
-{
-	[super didReceiveMemoryWarning];
-}
-
-- (void)viewDidUnload
-{
-}
-
-- (void)dealloc
-{
-	[super dealloc];
+	[self copyToClipboard:self.account->password()];
 }
 
 @end
