@@ -7,6 +7,7 @@
 //
 
 #import "RootViewController.h"
+#import "AccountViewController.h"
 
 @implementation RootViewController
 
@@ -16,6 +17,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+	
+	self.navigationItem.title = @"Accounts";
 
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
@@ -81,7 +84,7 @@
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
     
-	cell.textLabel.text = [NSString stringWithUTF8String:lastPass->get_accounts()[indexPath.row].c_str()];
+	cell.textLabel.text = [NSString stringWithUTF8String:lastPass->get_accounts()[indexPath.row].name().c_str()];
 	cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 
     return cell;
@@ -131,17 +134,12 @@
 #pragma mark -
 #pragma mark Table view delegate
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-	/*
-	 <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-	 [self.navigationController pushViewController:detailViewController animated:YES];
-	 [detailViewController release];
-	 */
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	 AccountViewController *account_view = [[[AccountViewController alloc] initWithNibName:@"AccountViewController" bundle:nil] autorelease];
+	 account_view.account = &lastPass->get_accounts()[indexPath.row];
+	 [self.navigationController pushViewController:account_view animated:YES];
 }
-
 
 #pragma mark -
 #pragma mark Memory management

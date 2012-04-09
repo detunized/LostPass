@@ -4,9 +4,40 @@
 class LastPass
 {
 public:
+	class Account
+	{
+	public:
+		Account(std::string const &name, std::string const &username, std::string const &password):
+			name_(name),
+			username_(username),
+			password_(password)
+		{
+		}
+
+		std::string const &name() const
+		{
+			return name_;
+		}
+		
+		std::string const &username() const
+		{
+			return username_;
+		}
+		
+		std::string const &password() const
+		{
+			return password_;
+		}
+		
+	private:
+		std::string name_;
+		std::string username_;
+		std::string password_;
+	};
+
 	LastPass(char const *dump_filename, char const *credentials_filename);
 	
-	std::vector<std::string> const &get_accounts() const
+	std::vector<Account> const &get_accounts() const
 	{
 		return accounts_;
 	}
@@ -26,5 +57,5 @@ private:
 	std::string username_;
 	std::string password_;
 	std::vector<uint8_t> key_;
-	std::vector<std::string> accounts_;
+	std::vector<Account> accounts_;
 };

@@ -19,6 +19,8 @@
 		6085ECF11530D6DD00912BE4 /* account.dump in Resources */ = {isa = PBXBuildFile; fileRef = 6085ECF01530D6DD00912BE4 /* account.dump */; };
 		6085ED6B1530E8BA00912BE4 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6085ED6A1530E8BA00912BE4 /* libcrypto.a */; };
 		6085EDDA153119EE00912BE4 /* credentials.txt in Resources */ = {isa = PBXBuildFile; fileRef = 6085EDD9153119EE00912BE4 /* credentials.txt */; };
+		6085EFA4153251A900912BE4 /* AccountViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6085EFA2153251A900912BE4 /* AccountViewController.mm */; };
+		6085EFA5153251A900912BE4 /* AccountViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6085EFA3153251A900912BE4 /* AccountViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +41,9 @@
 		6085ECF01530D6DD00912BE4 /* account.dump */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = account.dump; sourceTree = "<group>"; };
 		6085ED6A1530E8BA00912BE4 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = "cURL-SSL-for-iOS/OpenSSL/libcrypto.a"; sourceTree = "<group>"; };
 		6085EDD9153119EE00912BE4 /* credentials.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = credentials.txt; sourceTree = "<group>"; };
+		6085EFA1153251A900912BE4 /* AccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountViewController.h; sourceTree = "<group>"; };
+		6085EFA2153251A900912BE4 /* AccountViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AccountViewController.mm; sourceTree = "<group>"; };
+		6085EFA3153251A900912BE4 /* AccountViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AccountViewController.xib; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* LostPass-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "LostPass-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -60,10 +65,12 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				28C286DF0D94DF7D0034E888 /* RootViewController.h */,
-				28C286E00D94DF7D0034E888 /* RootViewController.mm */,
+				6085EFA1153251A900912BE4 /* AccountViewController.h */,
+				6085EFA2153251A900912BE4 /* AccountViewController.mm */,
 				1D3623240D0F684500981E51 /* LostPassAppDelegate.h */,
 				1D3623250D0F684500981E51 /* LostPassAppDelegate.mm */,
+				28C286DF0D94DF7D0034E888 /* RootViewController.h */,
+				28C286E00D94DF7D0034E888 /* RootViewController.mm */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -103,6 +110,7 @@
 			isa = PBXGroup;
 			children = (
 				6085ECF01530D6DD00912BE4 /* account.dump */,
+				6085EFA3153251A900912BE4 /* AccountViewController.xib */,
 				6085EDD9153119EE00912BE4 /* credentials.txt */,
 				8D1107310486CEB800E47090 /* LostPass-Info.plist */,
 				28AD735F0D9D9599002E5188 /* MainWindow.xib */,
@@ -176,6 +184,7 @@
 				28F335F11007B36200424DE2 /* RootViewController.xib in Resources */,
 				6085ECF11530D6DD00912BE4 /* account.dump in Resources */,
 				6085EDDA153119EE00912BE4 /* credentials.txt in Resources */,
+				6085EFA5153251A900912BE4 /* AccountViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -190,6 +199,7 @@
 				1D3623260D0F684500981E51 /* LostPassAppDelegate.mm in Sources */,
 				28C286E10D94DF7D0034E888 /* RootViewController.mm in Sources */,
 				6085ECBD1530D3B800912BE4 /* LastPass.cpp in Sources */,
+				6085EFA4153251A900912BE4 /* AccountViewController.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

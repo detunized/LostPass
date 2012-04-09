@@ -108,6 +108,10 @@ void LastPass::parse()
 
 void LastPass::parse_ACCT(char const *data, size_t size)
 {
+	vector<uint8_t> name;
+	vector<uint8_t> username;
+	vector<uint8_t> password;
+
 	for (size_t id = 0, i = 0; i + 4 <= size; ++id)
 	{
 		uint32_t item_size = OSReadBigInt32(data, i);
@@ -117,14 +121,21 @@ void LastPass::parse_ACCT(char const *data, size_t size)
 		
 		if (id == 1)
 		{
-			vector<uint8_t> name = decrypt_aes256_ecb(item_data, item_size);
-			accounts_.push_back(string(name.begin(), name.end()));
-			cout << accounts_.back() << endl;
+			name = decrypt_aes256_ecb(item_data, item_size);
 		}
-		else if (id == 7 || id == 8)
+		else if (id == 7)
 		{
-			vector<uint8_t> decrypted = decrypt_aes256_ecb(item_data, item_size);
-			cout << "\t" << string(decrypted.begin(), decrypted.end()) << endl;
+			username = decrypt_aes256_ecb(item_data, item_size);
+		}
+		else if (id == 8)
+		{
+			password = decrypt_aes256_ecb(item_data, item_size);
+
+			accounts_.push_back(Account(
+				string(name.begin(), name.end()), 
+				string(username.begin(), username.end()), 
+				string(password.begin(), password.end())
+			));
 		}
 	}
 }
