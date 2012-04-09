@@ -1,15 +1,5 @@
 #include "LastPass.h"
 
-#include <iostream>
-#include <fstream>
-
-#include <libkern/OSByteOrder.h>
-
-#include "openssl/bio.h"
-#include "openssl/evp.h"
-#include "openssl/sha.h"
-#include "openssl/aes.h"
-
 using namespace std;
 
 LastPass::LastPass(char const *dump_filename, char const *credentials_filename)
