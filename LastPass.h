@@ -34,7 +34,12 @@ public:
 
 	LastPass(char const *dump_filename, char const *credentials_filename);
 	
-	std::vector<Account> const &get_accounts() const
+	size_t count() const
+	{
+		return accounts_.size();
+	}
+
+	std::vector<Account> const &accounts() const
 	{
 		return accounts_;
 	}

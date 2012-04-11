@@ -15,8 +15,8 @@
 		[[mainBundle pathForResource:@"credentials" ofType:@"txt"] UTF8String]
 	);
 
-	displayIndex_.reserve(lastPass_->get_accounts().size());
-	for (size_t i = 0, count = lastPass_->get_accounts().size(); i < count; ++i)
+	displayIndex_.reserve(lastPass_->count());
+	for (size_t i = 0, count = lastPass_->count(); i < count; ++i)
 	{
 		displayIndex_.push_back(i);
 	}
@@ -44,7 +44,7 @@
 		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
 	}
 
-	cell.textLabel.text = [NSString stringWithUTF8String:lastPass_->get_accounts()[displayIndex_[indexPath.row]].name().c_str()];
+	cell.textLabel.text = [NSString stringWithUTF8String:lastPass_->accounts()[displayIndex_[indexPath.row]].name().c_str()];
 	cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 
 	return cell;
@@ -53,7 +53,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	 AccountViewController *accountView = [[[AccountViewController alloc] initWithNibName:@"AccountViewController" bundle:nil] autorelease];
-	 accountView.account = &lastPass_->get_accounts()[displayIndex_[indexPath.row]];
+	 accountView.account = &lastPass_->accounts()[displayIndex_[indexPath.row]];
 	 [self.navigationController pushViewController:accountView animated:YES];
 }
 
@@ -65,6 +65,25 @@
 	self.searchBar = nil;
 
 	[super dealloc];
+}
+
+#pragma mark -
+#pragma mark UISearchBarDelegate
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+	std::string pattern = [searchText UTF8String];
+
+	displayIndex_.clear();
+	for (size_t i = 0, count = lastPass_->count(); i < count; ++i)
+	{
+		if (lastPass_->accounts()[i].name().find(pattern) != std::string::npos)
+		{
+			displayIndex_.push_back(i);
+		}
+	}
+
+	[self.tableView reloadData];
 }
 
 @end
