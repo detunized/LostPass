@@ -3,16 +3,7 @@
 
 @implementation RootViewController
 
-- (void)addSearchBar
-{
-	UISearchBar *searchBar = [[[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 200, 0)] autorelease];
-	[searchBar sizeToFit];
-	searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-	searchBar.placeholder = NSLocalizedString(@"Search", @"Search");
-	searchBar.delegate = self;
-
-	self.navigationItem.titleView = searchBar;
-}
+@synthesize searchBar = searchBar_;
 
 - (void)viewDidLoad
 {
@@ -24,7 +15,7 @@
 		[[mainBundle pathForResource:@"credentials" ofType:@"txt"] UTF8String]
 	);
 
-	[self addSearchBar];
+	self.tableView.tableHeaderView = self.searchBar;
 	self.navigationItem.title = NSLocalizedString(@"Accounts", @"Accounts");
 }
 
@@ -64,6 +55,8 @@
 {
 	delete lastPass_;
 	lastPass_ = 0;
+
+	searchBar_ = nil;
 
 	[super dealloc];
 }

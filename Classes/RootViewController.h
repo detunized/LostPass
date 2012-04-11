@@ -5,4 +5,6 @@
 	LastPass *lastPass_;
 }
 
+@property(nonatomic, retain) IBOutlet UISearchBar *searchBar;
+
 @end
