@@ -3,17 +3,29 @@
 
 @implementation RootViewController
 
+- (void)addSearchBar
+{
+	UISearchBar *searchBar = [[[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 200, 0)] autorelease];
+	[searchBar sizeToFit];
+	searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+	searchBar.placeholder = NSLocalizedString(@"Search", @"Search");
+	searchBar.delegate = self;
+
+	self.navigationItem.titleView = searchBar;
+}
+
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
 	
-	self.navigationItem.title = @"Accounts";
-
 	NSBundle *mainBundle = [NSBundle mainBundle];
 	lastPass_ = new LastPass(
 		[[mainBundle pathForResource:@"account" ofType:@"dump"] UTF8String],
 		[[mainBundle pathForResource:@"credentials" ofType:@"txt"] UTF8String]
 	);
+
+	[self addSearchBar];
+	self.navigationItem.title = @"Accounts";
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView

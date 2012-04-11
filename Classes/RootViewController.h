@@ -1,6 +1,6 @@
 #import "LastPass.h"
 
-@interface RootViewController: UITableViewController
+@interface RootViewController: UITableViewController<UISearchBarDelegate>
 {
 	LastPass *lastPass_;
 }
