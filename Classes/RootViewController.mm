@@ -15,6 +15,12 @@
 		[[mainBundle pathForResource:@"credentials" ofType:@"txt"] UTF8String]
 	);
 
+	displayIndex_.reserve(lastPass_->get_accounts().size());
+	for (size_t i = 0, count = lastPass_->get_accounts().size(); i < count; ++i)
+	{
+		displayIndex_.push_back(i);
+	}
+
 	self.tableView.tableHeaderView = self.searchBar;
 	self.navigationItem.title = NSLocalizedString(@"Accounts", @"Accounts");
 }
@@ -26,7 +32,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-	return lastPass_->get_accounts().size();
+	return displayIndex_.size();
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -38,7 +44,7 @@
 		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
 	}
 
-	cell.textLabel.text = [NSString stringWithUTF8String:lastPass_->get_accounts()[indexPath.row].name().c_str()];
+	cell.textLabel.text = [NSString stringWithUTF8String:lastPass_->get_accounts()[displayIndex_[indexPath.row]].name().c_str()];
 	cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 
 	return cell;
@@ -47,7 +53,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	 AccountViewController *accountView = [[[AccountViewController alloc] initWithNibName:@"AccountViewController" bundle:nil] autorelease];
-	 accountView.account = &lastPass_->get_accounts()[indexPath.row];
+	 accountView.account = &lastPass_->get_accounts()[displayIndex_[indexPath.row]];
 	 [self.navigationController pushViewController:accountView animated:YES];
 }
 
@@ -56,7 +62,7 @@
 	delete lastPass_;
 	lastPass_ = 0;
 
-	searchBar_ = nil;
+	self.searchBar = nil;
 
 	[super dealloc];
 }
