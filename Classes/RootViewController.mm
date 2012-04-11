@@ -25,7 +25,7 @@
 	);
 
 	[self addSearchBar];
-	self.navigationItem.title = @"Accounts";
+	self.navigationItem.title = NSLocalizedString(@"Accounts", @"Accounts");
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView

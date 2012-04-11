@@ -31,16 +31,16 @@
 	switch (indexPath.row)
 	{
 	case 0:
-		name = @"Name";
+		name = NSLocalizedString(@"Name", @"Name");
 		value = &self.account->name();
 		break;
 	case 1:
-		name = @"Username";
+		name = NSLocalizedString(@"Username", @"Username");
 		value = &self.account->username();
 		copyAction = @selector(copyUsername:);
 		break;
 	case 2:
-		name = @"Password";
+		name = NSLocalizedString(@"Password", @"Password");
 		value = &self.account->password();
 		copyAction = @selector(copyPassword:);
 		break;
