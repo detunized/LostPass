@@ -43,9 +43,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	 AccountViewController *account_view = [[[AccountViewController alloc] initWithNibName:@"AccountViewController" bundle:nil] autorelease];
-	 account_view.account = &lastPass_->get_accounts()[indexPath.row];
-	 [self.navigationController pushViewController:account_view animated:YES];
+	 AccountViewController *accountView = [[[AccountViewController alloc] initWithNibName:@"AccountViewController" bundle:nil] autorelease];
+	 accountView.account = &lastPass_->get_accounts()[indexPath.row];
+	 [self.navigationController pushViewController:accountView animated:YES];
 }
 
 - (void)dealloc
