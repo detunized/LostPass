@@ -2,6 +2,41 @@
 
 using namespace std;
 
+static size_t write_data_callback(void *contents, size_t size, size_t count, void *user_parameter)
+{
+	vector<uint8_t> *storage = (vector<uint8_t> *)user_parameter;
+	size_t bytes = size * count;
+	storage->insert(storage->end(), (uint8_t *)contents, (uint8_t *)contents + bytes);
+
+	return bytes;
+}
+
+static void download()
+{
+	CURL *curl = curl_easy_init();
+	if (curl)
+	{
+		vector<uint8_t> response;
+
+		curl_easy_setopt(curl, CURLOPT_USERAGENT, "Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_0 like Mac OS X; en-us) AppleWebKit/532.9 (KHTML, like Gecko) Version/4.0.5 Mobile/8A293 Safari/6531.22.7");
+		curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0l);
+		
+		//curl_easy_setopt(curl, CURLOPT_VERBOSE, 1l);
+		
+		curl_easy_setopt(curl, CURLOPT_URL, "https://lastpass.com/login.php");
+		curl_easy_setopt(curl, CURLOPT_POSTFIELDS, "method=mobile&web=1&xml=1&username=yolastpass%40mailinator.com&hash=16274d9fc71aadffe805c4364559ff5ffa1d757da7cc0415d3b48c68b96ffa4d&iterations=1");
+		
+		curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data_callback);
+		curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void *)&response);
+		curl_easy_setopt(curl, CURLOPT_COOKIEJAR, "/Users/detunized/dev/temp/cookie.txt");
+
+		CURLcode result = curl_easy_perform(curl);
+		cout << "===\n" << result << "\n===\n" << string(response.begin(), response.end()) << "\n===\n";
+
+		curl_easy_cleanup(curl);
+	}
+}
+
 LastPass::LastPass(char const *dump_filename, char const *credentials_filename)
 {
 	vector<char> dump;
@@ -13,6 +48,8 @@ LastPass::LastPass(char const *dump_filename, char const *credentials_filename)
 	key_ = sha256(username_ + password_);
 	
 	parse();
+
+	download();
 }
 
 void LastPass::load_file(char const *filename, vector<char> &data_out)

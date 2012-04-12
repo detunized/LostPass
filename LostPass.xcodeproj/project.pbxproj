@@ -21,6 +21,10 @@
 		6085EDDA153119EE00912BE4 /* credentials.txt in Resources */ = {isa = PBXBuildFile; fileRef = 6085EDD9153119EE00912BE4 /* credentials.txt */; };
 		6085EFA4153251A900912BE4 /* AccountViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6085EFA2153251A900912BE4 /* AccountViewController.mm */; };
 		6085EFA5153251A900912BE4 /* AccountViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6085EFA3153251A900912BE4 /* AccountViewController.xib */; };
+		6085F19E1536401900912BE4 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6085F19D1536401900912BE4 /* libcurl.a */; };
+		6085F1A31536403200912BE4 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6085F1A21536403200912BE4 /* libssl.a */; };
+		6085F1A91536406400912BE4 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6085F1A81536406400912BE4 /* libz.dylib */; };
+		6085F28D1537761F00912BE4 /* LastPassProxy.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6085F28C1537761F00912BE4 /* LastPassProxy.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +48,11 @@
 		6085EFA1153251A900912BE4 /* AccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountViewController.h; sourceTree = "<group>"; };
 		6085EFA2153251A900912BE4 /* AccountViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AccountViewController.mm; sourceTree = "<group>"; };
 		6085EFA3153251A900912BE4 /* AccountViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AccountViewController.xib; sourceTree = "<group>"; };
+		6085F19D1536401900912BE4 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = "cURL-SSL-for-iOS/cURL/libcurl.a"; sourceTree = "<group>"; };
+		6085F1A21536403200912BE4 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = "cURL-SSL-for-iOS/OpenSSL/libssl.a"; sourceTree = "<group>"; };
+		6085F1A81536406400912BE4 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		6085F28B1537761F00912BE4 /* LastPassProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LastPassProxy.h; sourceTree = "<group>"; };
+		6085F28C1537761F00912BE4 /* LastPassProxy.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LastPassProxy.mm; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* LostPass-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "LostPass-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -56,6 +65,9 @@
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				2892E4100DC94CBA00A64D0F /* CoreGraphics.framework in Frameworks */,
 				6085ED6B1530E8BA00912BE4 /* libcrypto.a in Frameworks */,
+				6085F19E1536401900912BE4 /* libcurl.a in Frameworks */,
+				6085F1A31536403200912BE4 /* libssl.a in Frameworks */,
+				6085F1A91536406400912BE4 /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -67,6 +79,8 @@
 			children = (
 				6085EFA1153251A900912BE4 /* AccountViewController.h */,
 				6085EFA2153251A900912BE4 /* AccountViewController.mm */,
+				6085F28B1537761F00912BE4 /* LastPassProxy.h */,
+				6085F28C1537761F00912BE4 /* LastPassProxy.mm */,
 				1D3623240D0F684500981E51 /* LostPassAppDelegate.h */,
 				1D3623250D0F684500981E51 /* LostPassAppDelegate.mm */,
 				28C286DF0D94DF7D0034E888 /* RootViewController.h */,
@@ -122,10 +136,13 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
-				1D30AB110D05D00D00671497 /* Foundation.framework */,
 				2892E40F0DC94CBA00A64D0F /* CoreGraphics.framework */,
+				1D30AB110D05D00D00671497 /* Foundation.framework */,
 				6085ED6A1530E8BA00912BE4 /* libcrypto.a */,
+				6085F19D1536401900912BE4 /* libcurl.a */,
+				6085F1A21536403200912BE4 /* libssl.a */,
+				6085F1A81536406400912BE4 /* libz.dylib */,
+				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -200,6 +217,7 @@
 				28C286E10D94DF7D0034E888 /* RootViewController.mm in Sources */,
 				6085ECBD1530D3B800912BE4 /* LastPass.cpp in Sources */,
 				6085EFA4153251A900912BE4 /* AccountViewController.mm in Sources */,
+				6085F28D1537761F00912BE4 /* LastPassProxy.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -219,6 +237,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/cURL-SSL-for-iOS/OpenSSL\"",
+					"\"$(SRCROOT)/cURL-SSL-for-iOS/cURL\"",
 				);
 				PRODUCT_NAME = LostPass;
 			};
@@ -235,6 +254,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/cURL-SSL-for-iOS/OpenSSL\"",
+					"\"$(SRCROOT)/cURL-SSL-for-iOS/cURL\"",
 				);
 				PRODUCT_NAME = LostPass;
 				VALIDATE_PRODUCT = YES;
@@ -249,7 +269,10 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "cURL-SSL-for-iOS/OpenSSL/include";
+				HEADER_SEARCH_PATHS = (
+					"cURL-SSL-for-iOS/OpenSSL/include",
+					"cURL-SSL-for-iOS/cURL/include",
+				);
 				PREBINDING = NO;
 				SDKROOT = iphoneos;
 			};
@@ -263,7 +286,10 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "cURL-SSL-for-iOS/OpenSSL/include";
+				HEADER_SEARCH_PATHS = (
+					"cURL-SSL-for-iOS/OpenSSL/include",
+					"cURL-SSL-for-iOS/cURL/include",
+				);
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PREBINDING = NO;
 				SDKROOT = iphoneos;
