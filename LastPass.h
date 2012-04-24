@@ -32,7 +32,7 @@ public:
 		std::string password_;
 	};
 
-	LastPass(char const *dump_filename, char const *credentials_filename);
+	LastPass(char const *dump_filename, char const *username, char const *password);
 	
 	size_t count() const
 	{
@@ -49,7 +49,8 @@ private:
 	static void decode_base64(std::vector<char> &encoded, std::vector<char> &decoded_out);
 	static std::vector<uint8_t> sha256(std::string const &text);
 	
-	void load_credentials(char const *filename);
+	std::vector<uint8_t> make_key(size_t iteration_count);
+
 	void parse();
 	void parse_ACCT(char const *data, size_t size);
 	

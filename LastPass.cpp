@@ -37,19 +37,19 @@ static void download()
 	}
 }
 
-LastPass::LastPass(char const *dump_filename, char const *credentials_filename)
+LastPass::LastPass(char const *dump_filename, char const *username, char const *password):
+	username_(username),
+	password_(password)
 {
 	vector<char> dump;
 	load_file(dump_filename, dump);
 	decode_base64(dump, data_);
 
-	load_credentials(credentials_filename);
-	
-	key_ = sha256(username_ + password_);
+	key_ = make_key(1);
 	
 	parse();
 
-	download();
+	//download();
 }
 
 void LastPass::load_file(char const *filename, vector<char> &data_out)
@@ -93,10 +93,29 @@ vector<uint8_t> LastPass::sha256(string const &text)
 	return hash;
 }
 
-void LastPass::load_credentials(char const *filename)
+vector<uint8_t> LastPass::make_key(size_t iteration_count)
 {
-	ifstream in(filename);
-	in >> username_ >> password_;
+	if (iteration_count == 1)
+	{
+		return sha256(username_ + password_);
+	}
+	else
+	{
+		static size_t const key_length = 32;
+	
+		vector<uint8_t> key(key_length);
+		PKCS5_PBKDF2_HMAC(
+			password_.c_str(), 
+			password_.size(), 
+			(uint8_t const *)username_.c_str(), 
+			username_.size(), 
+			iteration_count, 
+			EVP_sha256(), 
+			key_length, 
+			&key[0]);
+		
+		return key;
+	}
 }
 
 void LastPass::parse()

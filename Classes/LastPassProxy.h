@@ -1,0 +1,1 @@
+void downloadLastPassAccounts(NSString *username, NSString *password);

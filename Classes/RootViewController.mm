@@ -1,5 +1,6 @@
 #import "RootViewController.h"
 #import "AccountViewController.h"
+#import "LastPassProxy.h"
 
 @implementation RootViewController
 
@@ -10,9 +11,18 @@
 	[super viewDidLoad];
 	
 	NSBundle *mainBundle = [NSBundle mainBundle];
+
+	std::ifstream in([[mainBundle pathForResource:@"credentials" ofType:@"txt"] UTF8String]);
+	std::string email;
+	std::string password;
+	in >> email >> password;
+	
+//	downloadLastPassAccounts([NSString stringWithUTF8String:email.c_str()], [NSString stringWithUTF8String:password.c_str()]);
+	
 	lastPass_ = new LastPass(
 		[[mainBundle pathForResource:@"account" ofType:@"dump"] UTF8String],
-		[[mainBundle pathForResource:@"credentials" ofType:@"txt"] UTF8String]
+		email.c_str(),
+		password.c_str()
 	);
 
 	displayIndex_.reserve(lastPass_->count());
@@ -61,7 +71,7 @@
 {
 	delete lastPass_;
 	lastPass_ = 0;
-
+	
 	self.searchBar = nil;
 
 	[super dealloc];
