@@ -30,6 +30,8 @@
 		60903BB015471E76003E742C /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60903BAE15471E76003E742C /* LoginViewController.xib */; };
 		60903BCE15472778003E742C /* login-background.png in Resources */ = {isa = PBXBuildFile; fileRef = 60903BCD15472778003E742C /* login-background.png */; };
 		60903CBC154747B8003E742C /* login-background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 60903CBB154747B8003E742C /* login-background@2x.png */; };
+		60903D1115475F59003E742C /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 60903D1015475F59003E742C /* icon@2x.png */; };
+		60903D1315475F98003E742C /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 60903D1215475F98003E742C /* icon.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +66,8 @@
 		60903BAE15471E76003E742C /* LoginViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
 		60903BCD15472778003E742C /* login-background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login-background.png"; sourceTree = "<group>"; };
 		60903CBB154747B8003E742C /* login-background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login-background@2x.png"; sourceTree = "<group>"; };
+		60903D1015475F59003E742C /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
+		60903D1215475F98003E742C /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* LostPass-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "LostPass-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -139,6 +143,8 @@
 				6085ECF01530D6DD00912BE4 /* account.dump */,
 				6085EFA3153251A900912BE4 /* AccountViewController.xib */,
 				6085EDD9153119EE00912BE4 /* credentials.txt */,
+				60903D1215475F98003E742C /* icon.png */,
+				60903D1015475F59003E742C /* icon@2x.png */,
 				6085F2BF1537797D00912BE4 /* lastpass.js */,
 				60903BCD15472778003E742C /* login-background.png */,
 				60903CBB154747B8003E742C /* login-background@2x.png */,
@@ -223,6 +229,8 @@
 				60903BB015471E76003E742C /* LoginViewController.xib in Resources */,
 				60903BCE15472778003E742C /* login-background.png in Resources */,
 				60903CBC154747B8003E742C /* login-background@2x.png in Resources */,
+				60903D1115475F59003E742C /* icon@2x.png in Resources */,
+				60903D1315475F98003E742C /* icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

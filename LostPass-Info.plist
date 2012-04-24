@@ -22,6 +22,8 @@
 	<string>UIStatusBarStyleBlackOpaque</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>UIPrerenderedIcon</key>
+	<true/>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
 	<key>LSRequiresIPhoneOS</key>
