@@ -1,0 +1,5 @@
+@interface LoginViewController: UIViewController
+{
+}
+
+@end
