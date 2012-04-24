@@ -27,6 +27,22 @@
 	self.busyIndicator = nil;
 }
 
+- (void)enableLoginButton
+{
+	self.loginButton.enabled = [self.emailInput.text length] > 0 && [self.passwordInput.text length] > 0;
+	NSLog(@"%d", self.loginButton.enabled);
+}
+
+- (IBAction)onEmailInputEditingChanged:(id)sender
+{
+	[self enableLoginButton];
+}
+
+- (IBAction)onPasswordInputEditingChanged:(id)sender
+{
+	[self enableLoginButton];
+}
+
 - (IBAction)onLoginButtonTouchUpInside:(id)sender
 {
 	self.emailInput.enabled = NO;
