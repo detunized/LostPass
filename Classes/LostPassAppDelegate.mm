@@ -1,5 +1,6 @@
 #import "LostPassAppDelegate.h"
 #import "RootViewController.h"
+#import "LoginViewController.h"
 
 @implementation LostPassAppDelegate
 
@@ -10,6 +11,9 @@
 {
 	[self.window addSubview:self.navigationController.view];
 	[self.window makeKeyAndVisible];
+	
+	LoginViewController *loginScreen = [[[LoginViewController alloc] initWithNibName:nil bundle:nil] autorelease];
+	[self.navigationController presentModalViewController:loginScreen animated:NO];
 
 	return YES;
 }
