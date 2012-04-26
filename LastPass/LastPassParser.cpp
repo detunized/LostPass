@@ -1,5 +1,8 @@
 #include "LastPassParser.h"
 
+namespace LastPass
+{
+
 using namespace std;
 
 static size_t write_data_callback(void *contents, size_t size, size_t count, void *user_parameter)
@@ -37,7 +40,7 @@ static void download()
 	}
 }
 
-LastPassParser::LastPassParser(char const *dump_filename, char const *username, char const *password):
+Parser::Parser(char const *dump_filename, char const *username, char const *password):
 	username_(username),
 	password_(password)
 {
@@ -52,7 +55,7 @@ LastPassParser::LastPassParser(char const *dump_filename, char const *username, 
 	//download();
 }
 
-void LastPassParser::load_file(char const *filename, vector<char> &data_out)
+void Parser::load_file(char const *filename, vector<char> &data_out)
 {
 	ifstream in(filename);
 
@@ -64,7 +67,7 @@ void LastPassParser::load_file(char const *filename, vector<char> &data_out)
 	in.read(&data_out[0], length);
 }
 
-void LastPassParser::decode_base64(vector<char> &encoded, vector<char> &decoded_out)
+void Parser::decode_base64(vector<char> &encoded, vector<char> &decoded_out)
 {
     BIO *context = BIO_push(BIO_new(BIO_f_base64()), BIO_new_mem_buf(&encoded[0], encoded.size()));
 	BIO_set_flags(context, BIO_FLAGS_BASE64_NO_NL);
@@ -82,7 +85,7 @@ void LastPassParser::decode_base64(vector<char> &encoded, vector<char> &decoded_
     BIO_free_all(context);
 }
 
-vector<uint8_t> LastPassParser::sha256(string const &text)
+vector<uint8_t> Parser::sha256(string const &text)
 {
     vector<uint8_t> hash(SHA256_DIGEST_LENGTH);
     SHA256_CTX sha256;
@@ -93,7 +96,7 @@ vector<uint8_t> LastPassParser::sha256(string const &text)
 	return hash;
 }
 
-vector<uint8_t> LastPassParser::make_key(size_t iteration_count)
+vector<uint8_t> Parser::make_key(size_t iteration_count)
 {
 	if (iteration_count == 1)
 	{
@@ -118,7 +121,7 @@ vector<uint8_t> LastPassParser::make_key(size_t iteration_count)
 	}
 }
 
-void LastPassParser::parse()
+void Parser::parse()
 {
 	size_t i = 0;
 	char const *data = &data_[0];
@@ -152,7 +155,7 @@ void LastPassParser::parse()
 	}
 }
 
-void LastPassParser::parse_ACCT(char const *data, size_t size)
+void Parser::parse_ACCT(char const *data, size_t size)
 {
 	vector<uint8_t> name;
 	vector<uint8_t> username;
@@ -186,7 +189,7 @@ void LastPassParser::parse_ACCT(char const *data, size_t size)
 	}
 }
 
-vector<uint8_t> LastPassParser::decrypt_aes256_ecb(char const *data, size_t size)
+vector<uint8_t> Parser::decrypt_aes256_ecb(char const *data, size_t size)
 {
 	EVP_CIPHER_CTX context;
 	EVP_CIPHER_CTX_init(&context);
@@ -205,4 +208,6 @@ vector<uint8_t> LastPassParser::decrypt_aes256_ecb(char const *data, size_t size
 
 	out.resize(decrypted_size + final_size);
 	return out;
+}
+
 }

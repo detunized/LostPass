@@ -2,7 +2,7 @@
 
 @interface RootViewController: UITableViewController<UISearchBarDelegate>
 {
-	LastPassParser *lastPass_;
+	LastPass::Parser *lastPass_;
 	std::vector<size_t> displayIndex_;
 }
 

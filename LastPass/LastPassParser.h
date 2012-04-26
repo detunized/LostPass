@@ -1,4 +1,7 @@
-class LastPassParser
+namespace LastPass
+{
+
+class Parser
 {
 public:
 	class Account
@@ -32,7 +35,7 @@ public:
 		std::string password_;
 	};
 
-	LastPassParser(char const *dump_filename, char const *username, char const *password);
+	Parser(char const *dump_filename, char const *username, char const *password);
 	
 	size_t count() const
 	{
@@ -62,3 +65,5 @@ private:
 	std::vector<uint8_t> key_;
 	std::vector<Account> accounts_;
 };
+
+}

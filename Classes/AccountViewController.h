@@ -4,6 +4,6 @@
 {
 }
 
-@property(nonatomic, assign) LastPassParser::Account const *account;
+@property(nonatomic, assign) LastPass::Parser::Account const *account;
 
 @end

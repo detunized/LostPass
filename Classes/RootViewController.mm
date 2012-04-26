@@ -19,7 +19,7 @@
 	
 //	downloadLastPassAccounts([NSString stringWithUTF8String:email.c_str()], [NSString stringWithUTF8String:password.c_str()]);
 	
-	lastPass_ = new LastPassParser(
+	lastPass_ = new LastPass::Parser(
 		[[mainBundle pathForResource:@"account" ofType:@"dump"] UTF8String],
 		email.c_str(),
 		password.c_str()
