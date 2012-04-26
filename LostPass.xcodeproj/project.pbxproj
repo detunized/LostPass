@@ -47,8 +47,8 @@
 		28C286E00D94DF7D0034E888 /* RootViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RootViewController.mm; sourceTree = "<group>"; };
 		28F335F01007B36200424DE2 /* RootViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RootViewController.xib; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
-		6085ECBB1530D3B800912BE4 /* LastPass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LastPass.h; sourceTree = "<group>"; };
-		6085ECBC1530D3B800912BE4 /* LastPass.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LastPass.cpp; sourceTree = "<group>"; };
+		6085ECBB1530D3B800912BE4 /* LastPass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LastPass.h; path = LastPass/LastPass.h; sourceTree = "<group>"; };
+		6085ECBC1530D3B800912BE4 /* LastPass.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LastPass.cpp; path = LastPass/LastPass.cpp; sourceTree = "<group>"; };
 		6085ECF01530D6DD00912BE4 /* account.dump */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = account.dump; sourceTree = "<group>"; };
 		6085ED6A1530E8BA00912BE4 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = "cURL-SSL-for-iOS/OpenSSL/libcrypto.a"; sourceTree = "<group>"; };
 		6085EDD9153119EE00912BE4 /* credentials.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = credentials.txt; sourceTree = "<group>"; };
