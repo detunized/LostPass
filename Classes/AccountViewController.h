@@ -1,9 +1,9 @@
-#import "LastPass.h"
+#import "LastPassParser.h"
 
 @interface AccountViewController: UITableViewController
 {
 }
 
-@property(nonatomic, assign) LastPass::Account const *account;
+@property(nonatomic, assign) LastPassParser::Account const *account;
 
 @end

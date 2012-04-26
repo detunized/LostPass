@@ -1,8 +1,8 @@
-#import "LastPass.h"
+#import "LastPassParser.h"
 
 @interface RootViewController: UITableViewController<UISearchBarDelegate>
 {
-	LastPass *lastPass_;
+	LastPassParser *lastPass_;
 	std::vector<size_t> displayIndex_;
 }
 
