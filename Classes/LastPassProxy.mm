@@ -8,6 +8,8 @@
 @property(nonatomic, retain) UIWebView *browser;
 @property(nonatomic, copy) NSString *username;
 @property(nonatomic, copy) NSString *password;
+@property(nonatomic, copy) SuccessBlock onSuccess;
+@property(nonatomic, copy) ErrorBlock onError;
 
 @end
 
@@ -16,6 +18,8 @@
 @synthesize browser = browser_;
 @synthesize username = username_;
 @synthesize password = password_;
+@synthesize onSuccess = onSuccess_;
+@synthesize onError = onError_;
 
 namespace
 {
@@ -32,7 +36,7 @@ namespace
 	NSString *jsCallPrefix = @"lastpass.";
 }
 
-- (id)init:(NSString *)username password:(NSString *)password;
+- (id)init:(NSString *)username password:(NSString *)password onSuccess:(SuccessBlock)onSuccess onError:(ErrorBlock)onError
 {
 	if (self = [super init])
 	{
@@ -43,6 +47,9 @@ namespace
 		
 		self.username = username;
 		self.password = password;
+		
+		self.onSuccess = onSuccess;
+		self.onError = onError;
 	}
 	
 	return self;
@@ -53,6 +60,8 @@ namespace
 	self.browser = nil;
 	self.username = nil;
 	self.password = nil;
+	self.onSuccess = nil;
+	self.onError = nil;
 
 	[super dealloc];
 }
@@ -84,17 +93,17 @@ namespace
 	else if ([call isEqualToString:@"downloaded"])
 	{
 		state_ = STATE_DONE;
-		NSLog(@"Downloaded: '%@'", [self executeJs:@"lastpass.database"]);
+		self.onSuccess([self executeJs:@"lastpass.database"]);
 	}
 	else if ([call isEqualToString:@"login-failed"])
 	{
 		state_ = STATE_FAILED;
-		NSLog(@"Login failed: '%@'", arguments);
+		self.onError(arguments);
 	}
 	else if ([call isEqualToString:@"download-failed"])
 	{
 		state_ = STATE_FAILED;
-		NSLog(@"Download failed: '%@'", arguments);
+		self.onError(arguments);
 	}
 	
 	if (state_ == STATE_DONE)
@@ -132,8 +141,8 @@ namespace
 
 @end
 
-void downloadLastPassAccounts(NSString *username, NSString *password)
+void downloadLastPassDatabase(NSString *username, NSString *password, SuccessBlock onSuccess, ErrorBlock onError)
 {
-	LastPassProxy *proxy = [[LastPassProxy alloc] init:username password:password];
+	LastPassProxy *proxy = [[LastPassProxy alloc] init:username password:password onSuccess:onSuccess onError:onError];
 	[proxy start];
 }

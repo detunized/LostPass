@@ -1,4 +1,5 @@
 #import "LoginViewController.h"
+#import "LastPassProxy.h"
 
 @implementation LoginViewController
 
@@ -6,6 +7,7 @@
 @synthesize passwordInput = passwordInput_;
 @synthesize loginButton = loginButton_;
 @synthesize busyIndicator = busyIndicator_;
+@synthesize errorLabel = errorLabel_;
 
 - (void)viewDidLoad
 {
@@ -25,12 +27,47 @@
 	self.passwordInput = nil;
 	self.loginButton = nil;
 	self.busyIndicator = nil;
+	self.errorLabel = nil;
 }
 
 - (void)enableLoginButton
 {
 	self.loginButton.enabled = [self.emailInput.text length] > 0 && [self.passwordInput.text length] > 0;
-	NSLog(@"%d", self.loginButton.enabled);
+}
+
+- (void)enableControls:(BOOL)enable
+{
+	self.emailInput.enabled = enable;
+	self.passwordInput.enabled = enable;
+	self.loginButton.enabled = enable;
+}
+
+- (void)setErrorText:(NSString *)text
+{
+	if ([text length] > 0)
+	{
+		self.errorLabel.text = text;
+		self.errorLabel.hidden = NO;
+	}
+	else
+	{
+		self.errorLabel.hidden = YES;
+	}
+
+}
+
+- (void)showBusyIndicator:(BOOL)show
+{
+	self.busyIndicator.hidden = !show;
+	
+	if (show)
+	{
+		[self.busyIndicator startAnimating];
+	}
+	else
+	{
+		[self.busyIndicator stopAnimating];
+	}
 }
 
 - (IBAction)onEmailInputEditingChanged:(id)sender
@@ -45,10 +82,25 @@
 
 - (IBAction)onLoginButtonTouchUpInside:(id)sender
 {
-	self.emailInput.enabled = NO;
-	self.passwordInput.enabled = NO;
-	self.loginButton.enabled = NO;
-	self.busyIndicator.hidden = NO;
+	[self enableControls:NO];
+	[self showBusyIndicator:YES];
+	[self setErrorText:@""];
+	
+	downloadLastPassDatabase(
+		self.emailInput.text, 
+		self.passwordInput.text,
+		
+		^(NSString *databseBase64) {
+			[self showBusyIndicator:NO];
+			NSLog(@"%@", databseBase64);
+		},
+		
+		^(NSString *errorMessage) {
+			[self enableControls:YES];
+			[self showBusyIndicator:NO];
+			[self setErrorText:errorMessage];
+		}
+	);
 }
 
 @end
