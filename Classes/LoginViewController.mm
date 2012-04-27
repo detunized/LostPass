@@ -1,5 +1,6 @@
 #import "LoginViewController.h"
 #import "LastPassProxy.h"
+#import "LastPassParser.h"
 
 @implementation LoginViewController
 
@@ -90,9 +91,17 @@
 		self.emailInput.text, 
 		self.passwordInput.text,
 		
-		^(NSString *databseBase64) {
+		^(NSString *databseBase64, NSString *key) {
 			[self showBusyIndicator:NO];
-			NSLog(@"%@", databseBase64);
+			
+			std::vector<uint8_t> key_u8;
+			key_u8.reserve([key length]);
+			for (size_t i = 0, count = [key length]; i < count; ++i)
+			{
+				key_u8.push_back(static_cast<uint8_t>([key characterAtIndex:i]));
+			}
+			
+			LastPass::Parser parser([databseBase64 UTF8String], &key_u8[0]);
 		},
 		
 		^(NSString *errorMessage) {

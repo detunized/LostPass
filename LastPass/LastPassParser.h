@@ -34,8 +34,10 @@ public:
 		std::string username_;
 		std::string password_;
 	};
+	
+	static size_t const KEY_LENGTH = 32;
 
-	Parser(char const *dump_filename, char const *username, char const *password);
+	Parser(char const *database_base64, uint8_t const *key);
 	
 	size_t count() const
 	{
@@ -48,20 +50,14 @@ public:
 	}
 
 private:
-	static void load_file(char const *filename, std::vector<char> &data_out);
-	static void decode_base64(std::vector<char> &encoded, std::vector<char> &decoded_out);
-	static std::vector<uint8_t> sha256(std::string const &text);
+	static void decode_base64(char const *encoded, std::vector<uint8_t> &decoded_out);
 	
-	std::vector<uint8_t> make_key(size_t iteration_count);
-
 	void parse();
-	void parse_ACCT(char const *data, size_t size);
-	
-	std::vector<uint8_t> decrypt_aes256_ecb(char const *data, size_t size);
+	void parse_ACCT(uint8_t const *data, size_t size);
 
-	std::vector<char> data_;
-	std::string username_;
-	std::string password_;
+	std::vector<uint8_t> decrypt_aes256_ecb(uint8_t const *data, size_t size);
+
+	std::vector<uint8_t> data_;
 	std::vector<uint8_t> key_;
 	std::vector<Account> accounts_;
 };

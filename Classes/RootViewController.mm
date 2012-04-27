@@ -10,20 +10,17 @@
 {
 	[super viewDidLoad];
 	
-	NSBundle *mainBundle = [NSBundle mainBundle];
+//	NSBundle *mainBundle = [NSBundle mainBundle];
 
-	std::ifstream in([[mainBundle pathForResource:@"credentials" ofType:@"txt"] UTF8String]);
-	std::string email;
-	std::string password;
-	in >> email >> password;
+//	std::ifstream in([[mainBundle pathForResource:@"credentials" ofType:@"txt"] UTF8String]);
+//	std::string email;
+//	std::string password;
+//	in >> email >> password;
 	
 //	downloadLastPassAccounts([NSString stringWithUTF8String:email.c_str()], [NSString stringWithUTF8String:password.c_str()]);
+//[[mainBundle pathForResource:@"account" ofType:@"dump"] UTF8String],
 	
-	lastPass_ = new LastPass::Parser(
-		[[mainBundle pathForResource:@"account" ofType:@"dump"] UTF8String],
-		email.c_str(),
-		password.c_str()
-	);
+//	lastPass_ = new LastPass::Parser("", 0);
 
 	displayIndex_.reserve(lastPass_->count());
 	for (size_t i = 0, count = lastPass_->count(); i < count; ++i)
