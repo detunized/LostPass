@@ -2,6 +2,25 @@
 #import "LastPassProxy.h"
 #import "LastPassParser.h"
 
+namespace
+{
+
+NSString *file_as_string(NSString *filename)
+{
+	return [NSString 
+		stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:filename ofType:@""]
+		encoding:NSUTF8StringEncoding 
+		error:nil
+	];
+}
+
+char const *file_as_c_string(NSString *filename)
+{
+	return [file_as_string(filename) UTF8String];
+}
+
+}
+
 @implementation LoginViewController
 
 @synthesize emailInput = emailInput_;
@@ -87,6 +106,9 @@
 	[self showBusyIndicator:YES];
 	[self setErrorText:@""];
 	
+#ifdef CONFIG_USE_LOCAL_DATABASE
+	LastPass::Parser parser(file_as_c_string(@"account.dump"), file_as_c_string(@"key.txt"));
+#else
 	downloadLastPassDatabase(
 		self.emailInput.text, 
 		self.passwordInput.text,
@@ -110,6 +132,7 @@
 			[self setErrorText:errorMessage];
 		}
 	);
+#endif
 }
 
 @end

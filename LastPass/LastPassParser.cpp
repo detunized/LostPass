@@ -5,10 +5,10 @@ namespace LastPass
 
 using namespace std;
 
-Parser::Parser(char const *database_base64, uint8_t const *key):
-	key_(key, key + KEY_LENGTH)
+Parser::Parser(char const *database_base64, char const *key_base64)
 {
 	decode_base64(database_base64, data_);
+	decode_base64(key_base64, key_);
 	parse();
 }
 

@@ -25,3 +25,5 @@
 #include <openssl/aes.h>
 
 #include <curl/curl.h>
+
+#define CONFIG_USE_LOCAL_DATABASE
