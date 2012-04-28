@@ -8,7 +8,6 @@
 @property(nonatomic, retain) UIWebView *browser;
 @property(nonatomic, copy) NSString *username;
 @property(nonatomic, copy) NSString *password;
-@property(nonatomic, copy) NSString *key;
 @property(nonatomic, copy) SuccessBlock onSuccess;
 @property(nonatomic, copy) ErrorBlock onError;
 
@@ -19,7 +18,6 @@
 @synthesize browser = browser_;
 @synthesize username = username_;
 @synthesize password = password_;
-@synthesize key = key_;
 @synthesize onSuccess = onSuccess_;
 @synthesize onError = onError_;
 
@@ -90,13 +88,12 @@ namespace
 	if ([call isEqualToString:@"logged-in"])
 	{
 		state_ = STATE_DOWNLOAD;
-		self.key = [self executeJs:@"lastpass.key"];
 		NSLog(@"Logged in: '%@', '%@'", [self executeJs:@"lastpass.key"], [self executeJs:@"lastpass.hash"]);
 	}
 	else if ([call isEqualToString:@"downloaded"])
 	{
 		state_ = STATE_DONE;
-		self.onSuccess([self executeJs:@"lastpass.database"], self.key);
+		self.onSuccess([self executeJs:@"lastpass.database"], [self executeJs:@"lastpass.key"]);
 	}
 	else if ([call isEqualToString:@"login-failed"])
 	{

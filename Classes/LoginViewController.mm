@@ -113,17 +113,10 @@ char const *file_as_c_string(NSString *filename)
 		self.emailInput.text, 
 		self.passwordInput.text,
 		
-		^(NSString *databseBase64, NSString *key) {
+		^(NSString *databseBase64, NSString *keyBase64) {
 			[self showBusyIndicator:NO];
 			
-			std::vector<uint8_t> key_u8;
-			key_u8.reserve([key length]);
-			for (size_t i = 0, count = [key length]; i < count; ++i)
-			{
-				key_u8.push_back(static_cast<uint8_t>([key characterAtIndex:i]));
-			}
-			
-			LastPass::Parser parser([databseBase64 UTF8String], &key_u8[0]);
+			LastPass::Parser parser([databseBase64 UTF8String], [keyBase64 UTF8String]);
 		},
 		
 		^(NSString *errorMessage) {

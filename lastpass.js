@@ -66,7 +66,7 @@ var lastpass = (function (){
 					console.log(context.arguments[0]);
 					var errors;
 					if (response.find('ok').size() > 0) {
-						exported_api.key = g_local_key;
+						exported_api.key = btoa(g_local_key);
 						exported_api.hash = g_hash;
 						call_ios('logged-in');
 						exported_api.receive();
