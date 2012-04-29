@@ -1,6 +1,7 @@
 #import "LoginViewController.h"
 #import "LastPassProxy.h"
 #import "LostPassAppDelegate.h"
+#import "Settings.h"
 
 #import "LastPassParser.h"
 
@@ -39,6 +40,8 @@ char const *file_as_c_string(NSString *filename)
 	self.loginButton.layer.borderWidth = 1;
 	self.loginButton.layer.borderColor = [UIColor lightGrayColor].CGColor;
 	self.loginButton.clipsToBounds = YES;
+	
+	self.emailInput.text = [Settings lastEmail];
 }
 
 - (void)viewDidUnload
@@ -116,6 +119,8 @@ char const *file_as_c_string(NSString *filename)
 	[self enableControls:NO];
 	[self showBusyIndicator:YES];
 	[self setErrorText:@""];
+	
+	[Settings setLastEmail:self.emailInput.text];
 
 	downloadLastPassDatabase(
 		self.emailInput.text, 
