@@ -1,3 +1,6 @@
+#ifndef lastpass_parser_h_included
+#define lastpass_parser_h_included
+
 namespace LastPass
 {
 
@@ -63,3 +66,5 @@ private:
 };
 
 }
+
+#endif
