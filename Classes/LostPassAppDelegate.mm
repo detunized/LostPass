@@ -1,6 +1,7 @@
 #import "LostPassAppDelegate.h"
 #import "RootViewController.h"
 #import "LoginViewController.h"
+#import "Settings.h"
 
 std::auto_ptr<LastPass::Parser> lastPassDatabase;
 
@@ -11,6 +12,8 @@ std::auto_ptr<LastPass::Parser> lastPassDatabase;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+	[Settings initialize];
+
 	[self.window addSubview:self.navigationController.view];
 	[self.window makeKeyAndVisible];
 	

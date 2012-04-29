@@ -33,6 +33,7 @@
 		60903D1115475F59003E742C /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 60903D1015475F59003E742C /* icon@2x.png */; };
 		60903D1315475F98003E742C /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 60903D1215475F98003E742C /* icon.png */; };
 		60903EC9154C886E003E742C /* key.txt in Resources */ = {isa = PBXBuildFile; fileRef = 60903EC8154C886E003E742C /* key.txt */; };
+		60903F40154D50C5003E742C /* Settings.mm in Sources */ = {isa = PBXBuildFile; fileRef = 60903F3F154D50C5003E742C /* Settings.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -70,6 +71,8 @@
 		60903D1015475F59003E742C /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
 		60903D1215475F98003E742C /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		60903EC8154C886E003E742C /* key.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = key.txt; sourceTree = "<group>"; };
+		60903F3E154D50C5003E742C /* Settings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Settings.h; sourceTree = "<group>"; };
+		60903F3F154D50C5003E742C /* Settings.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Settings.mm; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* LostPass-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "LostPass-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -104,6 +107,8 @@
 				1D3623250D0F684500981E51 /* LostPassAppDelegate.mm */,
 				28C286DF0D94DF7D0034E888 /* RootViewController.h */,
 				28C286E00D94DF7D0034E888 /* RootViewController.mm */,
+				60903F3E154D50C5003E742C /* Settings.h */,
+				60903F3F154D50C5003E742C /* Settings.mm */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -260,6 +265,7 @@
 				6085EFA4153251A900912BE4 /* AccountViewController.mm in Sources */,
 				6085F28D1537761F00912BE4 /* LastPassProxy.mm in Sources */,
 				60903BAF15471E76003E742C /* LoginViewController.mm in Sources */,
+				60903F40154D50C5003E742C /* Settings.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
