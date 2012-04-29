@@ -2,6 +2,8 @@
 #import "RootViewController.h"
 #import "LoginViewController.h"
 
+std::auto_ptr<LastPass::Parser> lastPassDatabase;
+
 @implementation LostPassAppDelegate
 
 @synthesize window = window_;

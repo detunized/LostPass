@@ -1,3 +1,7 @@
+#import "LastPassParser.h"
+
+extern std::auto_ptr<LastPass::Parser> lastPassDatabase;
+
 @interface LostPassAppDelegate: NSObject<UIApplicationDelegate>
 {
 }

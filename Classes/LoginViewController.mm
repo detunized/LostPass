@@ -1,5 +1,7 @@
 #import "LoginViewController.h"
 #import "LastPassProxy.h"
+#import "LostPassAppDelegate.h"
+
 #import "LastPassParser.h"
 
 namespace
@@ -90,6 +92,12 @@ char const *file_as_c_string(NSString *filename)
 	}
 }
 
+- (void)parseAndQuit:(NSString *)databseBase64 keyBase64:(NSString *)keyBase64
+{
+	lastPassDatabase.reset(new LastPass::Parser([databseBase64 UTF8String], [keyBase64 UTF8String]));
+	[self dismissModalViewControllerAnimated:YES];
+}
+
 - (IBAction)onEmailInputEditingChanged:(id)sender
 {
 	[self enableLoginButton];
@@ -102,21 +110,20 @@ char const *file_as_c_string(NSString *filename)
 
 - (IBAction)onLoginButtonTouchUpInside:(id)sender
 {
+#ifdef CONFIG_USE_LOCAL_DATABASE
+	[self parseAndQuit:file_as_string(@"account.dump") keyBase64:file_as_string(@"key.txt")];
+#else
 	[self enableControls:NO];
 	[self showBusyIndicator:YES];
 	[self setErrorText:@""];
-	
-#ifdef CONFIG_USE_LOCAL_DATABASE
-	LastPass::Parser parser(file_as_c_string(@"account.dump"), file_as_c_string(@"key.txt"));
-#else
+
 	downloadLastPassDatabase(
 		self.emailInput.text, 
 		self.passwordInput.text,
 		
 		^(NSString *databseBase64, NSString *keyBase64) {
 			[self showBusyIndicator:NO];
-			
-			LastPass::Parser parser([databseBase64 UTF8String], [keyBase64 UTF8String]);
+			[self parseAndQuit:databseBase64 keyBase64:keyBase64];
 		},
 		
 		^(NSString *errorMessage) {

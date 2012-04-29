@@ -1,6 +1,7 @@
 #import "RootViewController.h"
 #import "AccountViewController.h"
 #import "LastPassProxy.h"
+#import "LostPassAppDelegate.h"
 
 @implementation RootViewController
 
@@ -10,26 +11,22 @@
 {
 	[super viewDidLoad];
 	
-//	NSBundle *mainBundle = [NSBundle mainBundle];
-
-//	std::ifstream in([[mainBundle pathForResource:@"credentials" ofType:@"txt"] UTF8String]);
-//	std::string email;
-//	std::string password;
-//	in >> email >> password;
-	
-//	downloadLastPassAccounts([NSString stringWithUTF8String:email.c_str()], [NSString stringWithUTF8String:password.c_str()]);
-//[[mainBundle pathForResource:@"account" ofType:@"dump"] UTF8String],
-	
-//	lastPass_ = new LastPass::Parser("", 0);
-
-	displayIndex_.reserve(lastPass_->count());
-	for (size_t i = 0, count = lastPass_->count(); i < count; ++i)
-	{
-		displayIndex_.push_back(i);
-	}
-
 	self.tableView.tableHeaderView = self.searchBar;
 	self.navigationItem.title = NSLocalizedString(@"Accounts", @"Accounts");
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+	[super viewWillAppear:animated];
+	
+	if (displayIndex_.empty())
+	{
+		displayIndex_.reserve(lastPassDatabase->count());
+		for (size_t i = 0, count = lastPassDatabase->count(); i < count; ++i)
+		{
+			displayIndex_.push_back(i);
+		}
+	}
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -51,7 +48,7 @@
 		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
 	}
 
-	cell.textLabel.text = [NSString stringWithUTF8String:lastPass_->accounts()[displayIndex_[indexPath.row]].name().c_str()];
+	cell.textLabel.text = [NSString stringWithUTF8String:lastPassDatabase->accounts()[displayIndex_[indexPath.row]].name().c_str()];
 	cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 
 	return cell;
@@ -60,15 +57,12 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	 AccountViewController *accountView = [[[AccountViewController alloc] initWithNibName:@"AccountViewController" bundle:nil] autorelease];
-	 accountView.account = &lastPass_->accounts()[displayIndex_[indexPath.row]];
+	 accountView.account = &lastPassDatabase->accounts()[displayIndex_[indexPath.row]];
 	 [self.navigationController pushViewController:accountView animated:YES];
 }
 
 - (void)dealloc
 {
-	delete lastPass_;
-	lastPass_ = 0;
-	
 	self.searchBar = nil;
 
 	[super dealloc];
@@ -82,9 +76,9 @@
 	std::string pattern = [searchText UTF8String];
 
 	displayIndex_.clear();
-	for (size_t i = 0, count = lastPass_->count(); i < count; ++i)
+	for (size_t i = 0, count = lastPassDatabase->count(); i < count; ++i)
 	{
-		if (lastPass_->accounts()[i].name().find(pattern) != std::string::npos)
+		if (lastPassDatabase->accounts()[i].name().find(pattern) != std::string::npos)
 		{
 			displayIndex_.push_back(i);
 		}
