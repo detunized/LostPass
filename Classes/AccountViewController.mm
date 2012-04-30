@@ -52,8 +52,13 @@
 
 	if (copyAction)
 	{
-		UIButton *button = [UIButton buttonWithType:UIButtonTypeContactAdd];
+		UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
 		[button addTarget:self action:copyAction forControlEvents:UIControlEventTouchUpInside];
+
+		UIImage *image = [UIImage imageNamed:@"copy.png"];
+		[button setFrame:CGRectMake(0, 0, image.size.width, image.size.height)];
+		[button setImage:image forState:UIControlStateNormal];
+		
 		cell.accessoryView = button;
 	}
     

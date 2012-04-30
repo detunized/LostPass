@@ -34,6 +34,8 @@
 		60903D1315475F98003E742C /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 60903D1215475F98003E742C /* icon.png */; };
 		60903EC9154C886E003E742C /* key.txt in Resources */ = {isa = PBXBuildFile; fileRef = 60903EC8154C886E003E742C /* key.txt */; };
 		60903F40154D50C5003E742C /* Settings.mm in Sources */ = {isa = PBXBuildFile; fileRef = 60903F3F154D50C5003E742C /* Settings.mm */; };
+		60903F96154D79A0003E742C /* copy.png in Resources */ = {isa = PBXBuildFile; fileRef = 60903F94154D79A0003E742C /* copy.png */; };
+		60903F97154D79A0003E742C /* copy@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 60903F95154D79A0003E742C /* copy@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -73,6 +75,8 @@
 		60903EC8154C886E003E742C /* key.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = key.txt; sourceTree = "<group>"; };
 		60903F3E154D50C5003E742C /* Settings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Settings.h; sourceTree = "<group>"; };
 		60903F3F154D50C5003E742C /* Settings.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Settings.mm; sourceTree = "<group>"; };
+		60903F94154D79A0003E742C /* copy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = copy.png; sourceTree = "<group>"; };
+		60903F95154D79A0003E742C /* copy@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "copy@2x.png"; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* LostPass-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "LostPass-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -148,6 +152,8 @@
 			children = (
 				6085ECF01530D6DD00912BE4 /* account.dump */,
 				6085EFA3153251A900912BE4 /* AccountViewController.xib */,
+				60903F94154D79A0003E742C /* copy.png */,
+				60903F95154D79A0003E742C /* copy@2x.png */,
 				6085EDD9153119EE00912BE4 /* credentials.txt */,
 				60903D1215475F98003E742C /* icon.png */,
 				60903D1015475F59003E742C /* icon@2x.png */,
@@ -248,6 +254,8 @@
 				60903D1115475F59003E742C /* icon@2x.png in Resources */,
 				60903D1315475F98003E742C /* icon.png in Resources */,
 				60903EC9154C886E003E742C /* key.txt in Resources */,
+				60903F96154D79A0003E742C /* copy.png in Resources */,
+				60903F97154D79A0003E742C /* copy@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
