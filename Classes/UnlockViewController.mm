@@ -8,6 +8,9 @@ NSString *modeTitles[] = {
 	@"Enter Unlock Code"
 };
 
+NSTimeInterval const RESTART_DELAY = 1.0;
+NSTimeInterval const QUIT_DELAY = 1.0;
+
 }
 
 @implementation UnlockViewController
@@ -80,19 +83,44 @@ NSString *modeTitles[] = {
 	self.unlockCodeEdit = nil;
 }
 
+- (void)clearCode
+{
+	self.unlockCodeEdit.text = @"";
+}
+
+- (void)setText:(NSString *)title subtitle:(NSString *)subtitle
+{
+	self.titleLabel.text = title;
+	self.subtitleLabel.text = subtitle;
+}
+
+- (void)restartAfter:(NSTimeInterval)seconds title:(NSString *)title subtitle:(NSString *)subtitle
+{
+	dispatch_after(dispatch_time(0, seconds * NSEC_PER_SEC), dispatch_get_current_queue(), ^{
+		[self clearCode];
+		[self setText:title subtitle:subtitle];
+		[[UIApplication sharedApplication] endIgnoringInteractionEvents];
+	});
+}
+
+- (void)quitAfter:(NSTimeInterval)seconds
+{
+	[self.unlockCodeEdit resignFirstResponder];
+
+	dispatch_after(dispatch_time(0, seconds * NSEC_PER_SEC), dispatch_get_current_queue(), ^{
+		[self dismissModalViewControllerAnimated:YES];
+		[[UIApplication sharedApplication] endIgnoringInteractionEvents];
+	});						
+}
+
 - (void)setChosenCode:(NSString *)code
 {
 	self.code = code;
 
 	assert(state_ == 0);
 	++state_;
-
-	dispatch_after(dispatch_time(0, 1 * NSEC_PER_SEC), dispatch_get_current_queue(), ^{
-		self.unlockCodeEdit.text = @"";
-		self.titleLabel.text = @"Verify Unlock Code";
-		self.subtitleLabel.text = @"";
-		[[UIApplication sharedApplication] endIgnoringInteractionEvents];
-	});
+	
+	[self restartAfter:RESTART_DELAY title:@"Verify Unlock Code" subtitle:@""];
 }
 
 - (void)verifyChosenCode:(NSString *)code
@@ -101,23 +129,14 @@ NSString *modeTitles[] = {
 
 	if ([code isEqualToString:self.code])
 	{
-		[self.unlockCodeEdit resignFirstResponder];
-
-		dispatch_after(dispatch_time(0, 1 * NSEC_PER_SEC), dispatch_get_current_queue(), ^{
-			[self dismissModalViewControllerAnimated:YES];
-			[[UIApplication sharedApplication] endIgnoringInteractionEvents];
-		});						
+		[self quitAfter:QUIT_DELAY];
 	}
 	else
 	{
-		self.code = code;
+		self.code = @"";
 		state_ = 0;
-		dispatch_after(dispatch_time(0, 1 * NSEC_PER_SEC), dispatch_get_current_queue(), ^{
-			self.unlockCodeEdit.text = @"";
-			self.titleLabel.text = @"Choose Unlock Code";
-			self.subtitleLabel.text = @"Verification failed";
-			[[UIApplication sharedApplication] endIgnoringInteractionEvents];
-		});
+		
+		[self restartAfter:RESTART_DELAY title:@"Choose Unlock Code" subtitle:@"Verification failed"];
 	}
 }
 
@@ -141,27 +160,19 @@ NSString *modeTitles[] = {
 {
 	assert([code isEqualToString:self.code]);
 
-	[self.unlockCodeEdit resignFirstResponder];
-
-	dispatch_after(dispatch_time(0, 1 * NSEC_PER_SEC), dispatch_get_current_queue(), ^{
-		[self dismissModalViewControllerAnimated:YES];
-		[[UIApplication sharedApplication] endIgnoringInteractionEvents];
-	});
+	[self quitAfter:QUIT_DELAY];
 }
 
 - (void)rejectCode:(NSString *)code
 {
 	assert(![code isEqualToString:self.code]);
 
-	++state_;
 	AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+	++state_;
 
-	dispatch_after(dispatch_time(0, 1 * NSEC_PER_SEC), dispatch_get_current_queue(), ^{
-		self.unlockCodeEdit.text = @"";
-		self.titleLabel.text = @"Enter Unlock Code";
-		self.subtitleLabel.text = [NSString stringWithFormat:@"Wrong code. You have %d attempts left.", 3 - state_];
-		[[UIApplication sharedApplication] endIgnoringInteractionEvents];
-	});
+	[self restartAfter:RESTART_DELAY 
+		title:@"Enter Unlock Code" 
+		subtitle:[NSString stringWithFormat:@"Wrong code. You have %d attempts left.", 3 - state_]];
 }
 
 - (void)verifyCode:(NSString *)code
