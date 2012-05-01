@@ -21,10 +21,7 @@ std::auto_ptr<LastPass::Parser> lastPassDatabase;
 	LoginViewController *loginScreen = [[[LoginViewController alloc] initWithNibName:nil bundle:nil] autorelease];
 	[self.navigationController presentModalViewController:loginScreen animated:NO];
 
-	UnlockViewController *unlockScreen = [[[UnlockViewController alloc] initWithNibName:nil bundle:nil] autorelease];
-	unlockScreen.mode = UnlockViewControllerModeChoose;
-//	unlockScreen.mode = UnlockViewControllerModeVerify;
-//	unlockScreen.code = @"0000";
+	UnlockViewController *unlockScreen = [UnlockViewController chooseScreen];
 	[loginScreen presentModalViewController:unlockScreen animated:NO];
 
 	return YES;

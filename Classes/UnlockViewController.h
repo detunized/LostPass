@@ -25,4 +25,7 @@ enum UnlockViewControllerMode
 @property(nonatomic, retain) IBOutlet UIImageView *digit4;
 @property(nonatomic, retain) IBOutlet UITextField *unlockCodeEdit;
 
++ (UnlockViewController *)chooseScreen;
++ (UnlockViewController *)verifyScreen:(NSString *)code;
+
 @end

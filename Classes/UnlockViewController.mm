@@ -22,6 +22,25 @@ NSString *modeTitles[] = {
 @synthesize digit4 = digit4_;
 @synthesize unlockCodeEdit = unlockCodeEdit_;
 
++ (UnlockViewController *)chooseScreen
+{
+	UnlockViewController *screen = [[[UnlockViewController alloc] initWithNibName:nil bundle:nil] autorelease];
+	screen.mode = UnlockViewControllerModeChoose;
+	
+	return screen;
+}
+
++ (UnlockViewController *)verifyScreen:(NSString *)code
+{
+	assert([code length] == UnlockViewControllerCodeLength);
+
+	UnlockViewController *screen = [[[UnlockViewController alloc] initWithNibName:nil bundle:nil] autorelease];
+	screen.mode = UnlockViewControllerModeVerify;
+	screen.code = code;
+	
+	return screen;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
