@@ -15,6 +15,12 @@
 		28AD73600D9D9599002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD735F0D9D9599002E5188 /* MainWindow.xib */; };
 		28C286E10D94DF7D0034E888 /* RootViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 28C286E00D94DF7D0034E888 /* RootViewController.mm */; };
 		28F335F11007B36200424DE2 /* RootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28F335F01007B36200424DE2 /* RootViewController.xib */; };
+		603B255D154F28700016B0F6 /* UnlockViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 603B255B154F28700016B0F6 /* UnlockViewController.mm */; };
+		603B255E154F28700016B0F6 /* UnlockViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 603B255C154F28700016B0F6 /* UnlockViewController.xib */; };
+		603B2583155005100016B0F6 /* unlock-background.png in Resources */ = {isa = PBXBuildFile; fileRef = 603B2581155005100016B0F6 /* unlock-background.png */; };
+		603B2584155005100016B0F6 /* unlock-background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 603B2582155005100016B0F6 /* unlock-background@2x.png */; };
+		603B2595155008E40016B0F6 /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = 603B2593155008E40016B0F6 /* star.png */; };
+		603B2596155008E40016B0F6 /* star@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 603B2594155008E40016B0F6 /* star@2x.png */; };
 		6085ECBD1530D3B800912BE4 /* LastPassParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6085ECBC1530D3B800912BE4 /* LastPassParser.cpp */; };
 		6085ECF11530D6DD00912BE4 /* account.dump in Resources */ = {isa = PBXBuildFile; fileRef = 6085ECF01530D6DD00912BE4 /* account.dump */; };
 		6085ED6B1530E8BA00912BE4 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6085ED6A1530E8BA00912BE4 /* libcrypto.a */; };
@@ -51,6 +57,13 @@
 		28C286E00D94DF7D0034E888 /* RootViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RootViewController.mm; sourceTree = "<group>"; };
 		28F335F01007B36200424DE2 /* RootViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RootViewController.xib; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
+		603B255A154F28700016B0F6 /* UnlockViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnlockViewController.h; sourceTree = "<group>"; };
+		603B255B154F28700016B0F6 /* UnlockViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UnlockViewController.mm; sourceTree = "<group>"; };
+		603B255C154F28700016B0F6 /* UnlockViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UnlockViewController.xib; sourceTree = "<group>"; };
+		603B2581155005100016B0F6 /* unlock-background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "unlock-background.png"; sourceTree = "<group>"; };
+		603B2582155005100016B0F6 /* unlock-background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "unlock-background@2x.png"; sourceTree = "<group>"; };
+		603B2593155008E40016B0F6 /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star.png; sourceTree = "<group>"; };
+		603B2594155008E40016B0F6 /* star@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star@2x.png"; sourceTree = "<group>"; };
 		6085ECBB1530D3B800912BE4 /* LastPassParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LastPassParser.h; path = LastPass/LastPassParser.h; sourceTree = "<group>"; };
 		6085ECBC1530D3B800912BE4 /* LastPassParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LastPassParser.cpp; path = LastPass/LastPassParser.cpp; sourceTree = "<group>"; };
 		6085ECF01530D6DD00912BE4 /* account.dump */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = account.dump; sourceTree = "<group>"; };
@@ -113,6 +126,8 @@
 				28C286E00D94DF7D0034E888 /* RootViewController.mm */,
 				60903F3E154D50C5003E742C /* Settings.h */,
 				60903F3F154D50C5003E742C /* Settings.mm */,
+				603B255A154F28700016B0F6 /* UnlockViewController.h */,
+				603B255B154F28700016B0F6 /* UnlockViewController.mm */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -165,6 +180,11 @@
 				8D1107310486CEB800E47090 /* LostPass-Info.plist */,
 				28AD735F0D9D9599002E5188 /* MainWindow.xib */,
 				28F335F01007B36200424DE2 /* RootViewController.xib */,
+				603B2593155008E40016B0F6 /* star.png */,
+				603B2594155008E40016B0F6 /* star@2x.png */,
+				603B2581155005100016B0F6 /* unlock-background.png */,
+				603B2582155005100016B0F6 /* unlock-background@2x.png */,
+				603B255C154F28700016B0F6 /* UnlockViewController.xib */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -256,6 +276,11 @@
 				60903EC9154C886E003E742C /* key.txt in Resources */,
 				60903F96154D79A0003E742C /* copy.png in Resources */,
 				60903F97154D79A0003E742C /* copy@2x.png in Resources */,
+				603B255E154F28700016B0F6 /* UnlockViewController.xib in Resources */,
+				603B2583155005100016B0F6 /* unlock-background.png in Resources */,
+				603B2584155005100016B0F6 /* unlock-background@2x.png in Resources */,
+				603B2595155008E40016B0F6 /* star.png in Resources */,
+				603B2596155008E40016B0F6 /* star@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -274,6 +299,7 @@
 				6085F28D1537761F00912BE4 /* LastPassProxy.mm in Sources */,
 				60903BAF15471E76003E742C /* LoginViewController.mm in Sources */,
 				60903F40154D50C5003E742C /* Settings.mm in Sources */,
+				603B255D154F28700016B0F6 /* UnlockViewController.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

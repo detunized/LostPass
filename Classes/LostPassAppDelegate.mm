@@ -1,6 +1,7 @@
 #import "LostPassAppDelegate.h"
 #import "RootViewController.h"
 #import "LoginViewController.h"
+#import "UnlockViewController.h"
 #import "Settings.h"
 
 std::auto_ptr<LastPass::Parser> lastPassDatabase;
@@ -19,6 +20,9 @@ std::auto_ptr<LastPass::Parser> lastPassDatabase;
 	
 	LoginViewController *loginScreen = [[[LoginViewController alloc] initWithNibName:nil bundle:nil] autorelease];
 	[self.navigationController presentModalViewController:loginScreen animated:NO];
+
+	UnlockViewController *unlockScreen = [[[UnlockViewController alloc] initWithNibName:nil bundle:nil] autorelease];
+	[loginScreen presentModalViewController:unlockScreen animated:NO];
 
 	return YES;
 }
