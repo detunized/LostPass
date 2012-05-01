@@ -69,9 +69,6 @@
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
 	return [textField.text length] + [string length] <= 4;
-
-	NSLog(@"Change: '%@' (%u) '%@' (%u) %u %u", textField.text, [textField.text length], string, [string length], range.location, range.length);
-	return YES;
 }
 
 @end
