@@ -57,12 +57,12 @@
 		}
 		else
 		{
+			AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
 			dispatch_after(dispatch_time(0, 1 * NSEC_PER_SEC), dispatch_get_current_queue(), ^{
 				self.unlockCodeEdit.text = @"";
 				[[UIApplication sharedApplication] endIgnoringInteractionEvents];
 			});
 		}
-
 	}
 }
 
