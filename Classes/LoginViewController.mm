@@ -140,13 +140,4 @@ char const *file_as_c_string(NSString *filename)
 #endif
 }
 
-#ifdef CONFIG_USE_LOCAL_DATABASE
-- (void)viewDidAppear:(BOOL)animated
-{
-	dispatch_after(dispatch_time(0, 1 * NSEC_PER_SEC), dispatch_get_current_queue(), ^{
-		[self parseAndQuit:file_as_string(@"account.dump") keyBase64:file_as_string(@"key.txt")];
-	});
-}
-#endif
-
 @end
