@@ -170,9 +170,20 @@ NSTimeInterval const QUIT_DELAY = 1.0;
 	AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
 	++state_;
 
-	[self restartAfter:RESTART_DELAY 
-		title:@"Enter Unlock Code" 
-		subtitle:[NSString stringWithFormat:@"Wrong code. You have %d attempts left.", 3 - state_]];
+	int attemptsLeft = UnlockViewControllerVerifyAttempts - state_;
+	if (attemptsLeft > 0)
+	{
+		NSString *subtitle = attemptsLeft == 1
+			? @"Wrong code. You have 1 attempt left"
+			: [NSString stringWithFormat:@"Wrong code. You have %d attempts left", attemptsLeft];
+	
+		[self restartAfter:RESTART_DELAY title:@"Enter Unlock Code" subtitle:subtitle];
+	}
+	else
+	{
+		// TODO: Reset everything!
+	}
+
 }
 
 - (void)verifyCode:(NSString *)code
@@ -210,7 +221,7 @@ NSTimeInterval const QUIT_DELAY = 1.0;
 	NSString *code = self.unlockCodeEdit.text;
 
 	assert(UnlockViewControllerCodeLength == 4);
-	UIImageView *digits[4] = {self.digit1, self.digit2, self.digit3, self.digit4};
+	UIImageView *digits[UnlockViewControllerCodeLength] = {self.digit1, self.digit2, self.digit3, self.digit4};
 	size_t length = [code length];
 	for (size_t i = 0; i < UnlockViewControllerCodeLength; ++i)
 	{

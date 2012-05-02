@@ -1,6 +1,7 @@
 enum
 {
 	UnlockViewControllerCodeLength = 4,
+	UnlockViewControllerVerifyAttempts = 3,
 };
 
 enum UnlockViewControllerMode
