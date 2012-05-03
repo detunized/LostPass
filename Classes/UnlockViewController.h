@@ -10,6 +10,9 @@ enum UnlockViewControllerMode
 	UnlockViewControllerModeVerify,
 };
 
+typedef void (^UnlockViewControllerCodeSet)(NSString *code);
+typedef void (^UnlockViewControllerCodeRejected)();
+
 @interface UnlockViewController: UIViewController<UITextFieldDelegate>
 {
 	int state_;
@@ -17,6 +20,9 @@ enum UnlockViewControllerMode
 
 @property(nonatomic, assign) UnlockViewControllerMode mode;
 @property(nonatomic, copy) NSString *code;
+
+@property(nonatomic, copy) UnlockViewControllerCodeSet onCodeSet;
+@property(nonatomic, copy) UnlockViewControllerCodeRejected onCodeRejected;
 
 @property(nonatomic, retain) IBOutlet UILabel *titleLabel;
 @property(nonatomic, retain) IBOutlet UILabel *subtitleLabel;

@@ -22,6 +22,8 @@ std::auto_ptr<LastPass::Parser> lastPassDatabase;
 	[self.navigationController presentModalViewController:loginScreen animated:NO];
 
 	UnlockViewController *unlockScreen = [UnlockViewController chooseScreen];
+	unlockScreen.onCodeSet = ^(NSString *code){ NSLog(@"Code set: %@", code); };
+	unlockScreen.onCodeRejected = ^{ NSLog(@"Code rejected"); };
 	[loginScreen presentModalViewController:unlockScreen animated:NO];
 
 	return YES;

@@ -32,6 +32,10 @@ void callAfter(NSTimeInterval seconds, void (^block)())
 
 @synthesize mode = mode_;
 @synthesize code = code_;
+
+@synthesize onCodeSet = onCodeSet_;
+@synthesize onCodeRejected = onCodeRejected_;
+
 @synthesize titleLabel = titleLabel_;
 @synthesize subtitleLabel = subtitleLabel_;
 @synthesize digit1 = digit1_;
@@ -88,6 +92,9 @@ void callAfter(NSTimeInterval seconds, void (^block)())
     [super viewDidUnload];
 
 	self.code = nil;
+	
+	self.onCodeSet = nil;
+	self.onCodeRejected = nil;
 
 	self.titleLabel = nil;
 	self.subtitleLabel = nil;
@@ -144,6 +151,9 @@ void callAfter(NSTimeInterval seconds, void (^block)())
 
 	if ([code isEqualToString:self.code])
 	{
+		assert(self.onCodeSet);
+		self.onCodeSet(code);
+
 		[self quitAfter:QUIT_DELAY];
 	}
 	else
@@ -196,7 +206,12 @@ void callAfter(NSTimeInterval seconds, void (^block)())
 	}
 	else
 	{
-		// TODO: Reset everything!
+		assert(self.onCodeRejected);
+		self.onCodeRejected();
+		
+		state_ = 0;
+		self.mode = UnlockViewControllerModeChoose;
+		[self restartAfter:RESTART_DELAY title:@"Choose Unlock Code" subtitle:@""];
 	}
 }
 
