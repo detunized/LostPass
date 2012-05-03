@@ -11,6 +11,21 @@ NSString *modeTitles[] = {
 NSTimeInterval const RESTART_DELAY = 1.0;
 NSTimeInterval const QUIT_DELAY = 1.0;
 
+void disableInput()
+{
+	[[UIApplication sharedApplication] beginIgnoringInteractionEvents];
+}
+
+void enableInput()
+{
+	[[UIApplication sharedApplication] endIgnoringInteractionEvents];
+}
+
+void callAfter(NSTimeInterval seconds, void (^block)())
+{
+	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, seconds * NSEC_PER_SEC), dispatch_get_current_queue(), block);
+}
+
 }
 
 @implementation UnlockViewController
@@ -96,10 +111,10 @@ NSTimeInterval const QUIT_DELAY = 1.0;
 
 - (void)restartAfter:(NSTimeInterval)seconds title:(NSString *)title subtitle:(NSString *)subtitle
 {
-	dispatch_after(dispatch_time(0, seconds * NSEC_PER_SEC), dispatch_get_current_queue(), ^{
+	callAfter(seconds, ^{
 		[self clearCode];
 		[self setText:title subtitle:subtitle];
-		[[UIApplication sharedApplication] endIgnoringInteractionEvents];
+		enableInput();
 	});
 }
 
@@ -107,9 +122,9 @@ NSTimeInterval const QUIT_DELAY = 1.0;
 {
 	[self.unlockCodeEdit resignFirstResponder];
 
-	dispatch_after(dispatch_time(0, seconds * NSEC_PER_SEC), dispatch_get_current_queue(), ^{
+	callAfter(seconds, ^{
 		[self dismissModalViewControllerAnimated:YES];
-		[[UIApplication sharedApplication] endIgnoringInteractionEvents];
+		enableInput();
 	});						
 }
 
@@ -183,7 +198,6 @@ NSTimeInterval const QUIT_DELAY = 1.0;
 	{
 		// TODO: Reset everything!
 	}
-
 }
 
 - (void)verifyCode:(NSString *)code
@@ -200,7 +214,7 @@ NSTimeInterval const QUIT_DELAY = 1.0;
 
 - (void)processCode:(NSString *)code
 {
-	[[UIApplication sharedApplication] beginIgnoringInteractionEvents];
+	disableInput();
 	
 	switch (self.mode)
 	{
