@@ -134,6 +134,7 @@ void callAfter(NSTimeInterval seconds, void (^block)())
 	for (size_t i = 0; i < UnlockViewControllerCodeLength; ++i)
 	{
 		digits_[i].transform = CGAffineTransformIdentity;
+		digits_[i].alpha = 1;
 	}
 }
 
@@ -239,15 +240,21 @@ void callAfter(NSTimeInterval seconds, void (^block)())
 	if (attemptsLeft > 0)
 	{
 		NSString *subtitle = attemptsLeft == 1
-			? @"Wrong code. You have 1 attempt left"
-			: [NSString stringWithFormat:@"Wrong code. You have %d attempts left", attemptsLeft];
+			? @"Wrong code. You have 1 attempt left."
+			: [NSString stringWithFormat:@"Wrong code. You have %d attempts left.", attemptsLeft];
 			
-		[UIView animateWithDuration:0.75f
+		self.subtitleLabel.transform = CGAffineTransformMakeTranslation(self.view.frame.size.width, 0);
+		self.subtitleLabel.text = subtitle;
+		
+		[UIView animateWithDuration:0.5f
 			animations:^{
 				for (size_t i = 0; i < UnlockViewControllerCodeLength; ++i)
 				{
 					digits_[i].transform = CGAffineTransformMakeScale(0.01f, 1);
+					digits_[i].alpha = 0;
 				}
+				
+				self.subtitleLabel.transform = CGAffineTransformIdentity;
 			}
 			completion:^(BOOL){
 				[self restart:@"Enter Unlock Code" subtitle:subtitle];
@@ -262,7 +269,10 @@ void callAfter(NSTimeInterval seconds, void (^block)())
 				for (size_t i = 0; i < UnlockViewControllerCodeLength; ++i)
 				{
 					digits_[i].transform = CGAffineTransformMakeScale(0.01f, 0.01f);
+					digits_[i].alpha = 0;
 				}
+				
+				self.subtitleLabel.transform = CGAffineTransformMakeTranslation(-self.view.frame.size.width, 0);
 			}
 			completion:^(BOOL){
 				enableInput();
