@@ -255,10 +255,20 @@ void callAfter(NSTimeInterval seconds, void (^block)())
 	}
 	else
 	{
-		enableInput();
-	
-		assert(self.onCodeRejected);
-		self.onCodeRejected();
+		[self dismissKeyboard];
+
+		[UIView animateWithDuration:0.75f
+			animations:^{
+				for (size_t i = 0; i < UnlockViewControllerCodeLength; ++i)
+				{
+					digits_[i].transform = CGAffineTransformMakeScale(0.01f, 0.01f);
+				}
+			}
+			completion:^(BOOL){
+				enableInput();
+				assert(self.onCodeRejected);
+				self.onCodeRejected();
+			}];
 	}
 }
 
