@@ -67,6 +67,10 @@
 				<string key="NSFrame">{{598, 126}, {320, 44}}</string>
 				<int key="IBUIContentMode">3</int>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+				<object class="NSColor" key="IBTintColor">
+					<int key="NSColorSpace">1</int>
+					<bytes key="NSRGB">MC42MzcyNzEyMTQ2IDAgMAA</bytes>
+				</object>
 				<object class="IBUITextInputTraits" key="IBTextInputTraits">
 					<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 				</object>
@@ -162,7 +166,7 @@
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<string>RootViewController</string>
 					<string>UIResponder</string>
-					<string>{{144, 509}, {320, 247}}</string>
+					<string>{{323, 509}, {320, 247}}</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				</object>
