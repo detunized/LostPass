@@ -72,7 +72,7 @@
 					<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 					<object class="NSColor" key="IBUITintColor">
 						<int key="NSColorSpace">1</int>
-						<bytes key="NSRGB">MC41MDE5NjA4MTQgMCAwAA</bytes>
+						<bytes key="NSRGB">MC42MzcyNzEyMTQ2IDAgMAA</bytes>
 					</object>
 				</object>
 				<object class="NSMutableArray" key="IBUIViewControllers">
