@@ -30,7 +30,7 @@ std::auto_ptr<LastPass::Parser> lastPassDatabase;
 			// The unlock code is set and we have the database downloaded.
 			// Show the unlock screen and go straigh to the accounts.
 			// This should be the most common sittuation.
-			UnlockViewController *unlockScreen = [UnlockViewController chooseScreen];
+			UnlockViewController *unlockScreen = [UnlockViewController verifyScreen:@"0000"];
 			
 			// TODO: Add onCodeVerifed
 			
