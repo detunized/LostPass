@@ -9,10 +9,9 @@ enum SubtitleAnimationStyle
 	SubtitleAnimationStyleSlideOut
 };
 
-NSString *modeTitles[] = {
-	@"Choose Unlock Code",
-	@"Enter Unlock Code"
-};
+NSString *CHOOSE_CODE_TITLE = @"Choose Unlock Code";
+NSString *VERIFY_CODE_TITLE = @"Verify Unlock Code";
+NSString *ENTER_CODE_TITLE = @"Enter Unlock Code";
 
 NSTimeInterval const RESTART_DELAY = 1.0;
 NSTimeInterval const STAR_ANIMATION_DURATION = 0.4;
@@ -76,7 +75,19 @@ void callAfter(NSTimeInterval seconds, void (^block)())
 	
 	[self.unlockCodeEdit addTarget:self action:@selector(onTextChanged:) forControlEvents:UIControlEventEditingChanged];
 	
-	self.titleLabel.text = modeTitles[self.mode];
+	switch (self.mode)
+	{
+	case UnlockViewControllerModeChoose:
+		self.titleLabel.text = CHOOSE_CODE_TITLE;
+		break;
+	case UnlockViewControllerModeVerify:
+		self.titleLabel.text = ENTER_CODE_TITLE;
+		break;
+	default:
+		assert(false);
+		break;
+	}
+	
 	self.subtitleLabel.text = @"";
 	state_ = 0;
 	
@@ -203,7 +214,7 @@ void callAfter(NSTimeInterval seconds, void (^block)())
 	assert(state_ == 0);
 	++state_;
 	
-	[self restartAfter:RESTART_DELAY title:@"Verify Unlock Code" subtitle:@""];
+	[self restartAfter:RESTART_DELAY title:VERIFY_CODE_TITLE subtitle:@""];
 }
 
 - (void)verifyChosenCode:(NSString *)code
@@ -222,7 +233,7 @@ void callAfter(NSTimeInterval seconds, void (^block)())
 		self.code = @"";
 		state_ = 0;
 		
-		[self restartAfter:RESTART_DELAY title:@"Choose Unlock Code" subtitle:@"Verification failed"];
+		[self restartAfter:RESTART_DELAY title:CHOOSE_CODE_TITLE subtitle:@"Verification failed"];
 	}
 }
 
@@ -280,7 +291,7 @@ void callAfter(NSTimeInterval seconds, void (^block)())
 			subtitle:subtitle
 			subtitleAnimationStyle:SubtitleAnimationStyleSlideIn
 			onCompletion:^(BOOL) {
-				[self restart:@"Enter Unlock Code" subtitle:subtitle];
+				[self restart:ENTER_CODE_TITLE subtitle:subtitle];
 			}];
 	}
 	else
