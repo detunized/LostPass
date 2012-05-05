@@ -31,6 +31,15 @@ void setString(NSString *key, NSString *value)
 	[defaults synchronize];
 }
 
+NSString *getFileContents(NSString *filename)
+{
+	return [NSString 
+		stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:filename ofType:@""]
+		encoding:NSUTF8StringEncoding 
+		error:nil
+	];
+}
+
 }
 
 + (void)initialize
@@ -59,7 +68,38 @@ void setString(NSString *key, NSString *value)
 
 + (BOOL)haveDatabase
 {
+#ifdef CONFIG_USE_LOCAL_DATABASE
+	return YES;
+#else
 	return NO;
+#endif
+}
+
++ (NSString *)database
+{
+#ifdef CONFIG_USE_LOCAL_DATABASE
+	return getFileContents(@"account.dump");
+#else
+	return @"";
+#endif
+}
+
++ (BOOL)haveEncryptionKey
+{
+#ifdef CONFIG_USE_LOCAL_DATABASE
+	return YES;
+#else
+	return NO;
+#endif
+}
+
++ (NSString *)encryptionKey
+{
+#ifdef CONFIG_USE_LOCAL_DATABASE
+	return getFileContents(@"key.txt");
+#else
+	return @"";
+#endif
 }
 
 @end
