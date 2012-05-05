@@ -9,4 +9,6 @@ extern std::auto_ptr<LastPass::Parser> lastPassDatabase;
 @property(nonatomic, retain) IBOutlet UIWindow *window;
 @property(nonatomic, retain) IBOutlet UINavigationController *navigationController;
 
++ (void)loadDatabase;
+
 @end

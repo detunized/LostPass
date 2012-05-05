@@ -11,6 +11,13 @@ std::auto_ptr<LastPass::Parser> lastPassDatabase;
 @synthesize window = window_;
 @synthesize navigationController = navigationController_;
 
++ (void)loadDatabase
+{
+	assert([Settings haveDatabase]);
+	assert([Settings haveEncryptionKey]);
+	lastPassDatabase.reset(new LastPass::Parser([[Settings database] UTF8String], [[Settings encryptionKey] UTF8String]));
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 	[Settings initialize];
@@ -19,7 +26,7 @@ std::auto_ptr<LastPass::Parser> lastPassDatabase;
 	[self.window makeKeyAndVisible];
 	
 	BOOL haveCode = [Settings haveCode];
-	BOOL haveDatabase = [Settings haveDatabase];
+	BOOL haveDatabase = [Settings haveDatabase] && [Settings haveEncryptionKey];
 
 	if (haveCode)
 	{
@@ -32,7 +39,10 @@ std::auto_ptr<LastPass::Parser> lastPassDatabase;
 			// This should be the most common sittuation.
 			UnlockViewController *unlockScreen = [UnlockViewController verifyScreen:@"0000"];
 			
-			// TODO: Add onCodeVerifed
+			unlockScreen.onCodeAccepted = ^() {
+				[LostPassAppDelegate loadDatabase];
+				[self.navigationController dismissModalViewControllerAnimated:YES];
+			};
 			
 			unlockScreen.onCodeRejected = ^(){
 				// TODO: Reset the app here
