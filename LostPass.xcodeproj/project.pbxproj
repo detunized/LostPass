@@ -25,7 +25,6 @@
 		6085ECBD1530D3B800912BE4 /* LastPassParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6085ECBC1530D3B800912BE4 /* LastPassParser.cpp */; };
 		6085ECF11530D6DD00912BE4 /* account.dump in Resources */ = {isa = PBXBuildFile; fileRef = 6085ECF01530D6DD00912BE4 /* account.dump */; };
 		6085ED6B1530E8BA00912BE4 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6085ED6A1530E8BA00912BE4 /* libcrypto.a */; };
-		6085EDDA153119EE00912BE4 /* credentials.txt in Resources */ = {isa = PBXBuildFile; fileRef = 6085EDD9153119EE00912BE4 /* credentials.txt */; };
 		6085EFA4153251A900912BE4 /* AccountViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6085EFA2153251A900912BE4 /* AccountViewController.mm */; };
 		6085EFA5153251A900912BE4 /* AccountViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6085EFA3153251A900912BE4 /* AccountViewController.xib */; };
 		6085F19E1536401900912BE4 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6085F19D1536401900912BE4 /* libcurl.a */; };
@@ -70,7 +69,6 @@
 		6085ECBC1530D3B800912BE4 /* LastPassParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LastPassParser.cpp; path = LastPass/LastPassParser.cpp; sourceTree = "<group>"; };
 		6085ECF01530D6DD00912BE4 /* account.dump */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = account.dump; sourceTree = "<group>"; };
 		6085ED6A1530E8BA00912BE4 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = "cURL-SSL-for-iOS/OpenSSL/libcrypto.a"; sourceTree = "<group>"; };
-		6085EDD9153119EE00912BE4 /* credentials.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = credentials.txt; sourceTree = "<group>"; };
 		6085EFA1153251A900912BE4 /* AccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountViewController.h; sourceTree = "<group>"; };
 		6085EFA2153251A900912BE4 /* AccountViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AccountViewController.mm; sourceTree = "<group>"; };
 		6085EFA3153251A900912BE4 /* AccountViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AccountViewController.xib; sourceTree = "<group>"; };
@@ -172,7 +170,6 @@
 				6085EFA3153251A900912BE4 /* AccountViewController.xib */,
 				60903F94154D79A0003E742C /* copy.png */,
 				60903F95154D79A0003E742C /* copy@2x.png */,
-				6085EDD9153119EE00912BE4 /* credentials.txt */,
 				60903D1215475F98003E742C /* icon.png */,
 				60903D1015475F59003E742C /* icon@2x.png */,
 				60903EC8154C886E003E742C /* key.txt */,
@@ -268,7 +265,6 @@
 			files = (
 				6085ECF11530D6DD00912BE4 /* account.dump in Resources */,
 				6085EFA5153251A900912BE4 /* AccountViewController.xib in Resources */,
-				6085EDDA153119EE00912BE4 /* credentials.txt in Resources */,
 				28AD73600D9D9599002E5188 /* MainWindow.xib in Resources */,
 				28F335F11007B36200424DE2 /* RootViewController.xib in Resources */,
 				6085F2D615377D6200912BE4 /* lastpass.js in Resources */,
