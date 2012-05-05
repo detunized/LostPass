@@ -129,12 +129,26 @@ void callAfter(NSTimeInterval seconds, void (^block)())
 	self.subtitleLabel.text = subtitle;
 }
 
+- (void)resetAnimation
+{
+	for (size_t i = 0; i < UnlockViewControllerCodeLength; ++i)
+	{
+		digits_[i].transform = CGAffineTransformIdentity;
+	}
+}
+
+- (void)restart:(NSString *)title subtitle:(NSString *)subtitle
+{
+	[self clearCode];
+	[self setText:title subtitle:subtitle];
+	[self resetAnimation];
+	enableInput();
+}
+
 - (void)restartAfter:(NSTimeInterval)seconds title:(NSString *)title subtitle:(NSString *)subtitle
 {
 	callAfter(seconds, ^{
-		[self clearCode];
-		[self setText:title subtitle:subtitle];
-		enableInput();
+		[self restart:title subtitle:subtitle];
 	});
 }
 
@@ -227,8 +241,17 @@ void callAfter(NSTimeInterval seconds, void (^block)())
 		NSString *subtitle = attemptsLeft == 1
 			? @"Wrong code. You have 1 attempt left"
 			: [NSString stringWithFormat:@"Wrong code. You have %d attempts left", attemptsLeft];
-	
-		[self restartAfter:RESTART_DELAY title:@"Enter Unlock Code" subtitle:subtitle];
+			
+		[UIView animateWithDuration:0.75f
+			animations:^{
+				for (size_t i = 0; i < UnlockViewControllerCodeLength; ++i)
+				{
+					digits_[i].transform = CGAffineTransformMakeScale(0.01f, 1);
+				}
+			}
+			completion:^(BOOL){
+				[self restart:@"Enter Unlock Code" subtitle:subtitle];
+			}];
 	}
 	else
 	{
