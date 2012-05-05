@@ -2,9 +2,17 @@
 #import "RootViewController.h"
 #import "LoginViewController.h"
 #import "UnlockViewController.h"
+#import "SmokeScreenView.h"
 #import "Settings.h"
 
 std::auto_ptr<LastPass::Parser> lastPassDatabase;
+
+namespace
+{
+
+NSTimeInterval const SMOKE_SCREEN_ANIMATION_DURATION = 0.4;
+
+}
 
 @implementation LostPassAppDelegate
 
@@ -27,7 +35,7 @@ std::auto_ptr<LastPass::Parser> lastPassDatabase;
 {
 	[self.navigationController dismissModalViewControllerAnimated:NO];
 
-	[UIView animateWithDuration:0.25f
+	[UIView animateWithDuration:SMOKE_SCREEN_ANIMATION_DURATION
 		animations:^{
 			smokeScreen.frame = CGRectOffset(smokeScreen.frame, -smokeScreen.frame.size.width, 0);
 		}
@@ -63,12 +71,12 @@ std::auto_ptr<LastPass::Parser> lastPassDatabase;
 			};
 			
 			unlockScreen.onCodeRejected = ^() {
-				UIImageView *smokeScreen = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"login-background.png"]] autorelease];
-				CGFloat offset = self.window.frame.size.width;
-				smokeScreen.frame = CGRectOffset(smokeScreen.frame, offset, [[UIScreen mainScreen] applicationFrame].origin.y);
+				SmokeScreenView *smokeScreen = [SmokeScreenView smokeScreen];
+				CGFloat offset = smokeScreen.frame.size.width;
+				smokeScreen.frame = CGRectOffset(smokeScreen.frame, offset, 0);
 				[self.window addSubview:smokeScreen];
 
-				[UIView animateWithDuration:0.25f
+				[UIView animateWithDuration:SMOKE_SCREEN_ANIMATION_DURATION
 					animations:^{
 						smokeScreen.frame = CGRectOffset(smokeScreen.frame, -offset, 0);
 					}
