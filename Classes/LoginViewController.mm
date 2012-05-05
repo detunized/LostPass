@@ -76,9 +76,9 @@
 	}
 }
 
-- (void)parseAndQuit:(NSString *)databseBase64 keyBase64:(NSString *)keyBase64
+- (void)parseAndQuit
 {
-	lastPassDatabase.reset(new LastPass::Parser([databseBase64 UTF8String], [keyBase64 UTF8String]));
+	[LostPassAppDelegate loadDatabase];
 	[self dismissModalViewControllerAnimated:YES];
 }
 
@@ -95,7 +95,7 @@
 - (IBAction)onLoginButtonTouchUpInside:(id)sender
 {
 #ifdef CONFIG_USE_LOCAL_DATABASE
-	[self parseAndQuit:[Settings database] keyBase64:[Settings encryptionKey]];
+	[self parseAndQuit];
 #else
 	[self enableControls:NO];
 	[self showBusyIndicator:YES];
@@ -109,7 +109,9 @@
 		
 		^(NSString *databseBase64, NSString *keyBase64) {
 			[self showBusyIndicator:NO];
-			[self parseAndQuit:databseBase64 keyBase64:keyBase64];
+			[Settings setDatabase:databseBase64];
+			[Settings setEncryptionKey:keyBase64];
+			[self parseAndQuit];
 		},
 		
 		^(NSString *errorMessage) {
