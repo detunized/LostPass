@@ -18,13 +18,56 @@ std::auto_ptr<LastPass::Parser> lastPassDatabase;
 	[self.window addSubview:self.navigationController.view];
 	[self.window makeKeyAndVisible];
 	
-	LoginViewController *loginScreen = [[[LoginViewController alloc] initWithNibName:nil bundle:nil] autorelease];
-	[self.navigationController presentModalViewController:loginScreen animated:NO];
+	BOOL haveCode = NO; // TODO: Get this from the Settings
+	BOOL haveDatabase = NO; // TODO: Get this from the Settings
+	
+	if (haveCode)
+	{
+		UIViewController *screen = nil;
+		
+		if (haveDatabase)
+		{
+			// The unlock code is set and we have the database downloaded.
+			// Show the unlock screen and go straigh to the accounts.
+			// This should be the most common sittuation.
+			UnlockViewController *unlockScreen = [UnlockViewController chooseScreen];
+			
+			// TODO: Add onCodeVerifed
+			
+			unlockScreen.onCodeRejected = ^(){
+				// TODO: Reset the app here
+			};
+			
+			screen = unlockScreen;
+		}
+		else
+		{
+			// The code is set, but there's no database, so there's no need for unlocking.
+			// Go to the login screen.
+			screen = [[[LoginViewController alloc] initWithNibName:nil bundle:nil] autorelease];
+		}
 
-	UnlockViewController *unlockScreen = [UnlockViewController chooseScreen];
-	unlockScreen.onCodeSet = ^(NSString *code){ NSLog(@"Code set: %@", code); };
-	unlockScreen.onCodeRejected = ^{ NSLog(@"Code rejected"); };
-	[loginScreen presentModalViewController:unlockScreen animated:NO];
+		[self.navigationController presentModalViewController:screen animated:NO];
+	}
+	else
+	{
+		if (haveDatabase)
+		{
+			// TODO: Erase the database
+		}
+		
+		LoginViewController *loginScreen = [[[LoginViewController alloc] initWithNibName:nil bundle:nil] autorelease];
+		[self.navigationController presentModalViewController:loginScreen animated:NO];
+
+		UnlockViewController *unlockScreen = [UnlockViewController chooseScreen];
+		unlockScreen.onCodeSet = ^(NSString *code){ 
+			// TODO: Store the code
+			[loginScreen dismissModalViewControllerAnimated:YES];
+		};
+		[loginScreen presentModalViewController:unlockScreen animated:NO];
+		
+		// TODO: Push the welcome screen
+	}
 
 	return YES;
 }
