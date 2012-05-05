@@ -66,6 +66,11 @@ NSString *getFileContents(NSString *filename)
 	return NO;
 }
 
++ (NSString *)code
+{
+	return @"0000";
+}
+
 + (BOOL)haveDatabase
 {
 #ifdef CONFIG_USE_LOCAL_DATABASE
