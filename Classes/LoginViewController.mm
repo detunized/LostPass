@@ -5,25 +5,6 @@
 
 #import "LastPassParser.h"
 
-namespace
-{
-
-NSString *file_as_string(NSString *filename)
-{
-	return [NSString 
-		stringWithContentsOfFile:[[NSBundle mainBundle] pathForResource:filename ofType:@""]
-		encoding:NSUTF8StringEncoding 
-		error:nil
-	];
-}
-
-char const *file_as_c_string(NSString *filename)
-{
-	return [file_as_string(filename) UTF8String];
-}
-
-}
-
 @implementation LoginViewController
 
 @synthesize emailInput = emailInput_;
@@ -114,7 +95,7 @@ char const *file_as_c_string(NSString *filename)
 - (IBAction)onLoginButtonTouchUpInside:(id)sender
 {
 #ifdef CONFIG_USE_LOCAL_DATABASE
-	[self parseAndQuit:file_as_string(@"account.dump") keyBase64:file_as_string(@"key.txt")];
+	[self parseAndQuit:[Settings database] keyBase64:[Settings encryptionKey]];
 #else
 	[self enableControls:NO];
 	[self showBusyIndicator:YES];
