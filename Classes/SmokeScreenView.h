@@ -6,4 +6,7 @@
 
 + (SmokeScreenView *)smokeScreen;
 
+- (void)slideIn:(NSTimeInterval)seconds onCompletion:(void (^)())onCompletion;
+- (void)slideOut:(NSTimeInterval)seconds onCompletion:(void (^)())onCompletion;
+
 @end

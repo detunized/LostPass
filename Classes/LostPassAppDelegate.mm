@@ -31,15 +31,12 @@ NSTimeInterval const SMOKE_SCREEN_ANIMATION_DURATION = 0.4;
 	lastPassDatabase.reset(new LastPass::Parser([[Settings database] UTF8String], [[Settings encryptionKey] UTF8String]));
 }
 
-- (void)resetEverything:(UIView *)smokeScreen
+- (void)resetEverything:(SmokeScreenView *)smokeScreen
 {
 	[self.navigationController dismissModalViewControllerAnimated:NO];
 
-	[UIView animateWithDuration:SMOKE_SCREEN_ANIMATION_DURATION
-		animations:^{
-			smokeScreen.frame = CGRectOffset(smokeScreen.frame, -smokeScreen.frame.size.width, 0);
-		}
-		completion:^(BOOL) {
+	[smokeScreen slideOut:SMOKE_SCREEN_ANIMATION_DURATION
+		onCompletion:^ {
 			[smokeScreen removeFromSuperview];
 		}];
 }
@@ -65,22 +62,17 @@ NSTimeInterval const SMOKE_SCREEN_ANIMATION_DURATION = 0.4;
 			// This should be the most common sittuation.
 			UnlockViewController *unlockScreen = [UnlockViewController verifyScreen:[Settings unlockCode]];
 			
-			unlockScreen.onCodeAccepted = ^() {
+			unlockScreen.onCodeAccepted = ^{
 				[LostPassAppDelegate loadDatabase];
 				[self.navigationController dismissModalViewControllerAnimated:YES];
 			};
 			
-			unlockScreen.onCodeRejected = ^() {
+			unlockScreen.onCodeRejected = ^{
 				SmokeScreenView *smokeScreen = [SmokeScreenView smokeScreen];
-				CGFloat offset = smokeScreen.frame.size.width;
-				smokeScreen.frame = CGRectOffset(smokeScreen.frame, offset, 0);
 				[self.window addSubview:smokeScreen];
 
-				[UIView animateWithDuration:SMOKE_SCREEN_ANIMATION_DURATION
-					animations:^{
-						smokeScreen.frame = CGRectOffset(smokeScreen.frame, -offset, 0);
-					}
-					completion:^(BOOL) {
+				[smokeScreen slideIn:SMOKE_SCREEN_ANIMATION_DURATION
+					onCompletion:^{
 						[self resetEverything:smokeScreen];
 					}];
 
