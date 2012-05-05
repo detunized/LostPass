@@ -107,6 +107,11 @@ void callAfter(NSTimeInterval seconds, void (^block)())
 	self.unlockCodeEdit = nil;
 }
 
+- (void)dismissKeyboard
+{
+	[self.unlockCodeEdit resignFirstResponder];
+}
+
 - (void)clearCode
 {
 	self.unlockCodeEdit.text = @"";
@@ -187,10 +192,20 @@ void callAfter(NSTimeInterval seconds, void (^block)())
 {
 	assert([code isEqualToString:self.code]);
 	
-	enableInput();
-
-	assert(self.onCodeAccepted);
-	self.onCodeAccepted();
+	[self dismissKeyboard];
+	
+	[UIView animateWithDuration:0.4f
+		animations:^{
+			self.digit1.transform = CGAffineTransformMakeRotation(M_PI);
+			self.digit2.transform = CGAffineTransformMakeRotation(M_PI);
+			self.digit3.transform = CGAffineTransformMakeRotation(M_PI);
+			self.digit4.transform = CGAffineTransformMakeRotation(M_PI);
+		}
+		completion:^(BOOL){
+			enableInput();
+			assert(self.onCodeAccepted);
+			self.onCodeAccepted();
+		}];
 }
 
 - (void)rejectCode:(NSString *)code
