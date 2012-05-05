@@ -7,4 +7,7 @@
 + (NSString *)lastEmail;
 + (void)setLastEmail:(NSString *)email;
 
++ (BOOL)haveCode;
++ (BOOL)haveDatabase;
+
 @end

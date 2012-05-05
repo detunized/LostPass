@@ -18,9 +18,9 @@ std::auto_ptr<LastPass::Parser> lastPassDatabase;
 	[self.window addSubview:self.navigationController.view];
 	[self.window makeKeyAndVisible];
 	
-	BOOL haveCode = NO; // TODO: Get this from the Settings
-	BOOL haveDatabase = NO; // TODO: Get this from the Settings
-	
+	BOOL haveCode = [Settings haveCode];
+	BOOL haveDatabase = [Settings haveDatabase];
+
 	if (haveCode)
 	{
 		UIViewController *screen = nil;

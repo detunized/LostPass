@@ -52,4 +52,14 @@ void setString(NSString *key, NSString *value)
 	setString(LAST_EMAIL, email);
 }
 
++ (BOOL)haveCode
+{
+	return NO;
+}
+
++ (BOOL)haveDatabase
+{
+	return NO;
+}
+
 @end
