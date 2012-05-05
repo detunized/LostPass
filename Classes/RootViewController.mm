@@ -87,4 +87,21 @@
 	[self.tableView reloadData];
 }
 
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
+{
+	[searchBar setShowsCancelButton:YES animated:YES];
+	return YES;
+}
+
+- (BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar
+{
+	[searchBar setShowsCancelButton:NO animated:YES];
+	return YES;
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+	[self.searchBar resignFirstResponder];
+}
+
 @end
