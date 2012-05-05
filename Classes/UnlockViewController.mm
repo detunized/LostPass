@@ -34,6 +34,7 @@ void callAfter(NSTimeInterval seconds, void (^block)())
 @synthesize code = code_;
 
 @synthesize onCodeSet = onCodeSet_;
+@synthesize onCodeAccepted = onCodeAccepted_;
 @synthesize onCodeRejected = onCodeRejected_;
 
 @synthesize titleLabel = titleLabel_;
@@ -94,6 +95,7 @@ void callAfter(NSTimeInterval seconds, void (^block)())
 	self.code = nil;
 	
 	self.onCodeSet = nil;
+	self.onCodeAccepted = nil;
 	self.onCodeRejected = nil;
 
 	self.titleLabel = nil;
@@ -184,8 +186,11 @@ void callAfter(NSTimeInterval seconds, void (^block)())
 - (void)acceptCode:(NSString *)code
 {
 	assert([code isEqualToString:self.code]);
+	
+	enableInput();
 
-	[self quitAfter:QUIT_DELAY];
+	assert(self.onCodeAccepted);
+	self.onCodeAccepted();
 }
 
 - (void)rejectCode:(NSString *)code
