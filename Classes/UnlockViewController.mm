@@ -3,13 +3,19 @@
 namespace
 {
 
+enum SubtitleAnimationStyle
+{
+	SubtitleAnimationStyleSlideIn,
+	SubtitleAnimationStyleSlideOut
+};
+
 NSString *modeTitles[] = {
 	@"Choose Unlock Code",
 	@"Enter Unlock Code"
 };
 
 NSTimeInterval const RESTART_DELAY = 1.0;
-NSTimeInterval const QUIT_DELAY = 1.0;
+NSTimeInterval const STAR_ANIMATION_DURATION = 0.4;
 
 void disableInput()
 {
@@ -138,6 +144,43 @@ void callAfter(NSTimeInterval seconds, void (^block)())
 	}
 }
 
+- (void)animateStarsFor:(NSTimeInterval)seconds 
+	transform:(CGAffineTransform)transform 
+	alpha:(CGFloat)alpha
+	subtitle:(NSString *)subtitle
+	subtitleAnimationStyle:(SubtitleAnimationStyle)subtitleAnimationStyle
+	onCompletion:(void (^)(BOOL finished))onCompletion
+{
+	if (subtitleAnimationStyle == SubtitleAnimationStyleSlideIn)
+	{
+		self.subtitleLabel.transform = CGAffineTransformMakeTranslation(self.view.frame.size.width, 0);
+		self.subtitleLabel.text = subtitle;
+	}
+	
+	[UIView animateWithDuration:seconds
+		animations:^{
+			for (size_t i = 0; i < UnlockViewControllerCodeLength; ++i)
+			{
+				digits_[i].transform = transform;
+				digits_[i].alpha = alpha;
+			}
+			
+			switch (subtitleAnimationStyle)
+			{
+			case SubtitleAnimationStyleSlideIn:
+				self.subtitleLabel.transform = CGAffineTransformIdentity;
+				break;
+			case SubtitleAnimationStyleSlideOut:
+				self.subtitleLabel.transform = CGAffineTransformMakeTranslation(-self.view.frame.size.width, 0);
+				break;
+			default:
+				assert(false);
+				break;
+			}
+		}
+		completion:onCompletion];
+}
+
 - (void)restart:(NSString *)title subtitle:(NSString *)subtitle
 {
 	[self clearCode];
@@ -151,16 +194,6 @@ void callAfter(NSTimeInterval seconds, void (^block)())
 	callAfter(seconds, ^{
 		[self restart:title subtitle:subtitle];
 	});
-}
-
-- (void)quitAfter:(NSTimeInterval)seconds
-{
-	[self.unlockCodeEdit resignFirstResponder];
-
-	callAfter(seconds, ^{
-		[self dismissModalViewControllerAnimated:YES];
-		enableInput();
-	});						
 }
 
 - (void)setChosenCode:(NSString *)code
@@ -215,14 +248,12 @@ void callAfter(NSTimeInterval seconds, void (^block)())
 	
 	[self dismissKeyboard];
 	
-	[UIView animateWithDuration:0.4f
-		animations:^{
-			for (size_t i = 0; i < UnlockViewControllerCodeLength; ++i)
-			{
-				digits_[i].transform = CGAffineTransformMakeRotation(M_PI);
-			}
-		}
-		completion:^(BOOL){
+	[self animateStarsFor:STAR_ANIMATION_DURATION 
+		transform:CGAffineTransformMakeRotation(M_PI)
+		alpha:1
+		subtitle:@""
+		subtitleAnimationStyle:SubtitleAnimationStyleSlideOut
+		onCompletion:^(BOOL) {
 			enableInput();
 			assert(self.onCodeAccepted);
 			self.onCodeAccepted();
@@ -243,20 +274,12 @@ void callAfter(NSTimeInterval seconds, void (^block)())
 			? @"Wrong code. You have 1 attempt left."
 			: [NSString stringWithFormat:@"Wrong code. You have %d attempts left.", attemptsLeft];
 			
-		self.subtitleLabel.transform = CGAffineTransformMakeTranslation(self.view.frame.size.width, 0);
-		self.subtitleLabel.text = subtitle;
-		
-		[UIView animateWithDuration:0.5f
-			animations:^{
-				for (size_t i = 0; i < UnlockViewControllerCodeLength; ++i)
-				{
-					digits_[i].transform = CGAffineTransformMakeScale(0.01f, 1);
-					digits_[i].alpha = 0;
-				}
-				
-				self.subtitleLabel.transform = CGAffineTransformIdentity;
-			}
-			completion:^(BOOL){
+		[self animateStarsFor:STAR_ANIMATION_DURATION
+			transform:CGAffineTransformMakeScale(0.01f, 1) 
+			alpha:0 
+			subtitle:subtitle
+			subtitleAnimationStyle:SubtitleAnimationStyleSlideIn
+			onCompletion:^(BOOL) {
 				[self restart:@"Enter Unlock Code" subtitle:subtitle];
 			}];
 	}
@@ -264,17 +287,12 @@ void callAfter(NSTimeInterval seconds, void (^block)())
 	{
 		[self dismissKeyboard];
 
-		[UIView animateWithDuration:0.75f
-			animations:^{
-				for (size_t i = 0; i < UnlockViewControllerCodeLength; ++i)
-				{
-					digits_[i].transform = CGAffineTransformMakeScale(0.01f, 0.01f);
-					digits_[i].alpha = 0;
-				}
-				
-				self.subtitleLabel.transform = CGAffineTransformMakeTranslation(-self.view.frame.size.width, 0);
-			}
-			completion:^(BOOL){
+		[self animateStarsFor:STAR_ANIMATION_DURATION
+			transform:CGAffineTransformMakeScale(0.01f, 0.01f) 
+			alpha:0 
+			subtitle:@""
+			subtitleAnimationStyle:SubtitleAnimationStyleSlideOut
+			onCompletion:^(BOOL) {
 				enableInput();
 				assert(self.onCodeRejected);
 				self.onCodeRejected();
