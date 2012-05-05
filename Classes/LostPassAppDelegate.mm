@@ -11,10 +11,29 @@ std::auto_ptr<LastPass::Parser> lastPassDatabase;
 @synthesize window = window_;
 @synthesize navigationController = navigationController_;
 
++ (void)resetDatabase
+{
+	lastPassDatabase.reset();
+	[Settings setDatabase:@"" encryptionKey:@""];
+}
+
 + (void)loadDatabase
 {
 	assert([Settings haveDatabaseAndKey]);
 	lastPassDatabase.reset(new LastPass::Parser([[Settings database] UTF8String], [[Settings encryptionKey] UTF8String]));
+}
+
+- (void)resetEverything:(UIView *)smokeScreen
+{
+	[self.navigationController dismissModalViewControllerAnimated:NO];
+
+	[UIView animateWithDuration:0.25f
+		animations:^{
+			smokeScreen.frame = CGRectOffset(smokeScreen.frame, -smokeScreen.frame.size.width, 0);
+		}
+		completion:^(BOOL) {
+			[smokeScreen removeFromSuperview];
+		}];
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -43,8 +62,21 @@ std::auto_ptr<LastPass::Parser> lastPassDatabase;
 				[self.navigationController dismissModalViewControllerAnimated:YES];
 			};
 			
-			unlockScreen.onCodeRejected = ^(){
-				// TODO: Reset the app here
+			unlockScreen.onCodeRejected = ^() {
+				UIImageView *smokeScreen = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"login-background.png"]] autorelease];
+				CGFloat offset = self.window.frame.size.width;
+				smokeScreen.frame = CGRectOffset(smokeScreen.frame, offset, [[UIScreen mainScreen] applicationFrame].origin.y);
+				[self.window addSubview:smokeScreen];
+
+				[UIView animateWithDuration:0.25f
+					animations:^{
+						smokeScreen.frame = CGRectOffset(smokeScreen.frame, -offset, 0);
+					}
+					completion:^(BOOL) {
+						[self resetEverything:smokeScreen];
+					}];
+
+				[LostPassAppDelegate resetDatabase];
 			};
 			
 			screen = unlockScreen;
@@ -64,14 +96,14 @@ std::auto_ptr<LastPass::Parser> lastPassDatabase;
 		{
 			// We have the database, but no code has been set.  This is strange.
 			// Just wipe the database and make the user login.
-			[Settings setDatabase:@"" encryptionKey:@""];
+			[LostPassAppDelegate resetDatabase];
 		}
 		
 		LoginViewController *loginScreen = [[[LoginViewController alloc] initWithNibName:nil bundle:nil] autorelease];
 		[self.navigationController presentModalViewController:loginScreen animated:NO];
 
 		UnlockViewController *unlockScreen = [UnlockViewController chooseScreen];
-		unlockScreen.onCodeSet = ^(NSString *code){ 
+		unlockScreen.onCodeSet = ^(NSString *code) { 
 			[Settings setUnlockCode:code];
 			[loginScreen dismissModalViewControllerAnimated:YES];
 		};
