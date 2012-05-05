@@ -7,6 +7,8 @@ namespace
 
 NSString *const LAST_EMAIL = @"lastEmail";
 NSString *const UNLOCK_CODE = @"unlockCode";
+NSString *const DATABASE = @"database";
+NSString *const ENCRYPTION_KEY = @"encryptionKey";
 
 BOOL getBool(NSString *key)
 {
@@ -48,6 +50,8 @@ NSString *getFileContents(NSString *filename)
 	NSDictionary *defaults = [NSDictionary dictionaryWithObjectsAndKeys:
 		@"", LAST_EMAIL,
 		@"", UNLOCK_CODE,
+		@"", DATABASE,
+		@"", ENCRYPTION_KEY,
 		nil];
 
 	[[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
@@ -85,7 +89,7 @@ NSString *getFileContents(NSString *filename)
 #ifdef CONFIG_USE_LOCAL_DATABASE
 	return YES;
 #else
-	return NO;
+	return [getString(DATABASE) length] > 0;
 #endif
 }
 
@@ -94,16 +98,26 @@ NSString *getFileContents(NSString *filename)
 #ifdef CONFIG_USE_LOCAL_DATABASE
 	return getFileContents(@"account.dump");
 #else
-	return @"";
+	return getString(DATABASE);
 #endif
 }
 
++ (void)setDatabase:(NSString *)database
+{
+#ifdef CONFIG_USE_LOCAL_DATABASE
+#else
+	return setString(DATABASE, database);
+#endif
+}
+
+// TODO: The encryption key should not be stored in the user settings!!!
+//       This is just for testing.
 + (BOOL)haveEncryptionKey
 {
 #ifdef CONFIG_USE_LOCAL_DATABASE
 	return YES;
 #else
-	return NO;
+	return [getString(ENCRYPTION_KEY) length] > 0;
 #endif
 }
 
@@ -112,7 +126,15 @@ NSString *getFileContents(NSString *filename)
 #ifdef CONFIG_USE_LOCAL_DATABASE
 	return getFileContents(@"key.txt");
 #else
-	return @"";
+	return getString(ENCRYPTION_KEY);
+#endif
+}
+
++ (void)setEncryptionKey:(NSString *)key
+{
+#ifdef CONFIG_USE_LOCAL_DATABASE
+#else
+	return setString(ENCRYPTION_KEY, key);
 #endif
 }
 
