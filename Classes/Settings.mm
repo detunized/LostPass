@@ -6,6 +6,7 @@ namespace
 {
 
 NSString *const LAST_EMAIL = @"lastEmail";
+NSString *const UNLOCK_CODE = @"unlockCode";
 
 BOOL getBool(NSString *key)
 {
@@ -46,6 +47,7 @@ NSString *getFileContents(NSString *filename)
 {
 	NSDictionary *defaults = [NSDictionary dictionaryWithObjectsAndKeys:
 		@"", LAST_EMAIL,
+		@"", UNLOCK_CODE,
 		nil];
 
 	[[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
@@ -61,14 +63,21 @@ NSString *getFileContents(NSString *filename)
 	setString(LAST_EMAIL, email);
 }
 
-+ (BOOL)haveCode
+// TODO: The unlock code should not be stored in the user settings!!!
+//       This is just for testing.
++ (BOOL)haveUnlockCode
 {
-	return NO;
+	return [getString(UNLOCK_CODE) length] > 0;
 }
 
-+ (NSString *)code
++ (NSString *)unlockCode
 {
-	return @"0000";
+	return getString(UNLOCK_CODE);
+}
+
++ (void)setUnlockCode:(NSString *)code
+{
+	setString(UNLOCK_CODE, code);
 }
 
 + (BOOL)haveDatabase

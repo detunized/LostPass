@@ -25,7 +25,7 @@ std::auto_ptr<LastPass::Parser> lastPassDatabase;
 	[self.window addSubview:self.navigationController.view];
 	[self.window makeKeyAndVisible];
 	
-	BOOL haveCode = [Settings haveCode];
+	BOOL haveCode = [Settings haveUnlockCode];
 	BOOL haveDatabase = [Settings haveDatabase] && [Settings haveEncryptionKey];
 
 	if (haveCode)
@@ -37,7 +37,7 @@ std::auto_ptr<LastPass::Parser> lastPassDatabase;
 			// The unlock code is set and we have the database downloaded.
 			// Show the unlock screen and go straigh to the accounts.
 			// This should be the most common sittuation.
-			UnlockViewController *unlockScreen = [UnlockViewController verifyScreen:[Settings code]];
+			UnlockViewController *unlockScreen = [UnlockViewController verifyScreen:[Settings unlockCode]];
 			
 			unlockScreen.onCodeAccepted = ^() {
 				[LostPassAppDelegate loadDatabase];
@@ -71,7 +71,7 @@ std::auto_ptr<LastPass::Parser> lastPassDatabase;
 
 		UnlockViewController *unlockScreen = [UnlockViewController chooseScreen];
 		unlockScreen.onCodeSet = ^(NSString *code){ 
-			// TODO: Store the code
+			[Settings setUnlockCode:code];
 			[loginScreen dismissModalViewControllerAnimated:YES];
 		};
 		[loginScreen presentModalViewController:unlockScreen animated:NO];

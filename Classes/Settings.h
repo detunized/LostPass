@@ -7,8 +7,9 @@
 + (NSString *)lastEmail;
 + (void)setLastEmail:(NSString *)email;
 
-+ (BOOL)haveCode;
-+ (NSString *)code;
++ (BOOL)haveUnlockCode;
++ (NSString *)unlockCode;
++ (void)setUnlockCode:(NSString *)code;
 
 // The database is base64 encoded
 + (BOOL)haveDatabase;
