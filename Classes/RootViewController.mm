@@ -19,7 +19,12 @@
 {
 	[super viewWillAppear:animated];
 	
-	if (displayIndex_.empty())
+	// TODO: Sort out all the sitation when the database has changed or doesn't exist anymore.
+	if (!lastPassDatabase.get())
+	{
+		displayIndex_.clear();
+	}
+	else if (displayIndex_.empty())
 	{
 		displayIndex_.reserve(lastPassDatabase->count());
 		for (size_t i = 0, count = lastPassDatabase->count(); i < count; ++i)
