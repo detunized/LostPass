@@ -214,7 +214,14 @@ void callAfter(NSTimeInterval seconds, void (^block)())
 	assert(state_ == 0);
 	++state_;
 	
-	[self restartAfter:RESTART_DELAY title:VERIFY_CODE_TITLE subtitle:@""];
+	[self animateStarsFor:STAR_ANIMATION_DURATION 
+		transform:CGAffineTransformMakeScale(0.01f, 1) 
+		alpha:0 
+		subtitle:@"" 
+		subtitleAnimationStyle:SubtitleAnimationStyleSlideIn
+		onCompletion:^(BOOL) {
+			[self restart:VERIFY_CODE_TITLE subtitle:@""];
+		}];
 }
 
 - (void)verifyChosenCode:(NSString *)code
@@ -223,17 +230,30 @@ void callAfter(NSTimeInterval seconds, void (^block)())
 
 	if ([code isEqualToString:self.code])
 	{
-		enableInput();
-		
-		assert(self.onCodeSet);
-		self.onCodeSet(code);
+		[self animateStarsFor:STAR_ANIMATION_DURATION 
+			transform:CGAffineTransformMakeRotation(M_PI)
+			alpha:0 
+			subtitle:@"" 
+			subtitleAnimationStyle:SubtitleAnimationStyleSlideIn
+			onCompletion:^(BOOL) {
+				enableInput();
+				assert(self.onCodeSet);
+				self.onCodeSet(code);
+			}];
 	}
 	else
 	{
 		self.code = @"";
 		state_ = 0;
 		
-		[self restartAfter:RESTART_DELAY title:CHOOSE_CODE_TITLE subtitle:@"Verification failed"];
+		[self animateStarsFor:STAR_ANIMATION_DURATION 
+			transform:CGAffineTransformMakeScale(0.01f, 1) 
+			alpha:0 
+			subtitle:@"Verification failed"
+			subtitleAnimationStyle:SubtitleAnimationStyleSlideIn
+			onCompletion:^(BOOL) {
+				[self restart:CHOOSE_CODE_TITLE subtitle:@"Verification failed"];
+			}];
 	}
 }
 
