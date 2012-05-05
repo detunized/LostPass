@@ -151,10 +151,10 @@ void callAfter(NSTimeInterval seconds, void (^block)())
 
 	if ([code isEqualToString:self.code])
 	{
+		enableInput();
+		
 		assert(self.onCodeSet);
 		self.onCodeSet(code);
-
-		[self quitAfter:QUIT_DELAY];
 	}
 	else
 	{
@@ -206,12 +206,10 @@ void callAfter(NSTimeInterval seconds, void (^block)())
 	}
 	else
 	{
+		enableInput();
+	
 		assert(self.onCodeRejected);
 		self.onCodeRejected();
-		
-		state_ = 0;
-		self.mode = UnlockViewControllerModeChoose;
-		[self restartAfter:RESTART_DELAY title:@"Choose Unlock Code" subtitle:@""];
 	}
 }
 
