@@ -84,12 +84,14 @@ NSString *getFileContents(NSString *filename)
 	setString(UNLOCK_CODE, code);
 }
 
-+ (BOOL)haveDatabase
+// TODO: The encryption key should not be stored in the user settings!!!
+//       This is just for testing.
++ (BOOL)haveDatabaseAndKey;
 {
 #ifdef CONFIG_USE_LOCAL_DATABASE
 	return YES;
 #else
-	return [getString(DATABASE) length] > 0;
+	return [getString(DATABASE) length] > 0 && [getString(ENCRYPTION_KEY) length] > 0;
 #endif
 }
 
@@ -102,25 +104,6 @@ NSString *getFileContents(NSString *filename)
 #endif
 }
 
-+ (void)setDatabase:(NSString *)database
-{
-#ifdef CONFIG_USE_LOCAL_DATABASE
-#else
-	return setString(DATABASE, database);
-#endif
-}
-
-// TODO: The encryption key should not be stored in the user settings!!!
-//       This is just for testing.
-+ (BOOL)haveEncryptionKey
-{
-#ifdef CONFIG_USE_LOCAL_DATABASE
-	return YES;
-#else
-	return [getString(ENCRYPTION_KEY) length] > 0;
-#endif
-}
-
 + (NSString *)encryptionKey
 {
 #ifdef CONFIG_USE_LOCAL_DATABASE
@@ -130,11 +113,12 @@ NSString *getFileContents(NSString *filename)
 #endif
 }
 
-+ (void)setEncryptionKey:(NSString *)key
++ (void)setDatabase:(NSString *)database encryptionKey:(NSString *)key;
 {
 #ifdef CONFIG_USE_LOCAL_DATABASE
 #else
-	return setString(ENCRYPTION_KEY, key);
+	setString(DATABASE, database);
+	setString(ENCRYPTION_KEY, key);
 #endif
 }
 

@@ -11,14 +11,10 @@
 + (NSString *)unlockCode;
 + (void)setUnlockCode:(NSString *)code;
 
-// The database is base64 encoded
-+ (BOOL)haveDatabase;
+// The database and the encryption key are base64 encoded
++ (BOOL)haveDatabaseAndKey;
 + (NSString *)database;
-+ (void)setDatabase:(NSString *)database;
-
-// The key is base64 encoded
-+ (BOOL)haveEncryptionKey;
 + (NSString *)encryptionKey;
-+ (void)setEncryptionKey:(NSString *)key;
++ (void)setDatabase:(NSString *)database encryptionKey:(NSString *)key;
 
 @end

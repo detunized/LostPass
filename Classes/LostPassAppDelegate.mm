@@ -13,8 +13,7 @@ std::auto_ptr<LastPass::Parser> lastPassDatabase;
 
 + (void)loadDatabase
 {
-	assert([Settings haveDatabase]);
-	assert([Settings haveEncryptionKey]);
+	assert([Settings haveDatabaseAndKey]);
 	lastPassDatabase.reset(new LastPass::Parser([[Settings database] UTF8String], [[Settings encryptionKey] UTF8String]));
 }
 
@@ -26,7 +25,7 @@ std::auto_ptr<LastPass::Parser> lastPassDatabase;
 	[self.window makeKeyAndVisible];
 	
 	BOOL haveCode = [Settings haveUnlockCode];
-	BOOL haveDatabase = [Settings haveDatabase] && [Settings haveEncryptionKey];
+	BOOL haveDatabase = [Settings haveDatabaseAndKey];
 
 	if (haveCode)
 	{
@@ -63,7 +62,9 @@ std::auto_ptr<LastPass::Parser> lastPassDatabase;
 	{
 		if (haveDatabase)
 		{
-			// TODO: Erase the database
+			// We have the database, but no code has been set.  This is strange.
+			// Just wipe the database and make the user login.
+			[Settings setDatabase:@"" encryptionKey:@""];
 		}
 		
 		LoginViewController *loginScreen = [[[LoginViewController alloc] initWithNibName:nil bundle:nil] autorelease];

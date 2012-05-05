@@ -109,8 +109,7 @@
 		
 		^(NSString *databseBase64, NSString *keyBase64) {
 			[self showBusyIndicator:NO];
-			[Settings setDatabase:databseBase64];
-			[Settings setEncryptionKey:keyBase64];
+			[Settings setDatabase:databseBase64 encryptionKey:keyBase64];
 			[self parseAndQuit];
 		},
 		
