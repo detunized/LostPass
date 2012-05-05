@@ -17,6 +17,7 @@ typedef void (^UnlockViewControllerCodeRejected)();
 @interface UnlockViewController: UIViewController<UITextFieldDelegate>
 {
 	int state_;
+	UIImageView *digits_[UnlockViewControllerCodeLength];
 }
 
 @property(nonatomic, assign) UnlockViewControllerMode mode;

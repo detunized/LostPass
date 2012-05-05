@@ -74,6 +74,12 @@ void callAfter(NSTimeInterval seconds, void (^block)())
 	self.subtitleLabel.text = @"";
 	state_ = 0;
 	
+	assert(UnlockViewControllerCodeLength == 4);
+	digits_[0] = self.digit1;
+	digits_[1] = self.digit2;
+	digits_[2] = self.digit3;
+	digits_[3] = self.digit4;
+	
 	// Check that the code is set
 	if (self.mode == UnlockViewControllerModeVerify)
 	{
@@ -196,10 +202,10 @@ void callAfter(NSTimeInterval seconds, void (^block)())
 	
 	[UIView animateWithDuration:0.4f
 		animations:^{
-			self.digit1.transform = CGAffineTransformMakeRotation(M_PI);
-			self.digit2.transform = CGAffineTransformMakeRotation(M_PI);
-			self.digit3.transform = CGAffineTransformMakeRotation(M_PI);
-			self.digit4.transform = CGAffineTransformMakeRotation(M_PI);
+			for (size_t i = 0; i < UnlockViewControllerCodeLength; ++i)
+			{
+				digits_[i].transform = CGAffineTransformMakeRotation(M_PI);
+			}
 		}
 		completion:^(BOOL){
 			enableInput();
@@ -267,12 +273,10 @@ void callAfter(NSTimeInterval seconds, void (^block)())
 {
 	NSString *code = self.unlockCodeEdit.text;
 
-	assert(UnlockViewControllerCodeLength == 4);
-	UIImageView *digits[UnlockViewControllerCodeLength] = {self.digit1, self.digit2, self.digit3, self.digit4};
 	size_t length = [code length];
 	for (size_t i = 0; i < UnlockViewControllerCodeLength; ++i)
 	{
-		digits[i].hidden = i >= length;
+		digits_[i].hidden = i >= length;
 	}
 	
 	if (length == UnlockViewControllerCodeLength)
