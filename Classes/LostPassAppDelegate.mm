@@ -31,9 +31,27 @@ NSTimeInterval const SMOKE_SCREEN_ANIMATION_DURATION = 0.4;
 	lastPassDatabase.reset(new LastPass::Parser([[Settings database] UTF8String], [[Settings encryptionKey] UTF8String]));
 }
 
+- (void)pushWelcomeSequence
+{
+	LoginViewController *loginScreen = [[[LoginViewController alloc] initWithNibName:nil bundle:nil] autorelease];
+	[self.navigationController presentModalViewController:loginScreen animated:NO];
+
+	UnlockViewController *unlockScreen = [UnlockViewController chooseScreen];
+	unlockScreen.onCodeSet = ^(NSString *code) { 
+		[Settings setUnlockCode:code];
+		[loginScreen dismissModalViewControllerAnimated:YES];
+	};
+	[loginScreen presentModalViewController:unlockScreen animated:NO];
+	
+	// Welcome screen
+	UIViewController *welcomeScreen = [SmokeScreenView smokeScreenController:YES];
+	[unlockScreen presentModalViewController:welcomeScreen animated:NO];
+}
+
 - (void)resetEverything:(SmokeScreenView *)smokeScreen
 {
 	[self.navigationController dismissModalViewControllerAnimated:NO];
+	[self pushWelcomeSequence];
 
 	[smokeScreen slideOut:SMOKE_SCREEN_ANIMATION_DURATION
 		onCompletion:^ {
@@ -100,20 +118,8 @@ NSTimeInterval const SMOKE_SCREEN_ANIMATION_DURATION = 0.4;
 			// Just wipe the database and make the user login.
 			[LostPassAppDelegate resetDatabase];
 		}
-		
-		LoginViewController *loginScreen = [[[LoginViewController alloc] initWithNibName:nil bundle:nil] autorelease];
-		[self.navigationController presentModalViewController:loginScreen animated:NO];
 
-		UnlockViewController *unlockScreen = [UnlockViewController chooseScreen];
-		unlockScreen.onCodeSet = ^(NSString *code) { 
-			[Settings setUnlockCode:code];
-			[loginScreen dismissModalViewControllerAnimated:YES];
-		};
-		[loginScreen presentModalViewController:unlockScreen animated:NO];
-		
-		// Welcome screen
-		UIViewController *welcomeScreen = [SmokeScreenView smokeScreenController:YES];
-		[unlockScreen presentModalViewController:welcomeScreen animated:NO];
+		[self pushWelcomeSequence];
 	}
 
 	return YES;
