@@ -3,6 +3,7 @@
 @implementation SmokeScreenView
 
 @synthesize titleLabel = titleLabel_;
+@synthesize onTouched = onTouched_;
 
 + (SmokeScreenView *)smokeScreen
 {
@@ -26,11 +27,13 @@
 	// TODO: Init outlets here.
 	self.titleLabel.text = @"LostPass, bitches!";
 	self.titleLabel.textColor = [UIColor whiteColor];
+	[self.titleLabel sizeToFit];
 }
 
 - (void)dealloc
 {
 	self.titleLabel = nil;
+	self.onTouched = nil;
 
 	[super dealloc];
 }
@@ -65,6 +68,12 @@
 		fromTransform:CGAffineTransformIdentity
 		toTransform:CGAffineTransformMakeTranslation(-self.frame.size.width, 0)
 		onCompletion:onCompletion];
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	assert(self.onTouched);
+	self.onTouched();
 }
 
 @end

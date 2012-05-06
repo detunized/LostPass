@@ -1,7 +1,10 @@
+typedef void (^SmokeScreenViewOnTouched)();
+
 @interface SmokeScreenView: UIView
 {
 }
 
+@property(nonatomic, copy) SmokeScreenViewOnTouched onTouched;
 @property(nonatomic, retain) IBOutlet UILabel *titleLabel;
 
 + (SmokeScreenView *)smokeScreen;
