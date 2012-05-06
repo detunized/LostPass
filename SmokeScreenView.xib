@@ -57,7 +57,7 @@
 					<object class="IBUILabel" id="715551470">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{154, 53}, {206, 123}}</string>
+						<string key="NSFrame">{{20, 20}, {280, 133}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -66,8 +66,11 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<string key="IBUIText">Label</string>
 						<object class="NSColor" key="IBUITextColor">
-							<int key="NSColorSpace">1</int>
-							<bytes key="NSRGB">MCAwIDAAA</bytes>
+							<int key="NSColorSpace">3</int>
+							<bytes key="NSWhite">MQA</bytes>
+							<object class="NSColorSpace" key="NSCustomColorSpace">
+								<int key="NSID">2</int>
+							</object>
 						</object>
 						<object class="NSColor" key="IBUIHighlightedColor" id="878227728">
 							<int key="NSColorSpace">3</int>
@@ -75,6 +78,7 @@
 						</object>
 						<int key="IBUIBaselineAdjustment">1</int>
 						<float key="IBUIMinimumFontSize">10</float>
+						<int key="IBUINumberOfLines">0</int>
 					</object>
 				</object>
 				<string key="NSFrameSize">{320, 460}</string>
@@ -112,8 +116,8 @@
 						<reference key="object" ref="191373211"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="574799643"/>
 							<reference ref="715551470"/>
+							<reference ref="574799643"/>
 						</object>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -129,13 +133,13 @@
 						<reference key="parent" ref="0"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">3</int>
-						<reference key="object" ref="574799643"/>
+						<int key="objectID">4</int>
+						<reference key="object" ref="715551470"/>
 						<reference key="parent" ref="191373211"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">4</int>
-						<reference key="object" ref="715551470"/>
+						<int key="objectID">3</int>
+						<reference key="object" ref="574799643"/>
 						<reference key="parent" ref="191373211"/>
 					</object>
 				</object>
@@ -157,7 +161,7 @@
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<string>UIResponder</string>
 					<string>SmokeScreenView</string>
-					<string>{{601, -9}, {320, 480}}</string>
+					<string>{{351, 185}, {320, 480}}</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<object class="NSAffineTransform">
@@ -165,7 +169,7 @@
 					</object>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">P4AAAL+AAABCMAAAwycAAA</bytes>
+						<bytes key="NSTransformStruct">P4AAAL+AAABB8AAAw04AAA</bytes>
 					</object>
 				</object>
 			</object>
