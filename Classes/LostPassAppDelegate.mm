@@ -109,7 +109,15 @@ NSTimeInterval const SMOKE_SCREEN_ANIMATION_DURATION = 0.4;
 		};
 		[loginScreen presentModalViewController:unlockScreen animated:NO];
 		
-		// TODO: Push the welcome screen
+		// Welcome screen
+		SmokeScreenView *smokeScreen = [SmokeScreenView smokeScreen];
+		smokeScreen.onTouched = ^{
+			[unlockScreen dismissModalViewControllerAnimated:NO];
+		};
+
+		UIViewController *welcomeScreen = [[[UIViewController alloc] initWithNibName:nil bundle:nil] autorelease];
+		welcomeScreen.view = smokeScreen;
+		[unlockScreen presentModalViewController:welcomeScreen animated:NO];
 	}
 
 	return YES;
