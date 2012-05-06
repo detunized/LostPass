@@ -5,9 +5,24 @@
 @synthesize titleLabel = titleLabel_;
 @synthesize onTouched = onTouched_;
 
-+ (SmokeScreenView *)smokeScreen
++ (SmokeScreenView *)smokeScreenView
 {
 	return [[[NSBundle mainBundle] loadNibNamed:@"SmokeScreenView" owner:nil options:nil] objectAtIndex:0];
+}
+
++ (UIViewController *)smokeScreenController:(BOOL)autoDismiss
+{
+	// Note: __block is needed to avoid retain cycle within the block.
+	__block UIViewController *controller = [[[UIViewController alloc] initWithNibName:nil bundle:nil] autorelease];
+
+	SmokeScreenView *view = [SmokeScreenView smokeScreenView];
+	view.onTouched = autoDismiss
+		? ^{ [controller dismissModalViewControllerAnimated:NO]; }
+		: ^{};
+
+	controller.view = view;
+	
+	return controller;
 }
 
 - (id)initWithCoder:(NSCoder *)decoder
