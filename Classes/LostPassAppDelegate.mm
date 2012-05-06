@@ -68,13 +68,15 @@ NSTimeInterval const SMOKE_SCREEN_ANIMATION_DURATION = 0.4;
 			};
 			
 			unlockScreen.onCodeRejected = ^{
-				SmokeScreenView *smokeScreen = [SmokeScreenView smokeScreenView];
+				// Note: __block is needed to avoid a retain cycle within the block.
+				__block SmokeScreenView *smokeScreen = [SmokeScreenView smokeScreenView];
 				[self.window addSubview:smokeScreen];
 
-				[smokeScreen slideIn:SMOKE_SCREEN_ANIMATION_DURATION
-					onCompletion:^{
-						[self resetEverything:smokeScreen];
-					}];
+				smokeScreen.onTouched = ^{
+					[self resetEverything:smokeScreen];
+				};
+			
+				[smokeScreen slideIn:SMOKE_SCREEN_ANIMATION_DURATION onCompletion:^{}];
 
 				[LostPassAppDelegate resetDatabase];
 			};

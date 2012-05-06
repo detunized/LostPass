@@ -12,7 +12,7 @@
 
 + (UIViewController *)smokeScreenController:(BOOL)autoDismiss
 {
-	// Note: __block is needed to avoid retain cycle within the block.
+	// Note: __block is needed to avoid a retain cycle within the block.
 	__block UIViewController *controller = [[[UIViewController alloc] initWithNibName:nil bundle:nil] autorelease];
 
 	SmokeScreenView *view = [SmokeScreenView smokeScreenView];
@@ -40,7 +40,7 @@
 	[super awakeFromNib];
 
 	// TODO: Init outlets here.
-	self.titleLabel.text = @"LostPass, bitches!";
+	self.titleLabel.text = @"LostPass, bitches!\nTap to continue.";
 	self.titleLabel.textColor = [UIColor whiteColor];
 	[self.titleLabel sizeToFit];
 }
