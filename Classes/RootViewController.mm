@@ -1,5 +1,6 @@
 #import "RootViewController.h"
 #import "AccountViewController.h"
+#import "LoginViewController.h"
 #import "LastPassProxy.h"
 #import "LostPassAppDelegate.h"
 
@@ -13,6 +14,10 @@
 	
 	self.tableView.tableHeaderView = self.searchBar;
 	self.navigationItem.title = NSLocalizedString(@"Accounts", @"Accounts");
+	
+	self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh 
+		target:self 
+		action:@selector(onRefresh:)] autorelease];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -71,6 +76,11 @@
 	self.searchBar = nil;
 
 	[super dealloc];
+}
+
+- (void)onRefresh:(id)sender
+{
+	[self presentModalViewController:[LoginViewController loginScreen] animated:YES];
 }
 
 #pragma mark -
