@@ -12,6 +12,21 @@ namespace
 
 NSTimeInterval const SMOKE_SCREEN_ANIMATION_DURATION = 0.4;
 
+NSString *WELCOME_MESSAGE =
+	@"Welcome to LostPass!\n\n"
+	@"Before you start please choose your personal 4-digit unlock code.\n\n"
+	@"Tap to continue.";
+
+NSString *WELCOME_BACK_MESSAGE =
+	@"Welcome back to LostPass!\n\n"
+	@"The app has been reset. Please choose your new personal 4-digit unlock code.\n\n"
+	@"Tap to continue.";
+
+NSString *RESET_MESSAGE =
+	@"Hi, this is LostPass!\n\n"
+	@"You entered the unlock code incorrectly too many times. The app is going to reset itself and you'll have to start over.  See you in a moment.\n\n"
+	@"Tap to continue.";
+
 }
 
 @implementation LostPassAppDelegate
@@ -31,7 +46,7 @@ NSTimeInterval const SMOKE_SCREEN_ANIMATION_DURATION = 0.4;
 	lastPassDatabase.reset(new LastPass::Parser([[Settings database] UTF8String], [[Settings encryptionKey] UTF8String]));
 }
 
-- (void)pushWelcomeSequence
+- (void)pushWelcomeSequence:(NSString *)welcomeText
 {
 	LoginViewController *loginScreen = [[[LoginViewController alloc] initWithNibName:nil bundle:nil] autorelease];
 	[self.navigationController presentModalViewController:loginScreen animated:NO];
@@ -44,14 +59,14 @@ NSTimeInterval const SMOKE_SCREEN_ANIMATION_DURATION = 0.4;
 	[loginScreen presentModalViewController:unlockScreen animated:NO];
 	
 	// Welcome screen
-	UIViewController *welcomeScreen = [SmokeScreenView smokeScreenController:@"Welcome to LostPass!\nTap to continue." autoDismiss:YES];
+	UIViewController *welcomeScreen = [SmokeScreenView smokeScreenController:welcomeText autoDismiss:YES];
 	[unlockScreen presentModalViewController:welcomeScreen animated:NO];
 }
 
 - (void)resetEverything:(SmokeScreenView *)smokeScreen
 {
 	[self.navigationController dismissModalViewControllerAnimated:NO];
-	[self pushWelcomeSequence];
+	[self pushWelcomeSequence:WELCOME_BACK_MESSAGE];
 
 	[smokeScreen slideOut:SMOKE_SCREEN_ANIMATION_DURATION
 		onCompletion:^ {
@@ -87,7 +102,7 @@ NSTimeInterval const SMOKE_SCREEN_ANIMATION_DURATION = 0.4;
 			
 			unlockScreen.onCodeRejected = ^{
 				// Note: __block is needed to avoid a retain cycle within the block.
-				__block SmokeScreenView *smokeScreen = [SmokeScreenView smokeScreenView:@"You're screwed!"];
+				__block SmokeScreenView *smokeScreen = [SmokeScreenView smokeScreenView:RESET_MESSAGE];
 				[self.window addSubview:smokeScreen];
 
 				smokeScreen.onTouched = ^{
@@ -119,7 +134,7 @@ NSTimeInterval const SMOKE_SCREEN_ANIMATION_DURATION = 0.4;
 			[LostPassAppDelegate resetDatabase];
 		}
 
-		[self pushWelcomeSequence];
+		[self pushWelcomeSequence:WELCOME_MESSAGE];
 	}
 
 	return YES;
