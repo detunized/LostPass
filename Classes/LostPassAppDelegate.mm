@@ -11,6 +11,7 @@ namespace
 {
 
 NSTimeInterval const SMOKE_SCREEN_ANIMATION_DURATION = 0.4;
+NSTimeInterval const RESET_ANIMATION_DURATION = 2;
 
 NSString *WELCOME_MESSAGE =
 	@"Welcome to LostPass!\n\n"
@@ -67,11 +68,25 @@ NSString *RESET_MESSAGE =
 {
 	[self.navigationController dismissModalViewControllerAnimated:NO];
 	[self pushWelcomeSequence:WELCOME_BACK_MESSAGE];
-
-	[smokeScreen slideOut:SMOKE_SCREEN_ANIMATION_DURATION
-		onCompletion:^ {
-			[smokeScreen removeFromSuperview];
-		}];
+	
+	// Simulate some busy work by showing the spinning star to the user.
+	UIActivityIndicatorView *busyIcon = [[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge] autorelease];
+	busyIcon.frame = CGRectOffset(
+		busyIcon.frame, 
+		smokeScreen.frame.size.width / 2 - busyIcon.frame.size.width / 2, 
+		smokeScreen.frame.size.height / 2 - busyIcon.frame.size.height / 2 );
+	[smokeScreen addSubview:busyIcon];
+	[busyIcon startAnimating];
+	
+	dispatch_after(
+		dispatch_time(DISPATCH_TIME_NOW, RESET_ANIMATION_DURATION * NSEC_PER_SEC), 
+		dispatch_get_current_queue(), 
+		^{
+			[smokeScreen slideOut:SMOKE_SCREEN_ANIMATION_DURATION
+				onCompletion:^ {
+					[smokeScreen removeFromSuperview];
+				}];
+		});
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
