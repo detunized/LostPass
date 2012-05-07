@@ -80,6 +80,10 @@ void Parser::parse_ACCT(uint8_t const *data, size_t size)
 		{
 			password = decrypt_aes256_ecb(item_data, item_size);
 
+#ifdef CONFIG_CONCEAL_PASSWORDS
+			password = vector<uint8_t>(password.size(), '*');
+#endif
+
 			accounts_.push_back(Account(
 				string(name.begin(), name.end()), 
 				string(username.begin(), username.end()), 
