@@ -5,17 +5,19 @@
 @synthesize titleLabel = titleLabel_;
 @synthesize onTouched = onTouched_;
 
-+ (SmokeScreenView *)smokeScreenView
++ (SmokeScreenView *)smokeScreenView:(NSString *)title
 {
-	return [[[NSBundle mainBundle] loadNibNamed:@"SmokeScreenView" owner:nil options:nil] objectAtIndex:0];
+	SmokeScreenView *view = [[[NSBundle mainBundle] loadNibNamed:@"SmokeScreenView" owner:nil options:nil] objectAtIndex:0];
+	[view setTitle:title];
+	return view;
 }
 
-+ (UIViewController *)smokeScreenController:(BOOL)autoDismiss
++ (UIViewController *)smokeScreenController:(NSString *)title autoDismiss:(BOOL)autoDismiss
 {
 	// Note: __block is needed to avoid a retain cycle within the block.
 	__block UIViewController *controller = [[[UIViewController alloc] initWithNibName:nil bundle:nil] autorelease];
 
-	SmokeScreenView *view = [SmokeScreenView smokeScreenView];
+	SmokeScreenView *view = [SmokeScreenView smokeScreenView:title];
 	view.onTouched = autoDismiss
 		? ^{ [controller dismissModalViewControllerAnimated:NO]; }
 		: ^{};
@@ -35,22 +37,18 @@
 	return self;
 }
 
-- (void)awakeFromNib
-{
-	[super awakeFromNib];
-
-	// TODO: Init outlets here.
-	self.titleLabel.text = @"LostPass, bitches!\nTap to continue.";
-	self.titleLabel.textColor = [UIColor whiteColor];
-	[self.titleLabel sizeToFit];
-}
-
 - (void)dealloc
 {
 	self.titleLabel = nil;
 	self.onTouched = nil;
 
 	[super dealloc];
+}
+
+- (void)setTitle:(NSString *)title
+{
+	self.titleLabel.text = title;
+	[self.titleLabel sizeToFit];
 }
 
 - (void)animate:(NSTimeInterval)seconds 

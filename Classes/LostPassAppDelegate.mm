@@ -44,7 +44,7 @@ NSTimeInterval const SMOKE_SCREEN_ANIMATION_DURATION = 0.4;
 	[loginScreen presentModalViewController:unlockScreen animated:NO];
 	
 	// Welcome screen
-	UIViewController *welcomeScreen = [SmokeScreenView smokeScreenController:YES];
+	UIViewController *welcomeScreen = [SmokeScreenView smokeScreenController:@"Welcome to LostPass!\nTap to continue." autoDismiss:YES];
 	[unlockScreen presentModalViewController:welcomeScreen animated:NO];
 }
 
@@ -87,7 +87,7 @@ NSTimeInterval const SMOKE_SCREEN_ANIMATION_DURATION = 0.4;
 			
 			unlockScreen.onCodeRejected = ^{
 				// Note: __block is needed to avoid a retain cycle within the block.
-				__block SmokeScreenView *smokeScreen = [SmokeScreenView smokeScreenView];
+				__block SmokeScreenView *smokeScreen = [SmokeScreenView smokeScreenView:@"You're screwed!"];
 				[self.window addSubview:smokeScreen];
 
 				smokeScreen.onTouched = ^{
