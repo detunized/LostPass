@@ -13,6 +13,11 @@
 @synthesize busyIndicator = busyIndicator_;
 @synthesize errorLabel = errorLabel_;
 
++ (LoginViewController *)loginScreen
+{
+	return [[[LoginViewController alloc] initWithNibName:nil bundle:nil] autorelease];
+}
+
 - (void)viewDidLoad
 {
 	[super viewDidLoad];

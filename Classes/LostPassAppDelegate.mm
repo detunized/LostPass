@@ -49,7 +49,7 @@ NSString *RESET_MESSAGE =
 
 - (void)pushWelcomeSequence:(NSString *)welcomeText
 {
-	LoginViewController *loginScreen = [[[LoginViewController alloc] initWithNibName:nil bundle:nil] autorelease];
+	LoginViewController *loginScreen = [LoginViewController loginScreen];
 	[self.navigationController presentModalViewController:loginScreen animated:NO];
 
 	UnlockViewController *unlockScreen = [UnlockViewController chooseScreen];
