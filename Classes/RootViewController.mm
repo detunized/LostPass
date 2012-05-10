@@ -80,7 +80,7 @@
 
 - (void)onRefresh:(id)sender
 {
-	[self presentModalViewController:[LoginViewController loginScreen] animated:YES];
+	[self presentModalViewController:[LoginViewController cancelableLoginScreen] animated:YES];
 }
 
 #pragma mark -

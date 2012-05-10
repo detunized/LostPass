@@ -1,5 +1,7 @@
 @interface LoginViewController: UIViewController
 {
+@private
+	BOOL allowCancel_;
 }
 
 @property(nonatomic, retain) IBOutlet UITextField *emailInput;
@@ -10,6 +12,7 @@
 @property(nonatomic, retain) IBOutlet UILabel *errorLabel;
 
 + (LoginViewController *)loginScreen;
++ (LoginViewController *)cancelableLoginScreen;
 
 - (IBAction)onEmailInputEditingChanged:(id)sender;
 - (IBAction)onPasswordInputEditingChanged:(id)sender;

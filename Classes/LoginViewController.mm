@@ -14,9 +14,21 @@
 @synthesize busyIndicator = busyIndicator_;
 @synthesize errorLabel = errorLabel_;
 
++ (LoginViewController *)loginScreen:(BOOL)allowCancel
+{
+	LoginViewController *controller = [[[LoginViewController alloc] initWithNibName:nil bundle:nil] autorelease];
+	controller->allowCancel_ = allowCancel;
+	return controller;
+}
+
 + (LoginViewController *)loginScreen
 {
-	return [[[LoginViewController alloc] initWithNibName:nil bundle:nil] autorelease];
+	return [LoginViewController loginScreen:NO];
+}
+
++ (LoginViewController *)cancelableLoginScreen
+{
+	return [LoginViewController loginScreen:YES];
 }
 
 - (void)setupCustomButton:(UIButton *)button
@@ -33,6 +45,8 @@
 	
 	[self setupCustomButton:self.loginButton];
 	[self setupCustomButton:self.cancelButton];
+	
+	self.cancelButton.hidden = !allowCancel_;
 
 	self.emailInput.text = [Settings lastEmail];
 }
