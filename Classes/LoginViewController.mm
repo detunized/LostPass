@@ -10,6 +10,7 @@
 @synthesize emailInput = emailInput_;
 @synthesize passwordInput = passwordInput_;
 @synthesize loginButton = loginButton_;
+@synthesize cancelButton = cancelButton_;
 @synthesize busyIndicator = busyIndicator_;
 @synthesize errorLabel = errorLabel_;
 
@@ -18,15 +19,21 @@
 	return [[[LoginViewController alloc] initWithNibName:nil bundle:nil] autorelease];
 }
 
+- (void)setupCustomButton:(UIButton *)button
+{
+	button.layer.cornerRadius = 6;
+	button.layer.borderWidth = 1;
+	button.layer.borderColor = [UIColor lightGrayColor].CGColor;
+	button.clipsToBounds = YES;
+}
+
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
 	
-	self.loginButton.layer.cornerRadius = 6;
-	self.loginButton.layer.borderWidth = 1;
-	self.loginButton.layer.borderColor = [UIColor lightGrayColor].CGColor;
-	self.loginButton.clipsToBounds = YES;
-	
+	[self setupCustomButton:self.loginButton];
+	[self setupCustomButton:self.cancelButton];
+
 	self.emailInput.text = [Settings lastEmail];
 }
 
@@ -37,6 +44,7 @@
 	self.emailInput = nil;
 	self.passwordInput = nil;
 	self.loginButton = nil;
+	self.cancelButton = nil;
 	self.busyIndicator = nil;
 	self.errorLabel = nil;
 }
@@ -51,6 +59,7 @@
 	self.emailInput.enabled = enable;
 	self.passwordInput.enabled = enable;
 	self.loginButton.enabled = enable;
+	self.cancelButton.enabled = enable;
 }
 
 - (void)setErrorText:(NSString *)text
@@ -81,10 +90,15 @@
 	}
 }
 
+- (void)quit
+{
+	[self dismissModalViewControllerAnimated:YES];
+}
+
 - (void)parseAndQuit
 {
 	[LostPassAppDelegate loadDatabase];
-	[self dismissModalViewControllerAnimated:YES];
+	[self quit];
 }
 
 - (IBAction)onEmailInputEditingChanged:(id)sender
@@ -125,6 +139,11 @@
 		}
 	);
 #endif
+}
+
+- (IBAction)onCancelButtonTouchUpInside:(id)sender
+{
+	[self quit];
 }
 
 @end
