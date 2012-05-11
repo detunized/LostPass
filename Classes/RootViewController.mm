@@ -8,9 +8,26 @@
 
 @synthesize searchBar = searchBar_;
 
+- (void)setInitialIndex
+{
+	displayIndex_.clear();
+	displayIndex_.reserve(database_->count());
+	for (size_t i = 0, count = database_->count(); i < count; ++i)
+	{
+		displayIndex_.push_back(i);
+	}
+}
+
+- (void)resetView
+{
+	[self setInitialIndex];
+	[self.tableView reloadData];
+}
+
 - (void)setDatabase:(std::auto_ptr<LastPass::Parser>)database
 {
 	database_ = database;
+	[self resetView];
 }
 
 - (void)viewDidLoad
@@ -23,25 +40,6 @@
 	self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh 
 		target:self 
 		action:@selector(onRefresh:)] autorelease];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-	[super viewWillAppear:animated];
-	
-	// TODO: Sort out all the sitation when the database has changed or doesn't exist anymore.
-	if (!database_.get())
-	{
-		displayIndex_.clear();
-	}
-	else if (displayIndex_.empty())
-	{
-		displayIndex_.reserve(database_->count());
-		for (size_t i = 0, count = database_->count(); i < count; ++i)
-		{
-			displayIndex_.push_back(i);
-		}
-	}
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
