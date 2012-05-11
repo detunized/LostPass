@@ -22,6 +22,8 @@
 {
 	[self setInitialIndex];
 	[self.tableView reloadData];
+	
+	self.searchBar.text = @"";
 }
 
 - (void)setDatabase:(std::auto_ptr<LastPass::Parser>)database
