@@ -5,6 +5,13 @@
 
 #import "LastPassParser.h"
 
+namespace
+{
+
+NSTimeInterval const ERROR_ANIMATION_DURATION = 0.4;
+
+}
+
 @implementation LoginViewController
 
 @synthesize emailInput = emailInput_;
@@ -87,7 +94,6 @@
 	{
 		self.errorLabel.hidden = YES;
 	}
-
 }
 
 - (void)showBusyIndicator:(BOOL)show
@@ -102,6 +108,22 @@
 	{
 		[self.busyIndicator stopAnimating];
 	}
+}
+
+- (void)showErrorAndRetry:(NSString *)text
+{
+	[self showBusyIndicator:NO];
+	
+	self.errorLabel.transform = CGAffineTransformMakeTranslation(self.view.frame.size.width, 0);
+	[self setErrorText:text];
+	
+	[UIView animateWithDuration:ERROR_ANIMATION_DURATION
+		animations:^{
+			self.errorLabel.transform = CGAffineTransformIdentity;
+		}
+		completion:^(BOOL) {
+			[self enableControls:YES];
+		}];
 }
 
 - (void)quit
@@ -147,9 +169,7 @@
 		},
 		
 		^(NSString *errorMessage) {
-			[self enableControls:YES];
-			[self showBusyIndicator:NO];
-			[self setErrorText:errorMessage];
+			[self showErrorAndRetry:errorMessage];
 		}
 	);
 #endif
