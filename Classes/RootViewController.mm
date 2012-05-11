@@ -8,6 +8,11 @@
 
 @synthesize searchBar = searchBar_;
 
+- (void)setDatabase:(std::auto_ptr<LastPass::Parser>)database
+{
+	database_ = database;
+}
+
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
@@ -25,14 +30,14 @@
 	[super viewWillAppear:animated];
 	
 	// TODO: Sort out all the sitation when the database has changed or doesn't exist anymore.
-	if (!lastPassDatabase.get())
+	if (!database_.get())
 	{
 		displayIndex_.clear();
 	}
 	else if (displayIndex_.empty())
 	{
-		displayIndex_.reserve(lastPassDatabase->count());
-		for (size_t i = 0, count = lastPassDatabase->count(); i < count; ++i)
+		displayIndex_.reserve(database_->count());
+		for (size_t i = 0, count = database_->count(); i < count; ++i)
 		{
 			displayIndex_.push_back(i);
 		}
@@ -58,7 +63,7 @@
 		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
 	}
 
-	cell.textLabel.text = [NSString stringWithUTF8String:lastPassDatabase->accounts()[displayIndex_[indexPath.row]].name().c_str()];
+	cell.textLabel.text = [NSString stringWithUTF8String:database_->accounts()[displayIndex_[indexPath.row]].name().c_str()];
 	cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 
 	return cell;
@@ -67,7 +72,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	 AccountViewController *accountView = [[[AccountViewController alloc] initWithNibName:@"AccountViewController" bundle:nil] autorelease];
-	 accountView.account = &lastPassDatabase->accounts()[displayIndex_[indexPath.row]];
+	 accountView.account = &database_->accounts()[displayIndex_[indexPath.row]];
 	 [self.navigationController pushViewController:accountView animated:YES];
 }
 
@@ -91,9 +96,9 @@
 	std::string pattern = [searchText UTF8String];
 
 	displayIndex_.clear();
-	for (size_t i = 0, count = lastPassDatabase->count(); i < count; ++i)
+	for (size_t i = 0, count = database_->count(); i < count; ++i)
 	{
-		if (lastPassDatabase->accounts()[i].name().find(pattern) != std::string::npos)
+		if (database_->accounts()[i].name().find(pattern) != std::string::npos)
 		{
 			displayIndex_.push_back(i);
 		}

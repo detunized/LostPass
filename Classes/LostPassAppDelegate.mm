@@ -1,11 +1,8 @@
 #import "LostPassAppDelegate.h"
-#import "RootViewController.h"
 #import "LoginViewController.h"
 #import "UnlockViewController.h"
 #import "SmokeScreenView.h"
 #import "Settings.h"
-
-std::auto_ptr<LastPass::Parser> lastPassDatabase;
 
 namespace
 {
@@ -34,17 +31,30 @@ NSString *RESET_MESSAGE =
 
 @synthesize window = window_;
 @synthesize navigationController = navigationController_;
+@synthesize rootController = rootController_;
+
++ (LostPassAppDelegate *)instance
+{
+	return [UIApplication sharedApplication].delegate;
+}
+
++ (void)setDatabaseToRoot:(std::auto_ptr<LastPass::Parser>)database
+{
+	[[self instance].rootController setDatabase:database];
+}
 
 + (void)resetDatabase
 {
-	lastPassDatabase.reset();
+	[self setDatabaseToRoot:std::auto_ptr<LastPass::Parser>(0)];
 	[Settings setDatabase:@"" encryptionKey:@""];
 }
 
 + (void)loadDatabase
 {
 	assert([Settings haveDatabaseAndKey]);
-	lastPassDatabase.reset(new LastPass::Parser([[Settings database] UTF8String], [[Settings encryptionKey] UTF8String]));
+	[self setDatabaseToRoot:std::auto_ptr<LastPass::Parser>(new LastPass::Parser(
+		[[Settings database] UTF8String], 
+		[[Settings encryptionKey] UTF8String]))];
 }
 
 - (void)pushWelcomeSequence:(NSString *)welcomeText
@@ -202,6 +212,7 @@ NSString *RESET_MESSAGE =
 
 - (void)dealloc
 {
+	[rootController_ release];
 	[navigationController_ release];
 	[window_ release];
 
