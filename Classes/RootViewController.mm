@@ -69,9 +69,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	 AccountViewController *accountView = [[[AccountViewController alloc] initWithNibName:@"AccountViewController" bundle:nil] autorelease];
-	 accountView.account = &database_->accounts()[displayIndex_[indexPath.row]];
-	 [self.navigationController pushViewController:accountView animated:YES];
+	[self.navigationController
+		pushViewController:[AccountViewController accountScreen:&database_->accounts()[displayIndex_[indexPath.row]]]
+		animated:YES];
 }
 
 - (void)dealloc

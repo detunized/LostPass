@@ -2,7 +2,14 @@
 
 @implementation AccountViewController
 
-@synthesize account = account_;
++ (AccountViewController *)accountScreen:(LastPass::Parser::Account const *)account
+{
+	AccountViewController *controller = [[[AccountViewController alloc] 
+		initWithNibName:@"AccountViewController" 
+		bundle:nil] autorelease];
+	controller->account_ = account;
+	return controller;
+}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -32,16 +39,16 @@
 	{
 	case 0:
 		name = NSLocalizedString(@"Name", @"Name");
-		value = &self.account->name();
+		value = &account_->name();
 		break;
 	case 1:
 		name = NSLocalizedString(@"Username", @"Username");
-		value = &self.account->username();
+		value = &account_->username();
 		copyAction = @selector(copyUsername:);
 		break;
 	case 2:
 		name = NSLocalizedString(@"Password", @"Password");
-		value = &self.account->password();
+		value = &account_->password();
 		copyAction = @selector(copyPassword:);
 		break;
 	}
@@ -72,12 +79,12 @@
 
 - (void)copyUsername:(id)sender
 {
-	[self copyToClipboard:self.account->username()];
+	[self copyToClipboard:account_->username()];
 }
 
 - (void)copyPassword:(id)sender
 {
-	[self copyToClipboard:self.account->password()];
+	[self copyToClipboard:account_->password()];
 }
 
 @end
