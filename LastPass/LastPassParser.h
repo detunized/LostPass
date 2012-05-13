@@ -63,7 +63,15 @@ private:
 	void parse();
 	void parse_ACCT(uint8_t const *data, size_t size);
 
+	// Guesses encryption cipher from the data contents.
+	std::vector<uint8_t> decrypt_aes256(uint8_t const *data, size_t size);
+
 	std::vector<uint8_t> decrypt_aes256_ecb(uint8_t const *data, size_t size);
+	std::vector<uint8_t> decrypt_aes256_cbc(uint8_t const *iv, uint8_t const *data, size_t size);
+
+	// The cipher parameter is actually an OpenSSL EVP_CIPHER.  Exposing this would force users of this library
+	// to include libcrypto headers for no good reason.
+	std::vector<uint8_t> decrypt_aes256(void const *cipher, uint8_t const *iv, uint8_t const *data, size_t size);
 
 	std::vector<uint8_t> data_;
 	std::vector<uint8_t> key_;

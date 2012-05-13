@@ -17,6 +17,7 @@
 #include <string>
 #include <iostream>
 #include <fstream>
+#include <cassert>
 
 #include <libkern/OSByteOrder.h>
 

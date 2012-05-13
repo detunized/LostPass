@@ -70,15 +70,15 @@ void Parser::parse_ACCT(uint8_t const *data, size_t size)
 		
 		if (id == 1)
 		{
-			name = decrypt_aes256_ecb(item_data, item_size);
+			name = decrypt_aes256(item_data, item_size);
 		}
 		else if (id == 7)
 		{
-			username = decrypt_aes256_ecb(item_data, item_size);
+			username = decrypt_aes256(item_data, item_size);
 		}
 		else if (id == 8)
 		{
-			password = decrypt_aes256_ecb(item_data, item_size);
+			password = decrypt_aes256(item_data, item_size);
 
 #ifdef CONFIG_CONCEAL_PASSWORDS
 			password = vector<uint8_t>(password.size(), '*');
@@ -93,11 +93,30 @@ void Parser::parse_ACCT(uint8_t const *data, size_t size)
 	}
 }
 
+vector<uint8_t> Parser::decrypt_aes256(uint8_t const *data, size_t size)
+{
+	// When the data starts with '!', total length is a multiple of 16 plus 1 and is bigger than 32 we have a CBC block.
+	// The first 16 bytes is IV.
+	return size % 16 == 1 && size > 32 && data[0] == '!'
+		? decrypt_aes256_cbc(data + 1, data + 17, size - 17)
+		: decrypt_aes256_ecb(data, size);
+}
+
 vector<uint8_t> Parser::decrypt_aes256_ecb(uint8_t const *data, size_t size)
+{
+	return decrypt_aes256(EVP_aes_256_ecb(), 0, data, size);
+}
+
+vector<uint8_t> Parser::decrypt_aes256_cbc(uint8_t const *iv, uint8_t const *data, size_t size)
+{
+	return decrypt_aes256(EVP_aes_256_cbc(), iv, data, size);
+}
+
+vector<uint8_t> Parser::decrypt_aes256(void const *cipher, uint8_t const *iv, uint8_t const *data, size_t size)
 {
 	EVP_CIPHER_CTX context;
 	EVP_CIPHER_CTX_init(&context);
-	EVP_DecryptInit(&context, EVP_aes_256_ecb(), &key_[0], 0);
+	EVP_DecryptInit(&context, static_cast<EVP_CIPHER const *>(cipher), &key_[0], iv);
 	
 	vector<uint8_t> out(size + EVP_MAX_BLOCK_LENGTH);
 	int decrypted_size = 0;
