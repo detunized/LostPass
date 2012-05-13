@@ -1,7 +1,6 @@
 #import "LostPassAppDelegate.h"
 #import "LoginViewController.h"
 #import "UnlockViewController.h"
-#import "SmokeScreenView.h"
 #import "Settings.h"
 
 namespace
@@ -29,6 +28,8 @@ NSString *RESET_MESSAGE =
 
 @implementation LostPassAppDelegate
 
+@synthesize modalScreens = modalScreens_;
+@synthesize smokeScreen = smokeScreen_;
 @synthesize window = window_;
 @synthesize navigationController = navigationController_;
 @synthesize rootController = rootController_;
@@ -45,7 +46,7 @@ NSString *RESET_MESSAGE =
 
 + (void)resetDatabase
 {
-	[self setDatabaseToRoot:std::auto_ptr<LastPass::Parser>(0)];
+	[self setDatabaseToRoot:std::auto_ptr<LastPass::Parser>(new LastPass::Parser())];
 	[Settings setDatabase:@"" encryptionKey:@""];
 }
 
@@ -57,98 +58,134 @@ NSString *RESET_MESSAGE =
 		[[Settings encryptionKey] UTF8String]))];
 }
 
+- (void)pushScreen:(UIViewController *)screen animated:(BOOL)animated
+{
+	// Push onto the last modal screen (if any).
+	[[self.modalScreens count] == 0 ? self.navigationController : [self.modalScreens lastObject]
+		presentModalViewController:screen
+		animated:animated];
+
+	[self.modalScreens addObject:screen];
+}
+
+- (void)popScreenAnimated:(BOOL)animated
+{
+	if ([self.modalScreens count] > 0)
+	{
+		[[self.modalScreens lastObject] dismissModalViewControllerAnimated:animated];
+		[self.modalScreens removeLastObject];
+	}
+}
+
+- (void)popAllScreens
+{
+	if ([self.modalScreens count] > 0)
+	{
+		[self.navigationController dismissModalViewControllerAnimated:NO];
+		[self.modalScreens removeAllObjects];
+	}
+}
+
+- (void)pushLoginScreen
+{
+	[self pushScreen:[LoginViewController loginScreen] animated:NO];
+}
+
 - (void)pushWelcomeSequence:(NSString *)welcomeText
 {
-	LoginViewController *loginScreen = [LoginViewController loginScreen];
-	[self.navigationController presentModalViewController:loginScreen animated:NO];
+	[self pushLoginScreen];
 
 	UnlockViewController *unlockScreen = [UnlockViewController chooseScreen];
 	unlockScreen.onCodeSet = ^(NSString *code) { 
 		[Settings setUnlockCode:code];
-		[loginScreen dismissModalViewControllerAnimated:YES];
+		[self popScreenAnimated:YES];
 	};
-	[loginScreen presentModalViewController:unlockScreen animated:NO];
+	[self pushScreen:unlockScreen animated:NO];
 	
 	// Welcome screen
-	UIViewController *welcomeScreen = [SmokeScreenView smokeScreenController:welcomeText autoDismiss:YES];
-	[unlockScreen presentModalViewController:welcomeScreen animated:NO];
+	UIViewController *welcomeScreen = [SmokeScreenView 
+		smokeScreenController:welcomeText 
+		onTouched:^{ [self popScreenAnimated:NO]; }];
+	[self pushScreen:welcomeScreen animated:NO];
 }
 
-- (void)resetEverything:(SmokeScreenView *)smokeScreen
+- (void)resetEverything
 {
-	[self.navigationController dismissModalViewControllerAnimated:NO];
+	assert(self.smokeScreen);
+
+	[self popAllScreens];
 	[self pushWelcomeSequence:WELCOME_BACK_MESSAGE];
 	
 	// Simulate some busy work by showing the spinning star to the user.
 	UIActivityIndicatorView *busyIcon = [[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge] autorelease];
 	busyIcon.frame = CGRectOffset(
 		busyIcon.frame, 
-		smokeScreen.frame.size.width / 2 - busyIcon.frame.size.width / 2, 
-		smokeScreen.frame.size.height / 2 - busyIcon.frame.size.height / 2 );
-	[smokeScreen addSubview:busyIcon];
+		self.smokeScreen.frame.size.width / 2 - busyIcon.frame.size.width / 2, 
+		self.smokeScreen.frame.size.height / 2 - busyIcon.frame.size.height / 2 );
+	[self.smokeScreen addSubview:busyIcon];
 	[busyIcon startAnimating];
 	
 	dispatch_after(
 		dispatch_time(DISPATCH_TIME_NOW, RESET_ANIMATION_DURATION * NSEC_PER_SEC), 
 		dispatch_get_current_queue(), 
 		^{
-			[smokeScreen slideOut:SMOKE_SCREEN_ANIMATION_DURATION
+			[self.smokeScreen slideOut:SMOKE_SCREEN_ANIMATION_DURATION
 				onCompletion:^ {
-					[smokeScreen removeFromSuperview];
+					[self.smokeScreen removeFromSuperview];
+					self.smokeScreen = nil;
 				}];
 		});
 }
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+- (void)pushUnlockScreen
 {
-	[Settings initialize];
-
-	[self.window addSubview:self.navigationController.view];
-	[self.window makeKeyAndVisible];
+	assert([Settings haveUnlockCode]);
+	assert([Settings haveDatabaseAndKey]);
 	
+	UnlockViewController *screen = [UnlockViewController verifyScreen:[Settings unlockCode]];
+	
+	screen.onCodeAccepted = ^{
+		[LostPassAppDelegate loadDatabase];
+		[self popScreenAnimated:YES];
+	};
+	
+	screen.onCodeRejected = ^{
+		// Note: __block is needed to avoid a retain cycle within the block.
+		self.smokeScreen = [SmokeScreenView 
+			smokeScreenView:RESET_MESSAGE
+			onTouched:^{ 
+				[self resetEverything]; 
+			}];
+		[self.window addSubview:self.smokeScreen];
+
+		[self.smokeScreen slideIn:SMOKE_SCREEN_ANIMATION_DURATION onCompletion:^{}];
+
+		[LostPassAppDelegate resetDatabase];
+	};
+	
+	[self pushScreen:screen animated:NO];
+}
+
+- (void)pushScreens
+{
 	BOOL haveCode = [Settings haveUnlockCode];
 	BOOL haveDatabase = [Settings haveDatabaseAndKey];
 
 	if (haveCode)
 	{
-		UIViewController *screen = nil;
-		
 		if (haveDatabase)
 		{
 			// The unlock code is set and we have the database downloaded.
 			// Show the unlock screen and go straigh to the accounts.
 			// This should be the most common sittuation.
-			UnlockViewController *unlockScreen = [UnlockViewController verifyScreen:[Settings unlockCode]];
-			
-			unlockScreen.onCodeAccepted = ^{
-				[LostPassAppDelegate loadDatabase];
-				[self.navigationController dismissModalViewControllerAnimated:YES];
-			};
-			
-			unlockScreen.onCodeRejected = ^{
-				// Note: __block is needed to avoid a retain cycle within the block.
-				__block SmokeScreenView *smokeScreen = [SmokeScreenView smokeScreenView:RESET_MESSAGE];
-				[self.window addSubview:smokeScreen];
-
-				smokeScreen.onTouched = ^{
-					[self resetEverything:smokeScreen];
-				};
-			
-				[smokeScreen slideIn:SMOKE_SCREEN_ANIMATION_DURATION onCompletion:^{}];
-
-				[LostPassAppDelegate resetDatabase];
-			};
-			
-			screen = unlockScreen;
+			[self pushUnlockScreen];
 		}
 		else
 		{
 			// The code is set, but there's no database, so there's no need for unlocking.
 			// Go to the login screen.
-			screen = [[[LoginViewController alloc] initWithNibName:nil bundle:nil] autorelease];
+			[self pushLoginScreen];
 		}
-
-		[self.navigationController presentModalViewController:screen animated:NO];
 	}
 	else
 	{
@@ -161,12 +198,27 @@ NSString *RESET_MESSAGE =
 
 		[self pushWelcomeSequence:WELCOME_MESSAGE];
 	}
+}
 
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+	NSLog(@"didFinishLaunchingWithOptions");
+
+	[Settings initialize];
+
+	[self.window addSubview:self.navigationController.view];
+	[self.window makeKeyAndVisible];
+	
+	self.modalScreens = [NSMutableArray arrayWithCapacity:4];
+	
+	[self pushScreens];
+	
 	return YES;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
+	NSLog(@"applicationWillResignActive");
 	/*
 	 Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
 	 Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
@@ -175,6 +227,7 @@ NSString *RESET_MESSAGE =
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
+	NSLog(@"applicationDidEnterBackground");
 	/*
 	 Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
 	 If your application supports background execution, called instead of applicationWillTerminate: when the user quits.
@@ -183,6 +236,7 @@ NSString *RESET_MESSAGE =
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
+	NSLog(@"applicationWillEnterForeground");
 	/*
 	 Called as part of  transition from the background to the inactive state: here you can undo many of the changes made on entering the background.
 	 */
@@ -190,6 +244,7 @@ NSString *RESET_MESSAGE =
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
+	NSLog(@"applicationDidBecomeActive");
 	/*
 	 Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 	 */
@@ -197,6 +252,7 @@ NSString *RESET_MESSAGE =
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
+	NSLog(@"applicationWillTerminate");
 	/*
 	 Called when the application is about to terminate.
 	 See also applicationDidEnterBackground:.
@@ -212,6 +268,9 @@ NSString *RESET_MESSAGE =
 
 - (void)dealloc
 {
+	self.modalScreens = nil;
+	self.smokeScreen = nil;
+
 	[rootController_ release];
 	[navigationController_ release];
 	[window_ release];
