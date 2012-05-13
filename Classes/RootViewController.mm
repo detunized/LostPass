@@ -11,6 +11,8 @@
 - (void)setInitialIndex
 {
 	displayIndex_.clear();
+
+	assert(database_.get());
 	displayIndex_.reserve(database_->count());
 	for (size_t i = 0, count = database_->count(); i < count; ++i)
 	{
@@ -28,6 +30,8 @@
 
 - (void)setDatabase:(std::auto_ptr<LastPass::Parser>)database
 {
+	assert(database.get());
+
 	database_ = database;
 	[self resetView];
 }
