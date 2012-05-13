@@ -7,8 +7,8 @@ typedef void (^SmokeScreenViewOnTouched)();
 @property(nonatomic, copy) SmokeScreenViewOnTouched onTouched;
 @property(nonatomic, retain) IBOutlet UILabel *titleLabel;
 
-+ (SmokeScreenView *)smokeScreenView:(NSString *)title;
-+ (UIViewController *)smokeScreenController:(NSString *)title autoDismiss:(BOOL)autoDismiss;
++ (SmokeScreenView *)smokeScreenView:(NSString *)title onTouched:(SmokeScreenViewOnTouched)onTouched;
++ (UIViewController *)smokeScreenController:(NSString *)title onTouched:(SmokeScreenViewOnTouched)onTouched;
 
 - (void)setTitle:(NSString *)title;
 
