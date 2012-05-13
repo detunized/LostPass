@@ -40,6 +40,11 @@ public:
 	
 	static size_t const KEY_LENGTH = 32;
 
+	// Creates valid empty database
+	Parser()
+	{
+	}
+
 	Parser(char const *database_base64, char const *key_base64);
 	
 	size_t count() const
