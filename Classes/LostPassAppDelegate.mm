@@ -58,6 +58,25 @@ NSString *RESET_MESSAGE =
 		[[Settings encryptionKey] UTF8String]))];
 }
 
+- (void)showBlackScreen
+{
+	self.smokeScreen = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
+	self.smokeScreen.backgroundColor = [UIColor blackColor];
+	[self.window addSubview:self.smokeScreen];
+}
+
+- (void)hideBlackScreen
+{
+	[self.smokeScreen removeFromSuperview];
+	self.smokeScreen = nil;
+}
+
+- (void)hideSmokeScreen
+{
+	[self.smokeScreen removeFromSuperview];
+	self.smokeScreen = nil;
+}
+
 - (void)pushScreen:(UIViewController *)screen animated:(BOOL)animated
 {
 	// Push onto the last modal screen (if any).
@@ -228,18 +247,19 @@ NSString *RESET_MESSAGE =
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
 	NSLog(@"applicationDidEnterBackground");
-	/*
-	 Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
-	 If your application supports background execution, called instead of applicationWillTerminate: when the user quits.
-	 */
+
+	[self popAllScreens];
+	[self hideSmokeScreen];
+	[self showBlackScreen];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
 	NSLog(@"applicationWillEnterForeground");
-	/*
-	 Called as part of  transition from the background to the inactive state: here you can undo many of the changes made on entering the background.
-	 */
+
+	[self popAllScreens];
+	[self hideBlackScreen];
+	[self pushScreens];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
