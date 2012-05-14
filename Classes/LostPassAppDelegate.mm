@@ -179,6 +179,7 @@ NSString *RESET_MESSAGE =
 
 		[self.smokeScreen slideIn:SMOKE_SCREEN_ANIMATION_DURATION onCompletion:^{}];
 
+		[Settings setUnlockCode:@""];
 		[LostPassAppDelegate resetDatabase];
 	};
 	
