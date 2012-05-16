@@ -136,7 +136,8 @@ NSString *RESET_MESSAGE =
 	[self pushWelcomeSequence:WELCOME_BACK_MESSAGE];
 	
 	// Simulate some busy work by showing the spinning star to the user.
-	UIActivityIndicatorView *busyIcon = [[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge] autorelease];
+	UIActivityIndicatorView *busyIcon = [[[UIActivityIndicatorView alloc] 
+		initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge] autorelease];
 	busyIcon.frame = CGRectOffset(
 		busyIcon.frame, 
 		self.smokeScreen.frame.size.width / 2 - busyIcon.frame.size.width / 2, 
@@ -179,6 +180,7 @@ NSString *RESET_MESSAGE =
 
 		[self.smokeScreen slideIn:SMOKE_SCREEN_ANIMATION_DURATION onCompletion:^{}];
 
+		[Settings setWasReset:YES];
 		[Settings setUnlockCode:@""];
 		[LostPassAppDelegate resetDatabase];
 	};
@@ -216,7 +218,7 @@ NSString *RESET_MESSAGE =
 			[LostPassAppDelegate resetDatabase];
 		}
 
-		[self pushWelcomeSequence:WELCOME_MESSAGE];
+		[self pushWelcomeSequence:[Settings wasReset] ? WELCOME_BACK_MESSAGE : WELCOME_MESSAGE];
 	}
 }
 

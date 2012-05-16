@@ -4,6 +4,9 @@
 
 + (void)initialize;
 
++ (BOOL)wasReset;
++ (void)setWasReset:(BOOL)yesNo;
+
 + (NSString *)lastEmail;
 + (void)setLastEmail:(NSString *)email;
 

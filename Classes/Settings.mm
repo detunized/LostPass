@@ -5,6 +5,7 @@
 namespace
 {
 
+NSString *const WAS_RESET = @"wasReset";
 NSString *const LAST_EMAIL = @"lastEmail";
 NSString *const UNLOCK_CODE = @"unlockCode";
 NSString *const DATABASE = @"database";
@@ -48,6 +49,7 @@ NSString *getFileContents(NSString *filename)
 + (void)initialize
 {
 	NSDictionary *defaults = [NSDictionary dictionaryWithObjectsAndKeys:
+		[NSNumber numberWithBool:NO], WAS_RESET,
 		@"", LAST_EMAIL,
 		@"", UNLOCK_CODE,
 		@"", DATABASE,
@@ -55,6 +57,16 @@ NSString *getFileContents(NSString *filename)
 		nil];
 
 	[[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
+}
+
++ (BOOL)wasReset
+{
+	return getBool(WAS_RESET);
+}
+
++ (void)setWasReset:(BOOL)yesNo
+{
+	setBool(WAS_RESET, yesNo);
 }
 
 + (NSString *)lastEmail
