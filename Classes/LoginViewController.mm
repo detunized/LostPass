@@ -9,6 +9,7 @@ namespace
 {
 
 NSTimeInterval const ERROR_ANIMATION_DURATION = 0.4;
+NSString const *const WELCOME_MESSAGE = @"Please login to your LastPass account.";
 
 }
 
@@ -70,6 +71,42 @@ NSTimeInterval const ERROR_ANIMATION_DURATION = 0.4;
 	self.errorLabel = nil;
 }
 
+- (void)showMessage:(NSString *)text onCompletion:(void (^)())onCompletion
+{
+	self.errorLabel.transform = CGAffineTransformMakeTranslation(self.view.frame.size.width, 0);
+	self.errorLabel.text = text;
+	
+	[UIView animateWithDuration:ERROR_ANIMATION_DURATION
+		animations:^{
+			self.errorLabel.transform = CGAffineTransformIdentity;
+		}
+		completion:^(BOOL) {
+			if (onCompletion)
+			{
+				onCompletion();
+			}
+		}];
+}
+
+- (void)clearErrorText
+{
+	self.errorLabel.text = @"";
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+	[super viewWillAppear:animated];
+	
+	[self clearErrorText];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+	[super viewDidAppear:animated];
+	
+	[self showMessage:WELCOME_MESSAGE onCompletion:nil];
+}
+
 - (void)enableLoginButton
 {
 	self.loginButton.enabled = [self.emailInput.text length] > 0 && [self.passwordInput.text length] > 0;
@@ -81,19 +118,6 @@ NSTimeInterval const ERROR_ANIMATION_DURATION = 0.4;
 	self.passwordInput.enabled = enable;
 	self.loginButton.enabled = enable;
 	self.cancelButton.enabled = enable;
-}
-
-- (void)setErrorText:(NSString *)text
-{
-	if ([text length] > 0)
-	{
-		self.errorLabel.text = text;
-		self.errorLabel.hidden = NO;
-	}
-	else
-	{
-		self.errorLabel.hidden = YES;
-	}
 }
 
 - (void)showBusyIndicator:(BOOL)show
@@ -114,16 +138,9 @@ NSTimeInterval const ERROR_ANIMATION_DURATION = 0.4;
 {
 	[self showBusyIndicator:NO];
 	
-	self.errorLabel.transform = CGAffineTransformMakeTranslation(self.view.frame.size.width, 0);
-	[self setErrorText:text];
-	
-	[UIView animateWithDuration:ERROR_ANIMATION_DURATION
-		animations:^{
-			self.errorLabel.transform = CGAffineTransformIdentity;
-		}
-		completion:^(BOOL) {
-			[self enableControls:YES];
-		}];
+	[self showMessage:text onCompletion:^{ 
+		[self enableControls:YES]; 
+	}];
 }
 
 - (void)quit
@@ -154,7 +171,7 @@ NSTimeInterval const ERROR_ANIMATION_DURATION = 0.4;
 #else
 	[self enableControls:NO];
 	[self showBusyIndicator:YES];
-	[self setErrorText:@""];
+	[self clearErrorText];
 	
 	[Settings setLastEmail:self.emailInput.text];
 
