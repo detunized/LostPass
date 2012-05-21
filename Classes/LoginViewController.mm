@@ -8,7 +8,14 @@
 namespace
 {
 
-NSTimeInterval const ERROR_ANIMATION_DURATION = 0.4;
+enum MessageAnimationStyle
+{
+	MessageAnimationStyleSlideIn,
+	MessageAnimationStyleSlideOut
+};
+
+NSTimeInterval const MESSAGE_SLIDE_IN_ANIMATION_DURATION = 0.4;
+NSTimeInterval const MESSAGE_SLIDE_OUT_ANIMATION_DURATION = 0.2;
 NSString const *const WELCOME_MESSAGE = @"Please login to your LastPass account.";
 
 }
@@ -71,14 +78,38 @@ NSString const *const WELCOME_MESSAGE = @"Please login to your LastPass account.
 	self.errorLabel = nil;
 }
 
-- (void)showMessage:(NSString *)text onCompletion:(void (^)())onCompletion
+- (void)animateMessage:(NSString *)text animationStyle:(MessageAnimationStyle)animationStyle onCompletion:(void (^)())onCompletion
 {
-	self.errorLabel.transform = CGAffineTransformMakeTranslation(self.view.frame.size.width, 0);
-	self.errorLabel.text = text;
+	NSTimeInterval duration = 0;
+	switch (animationStyle)
+	{
+	case MessageAnimationStyleSlideIn:
+		self.errorLabel.transform = CGAffineTransformMakeTranslation(self.view.frame.size.width, 0);
+		self.errorLabel.text = text;
+		duration = MESSAGE_SLIDE_IN_ANIMATION_DURATION;
+		break;
+	case MessageAnimationStyleSlideOut:
+		duration = MESSAGE_SLIDE_OUT_ANIMATION_DURATION; 
+		break;
+	default:
+		assert(false);
+		break;
+	}
 	
-	[UIView animateWithDuration:ERROR_ANIMATION_DURATION
+	[UIView animateWithDuration:duration
 		animations:^{
-			self.errorLabel.transform = CGAffineTransformIdentity;
+			switch (animationStyle)
+			{
+			case MessageAnimationStyleSlideIn:
+				self.errorLabel.transform = CGAffineTransformIdentity;
+				break;
+			case MessageAnimationStyleSlideOut:
+				self.errorLabel.transform = CGAffineTransformMakeTranslation(-self.view.frame.size.width, 0);
+				break;
+			default:
+				assert(false);
+				break;
+			}
 		}
 		completion:^(BOOL) {
 			if (onCompletion)
@@ -86,6 +117,16 @@ NSString const *const WELCOME_MESSAGE = @"Please login to your LastPass account.
 				onCompletion();
 			}
 		}];
+}
+
+- (void)showMessage:(NSString *)text onCompletion:(void (^)())onCompletion
+{
+	[self animateMessage:text animationStyle:MessageAnimationStyleSlideIn onCompletion:onCompletion];
+}
+
+- (void)hideMessage
+{
+	[self animateMessage:nil animationStyle:MessageAnimationStyleSlideOut onCompletion:nil];
 }
 
 - (void)clearErrorText
@@ -171,7 +212,7 @@ NSString const *const WELCOME_MESSAGE = @"Please login to your LastPass account.
 #else
 	[self enableControls:NO];
 	[self showBusyIndicator:YES];
-	[self clearErrorText];
+	[self hideMessage];
 	
 	[Settings setLastEmail:self.emailInput.text];
 
