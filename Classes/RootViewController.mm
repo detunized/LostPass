@@ -41,7 +41,7 @@
 	[super viewDidLoad];
 	
 	self.tableView.tableHeaderView = self.searchBar;
-	self.navigationItem.title = NSLocalizedString(@"Accounts", @"Accounts");
+	self.navigationItem.title = NSLocalizedString(@"Accounts", 0);
 	
 	self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh 
 		target:self 

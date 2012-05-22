@@ -44,16 +44,16 @@ enum TableRows
 	switch (indexPath.row)
 	{
 	case TableRowName:
-		name = NSLocalizedString(@"Name", @"Name");
+		name = NSLocalizedString(@"Name", 0);
 		value = &account_->name();
 		break;
 	case TableRowUsername:
-		name = NSLocalizedString(@"Username", @"Username");
+		name = NSLocalizedString(@"Username", 0);
 		value = &account_->username();
 		copyAction = @selector(copyUsername:);
 		break;
 	case TableRowPassword:
-		name = NSLocalizedString(@"Password", @"Password");
+		name = NSLocalizedString(@"Password", 0);
 		value = &account_->password();
 		copyAction = @selector(copyPassword:);
 		break;
