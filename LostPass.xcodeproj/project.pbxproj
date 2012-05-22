@@ -45,6 +45,8 @@
 		60903F40154D50C5003E742C /* Settings.mm in Sources */ = {isa = PBXBuildFile; fileRef = 60903F3F154D50C5003E742C /* Settings.mm */; };
 		60903F96154D79A0003E742C /* copy.png in Resources */ = {isa = PBXBuildFile; fileRef = 60903F94154D79A0003E742C /* copy.png */; };
 		60903F97154D79A0003E742C /* copy@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 60903F95154D79A0003E742C /* copy@2x.png */; };
+		60E31E36156C19BA00ECBD3B /* SFHFKeychainUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 60E31E35156C19BA00ECBD3B /* SFHFKeychainUtils.m */; };
+		60E31E3E156C19FE00ECBD3B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60E31E3D156C19FE00ECBD3B /* Security.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -98,6 +100,9 @@
 		60903F3F154D50C5003E742C /* Settings.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Settings.mm; sourceTree = "<group>"; };
 		60903F94154D79A0003E742C /* copy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = copy.png; sourceTree = "<group>"; };
 		60903F95154D79A0003E742C /* copy@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "copy@2x.png"; sourceTree = "<group>"; };
+		60E31E34156C19BA00ECBD3B /* SFHFKeychainUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SFHFKeychainUtils.h; path = external/SFHFKeychainUtils.h; sourceTree = "<group>"; };
+		60E31E35156C19BA00ECBD3B /* SFHFKeychainUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SFHFKeychainUtils.m; path = external/SFHFKeychainUtils.m; sourceTree = "<group>"; };
+		60E31E3D156C19FE00ECBD3B /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		8D1107310486CEB800E47090 /* LostPass-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "LostPass-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -114,6 +119,7 @@
 				6085F1A31536403200912BE4 /* libssl.a in Frameworks */,
 				6085F1A91536406400912BE4 /* libz.dylib in Frameworks */,
 				603B263815501CB40016B0F6 /* AudioToolbox.framework in Frameworks */,
+				60E31E3E156C19FE00ECBD3B /* Security.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -158,6 +164,7 @@
 			children = (
 				080E96DDFE201D6D7F000001 /* Classes */,
 				60903DE9154A1789003E742C /* LastPass */,
+				60E31E32156C199400ECBD3B /* external */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
@@ -212,6 +219,7 @@
 				6085F19D1536401900912BE4 /* libcurl.a */,
 				6085F1A21536403200912BE4 /* libssl.a */,
 				6085F1A81536406400912BE4 /* libz.dylib */,
+				60E31E3D156C19FE00ECBD3B /* Security.framework */,
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
 			);
 			name = Frameworks;
@@ -224,6 +232,15 @@
 				6085ECBC1530D3B800912BE4 /* LastPassParser.cpp */,
 			);
 			name = LastPass;
+			sourceTree = "<group>";
+		};
+		60E31E32156C199400ECBD3B /* external */ = {
+			isa = PBXGroup;
+			children = (
+				60E31E34156C19BA00ECBD3B /* SFHFKeychainUtils.h */,
+				60E31E35156C19BA00ECBD3B /* SFHFKeychainUtils.m */,
+			);
+			name = external;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -316,6 +333,7 @@
 				603B255D154F28700016B0F6 /* UnlockViewController.mm in Sources */,
 				603578A015559E3200C3651E /* SmokeScreenView.mm in Sources */,
 				6035842D156B706600C3651E /* Utilities.mm in Sources */,
+				60E31E36156C19BA00ECBD3B /* SFHFKeychainUtils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
