@@ -9,10 +9,14 @@ namespace
 
 NSString *const KEYCHAIN_SERVICE_NAME = @"net.detunized.lostpass";
 
+// These go to the user defaults.
+NSString *const FIRST_TIME = @"firstTime";
 NSString *const WAS_RESET = @"wasReset";
 NSString *const LAST_EMAIL = @"lastEmail";
-NSString *const UNLOCK_CODE = @"unlockCode";
 NSString *const DATABASE = @"database";
+
+// And these are stored in the keychain.
+NSString *const UNLOCK_CODE = @"unlockCode";
 NSString *const ENCRYPTION_KEY = @"encryptionKey";
 
 BOOL getBool(NSString *key)
@@ -59,17 +63,33 @@ void storeInKeychain(NSString *key, NSString *value)
 	[SFHFKeychainUtils storeUsername:key andPassword:value forServiceName:KEYCHAIN_SERVICE_NAME updateExisting:YES error:nil];
 }
 
+void deleteFromKeychain(NSString *key)
+{
+	[SFHFKeychainUtils deleteItemForUsername:key andServiceName:KEYCHAIN_SERVICE_NAME error:nil];
+}
+
 }
 
 + (void)initialize
 {
 	NSDictionary *defaults = [NSDictionary dictionaryWithObjectsAndKeys:
+		[NSNumber numberWithBool:YES], FIRST_TIME,
 		[NSNumber numberWithBool:NO], WAS_RESET,
 		@"", LAST_EMAIL,
 		@"", DATABASE,
 		nil];
 
 	[[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
+	
+	// When the application is reinstalled the user default are wiped, but the keychain stays untouched.
+	// Remove them from the keychain completely on the first launch.
+	if (getBool(FIRST_TIME))
+	{
+		deleteFromKeychain(UNLOCK_CODE);
+		deleteFromKeychain(ENCRYPTION_KEY);
+
+		setBool(FIRST_TIME, NO);
+	}
 }
 
 + (BOOL)wasReset
