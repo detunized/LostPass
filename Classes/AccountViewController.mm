@@ -1,5 +1,19 @@
 #import "AccountViewController.h"
 
+namespace
+{
+
+enum TableRows
+{
+	TableRowName,
+	TableRowUsername,
+	TableRowPassword,
+
+	TableRowCount
+};
+
+}
+
 @implementation AccountViewController
 
 + (AccountViewController *)accountScreen:(LastPass::Parser::Account const *)account
@@ -18,7 +32,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-	return 3;
+	return TableRowCount;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -37,16 +51,16 @@
 
 	switch (indexPath.row)
 	{
-	case 0:
+	case TableRowName:
 		name = NSLocalizedString(@"Name", @"Name");
 		value = &account_->name();
 		break;
-	case 1:
+	case TableRowUsername:
 		name = NSLocalizedString(@"Username", @"Username");
 		value = &account_->username();
 		copyAction = @selector(copyUsername:);
 		break;
-	case 2:
+	case TableRowPassword:
 		name = NSLocalizedString(@"Password", @"Password");
 		value = &account_->password();
 		copyAction = @selector(copyPassword:);
