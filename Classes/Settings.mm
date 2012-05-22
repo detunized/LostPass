@@ -50,7 +50,7 @@ NSString *getFileContents(NSString *filename)
 
 NSString *retrieveFromKeychain(NSString *key)
 {
-	NSString *value = [SFHFKeychainUtils getPasswordForUsername:UNLOCK_CODE andServiceName:KEYCHAIN_SERVICE_NAME error:nil];
+	NSString *value = [SFHFKeychainUtils getPasswordForUsername:key andServiceName:KEYCHAIN_SERVICE_NAME error:nil];
 	return value ? value : @"";
 }
 
@@ -109,14 +109,12 @@ void storeInKeychain(NSString *key, NSString *value)
 	storeInKeychain(UNLOCK_CODE, code);
 }
 
-// TODO: The encryption key should not be stored in the user settings!!!
-//       This is just for testing.
 + (BOOL)haveDatabaseAndKey;
 {
 #ifdef CONFIG_USE_LOCAL_DATABASE
 	return YES;
 #else
-	return [getString(DATABASE) length] > 0 && [getString(ENCRYPTION_KEY) length] > 0;
+	return [getString(DATABASE) length] > 0 && [retrieveFromKeychain(ENCRYPTION_KEY) length] > 0;
 #endif
 }
 
@@ -134,7 +132,7 @@ void storeInKeychain(NSString *key, NSString *value)
 #ifdef CONFIG_USE_LOCAL_DATABASE
 	return getFileContents(@"key.txt");
 #else
-	return getString(ENCRYPTION_KEY);
+	return retrieveFromKeychain(ENCRYPTION_KEY);
 #endif
 }
 
@@ -143,7 +141,7 @@ void storeInKeychain(NSString *key, NSString *value)
 #ifdef CONFIG_USE_LOCAL_DATABASE
 #else
 	setString(DATABASE, database);
-	setString(ENCRYPTION_KEY, key);
+	storeInKeychain(ENCRYPTION_KEY, key);
 #endif
 }
 
