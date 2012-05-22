@@ -1,9 +1,13 @@
 #import "Settings.h"
 
+#import "../external/SFHFKeychainUtils.h"
+
 @implementation Settings
 
 namespace
 {
+
+NSString const *const KEYCHAIN_SERVICE_NAME = @"net.detunized.lostpass";
 
 NSString *const WAS_RESET = @"wasReset";
 NSString *const LAST_EMAIL = @"lastEmail";
@@ -44,6 +48,17 @@ NSString *getFileContents(NSString *filename)
 	];
 }
 
+NSString *retrieveFromKeychain(NSString *key)
+{
+	NSString *value = [SFHFKeychainUtils getPasswordForUsername:UNLOCK_CODE andServiceName:KEYCHAIN_SERVICE_NAME error:nil];
+	return value ? value : @"";
+}
+
+void storeInKeychain(NSString *key, NSString *value)
+{
+	[SFHFKeychainUtils storeUsername:key andPassword:value forServiceName:KEYCHAIN_SERVICE_NAME updateExisting:YES error:nil];
+}
+
 }
 
 + (void)initialize
@@ -79,21 +94,19 @@ NSString *getFileContents(NSString *filename)
 	setString(LAST_EMAIL, email);
 }
 
-// TODO: The unlock code should not be stored in the user settings!!!
-//       This is just for testing.
 + (BOOL)haveUnlockCode
 {
-	return [getString(UNLOCK_CODE) length] > 0;
+	return [retrieveFromKeychain(UNLOCK_CODE) length] > 0;
 }
 
 + (NSString *)unlockCode
 {
-	return getString(UNLOCK_CODE);
+	return retrieveFromKeychain(UNLOCK_CODE);
 }
 
 + (void)setUnlockCode:(NSString *)code
 {
-	setString(UNLOCK_CODE, code);
+	storeInKeychain(UNLOCK_CODE, code);
 }
 
 // TODO: The encryption key should not be stored in the user settings!!!
