@@ -22,6 +22,9 @@
 
 - (void)resetView
 {
+	// Go back to the account list view.
+	[self.navigationController popToRootViewControllerAnimated:NO];
+
 	[self setInitialIndex];
 	[self.tableView reloadData];
 	
