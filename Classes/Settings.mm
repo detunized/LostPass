@@ -66,9 +66,7 @@ void storeInKeychain(NSString *key, NSString *value)
 	NSDictionary *defaults = [NSDictionary dictionaryWithObjectsAndKeys:
 		[NSNumber numberWithBool:NO], WAS_RESET,
 		@"", LAST_EMAIL,
-		@"", UNLOCK_CODE,
 		@"", DATABASE,
-		@"", ENCRYPTION_KEY,
 		nil];
 
 	[[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
