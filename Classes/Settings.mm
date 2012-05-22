@@ -7,7 +7,7 @@
 namespace
 {
 
-NSString const *const KEYCHAIN_SERVICE_NAME = @"net.detunized.lostpass";
+NSString *const KEYCHAIN_SERVICE_NAME = @"net.detunized.lostpass";
 
 NSString *const WAS_RESET = @"wasReset";
 NSString *const LAST_EMAIL = @"lastEmail";

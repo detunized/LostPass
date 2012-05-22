@@ -56,7 +56,7 @@ NSTimeInterval const MESSAGE_SHOW_DURATION = 1;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	static NSString const *const cellIdentifier = @"cell";
+	static NSString *const cellIdentifier = @"cell";
 
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
 	if (!cell)
