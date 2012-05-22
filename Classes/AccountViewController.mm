@@ -37,14 +37,6 @@ enum TableRows
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (!cell)
-	{
-		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:CellIdentifier] autorelease];
-    }
-	
 	SEL copyAction = nil;
 	NSString *name = nil;
 	std::string const *value = 0;
@@ -67,23 +59,33 @@ enum TableRows
 		break;
 	}
 	
+	NSString *cellType = copyAction ? @"cell-with-copy-button" : @"cell";
+	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellType];
+	if (!cell)
+	{
+		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:cellType] autorelease];
+		
+		// These things are permanent and are set only once.
+		cell.selectionStyle = UITableViewCellSelectionStyleNone;
+
+		if (copyAction)
+		{
+			UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+			[button addTarget:self action:copyAction forControlEvents:UIControlEventTouchUpInside];
+
+			UIImage *image = [UIImage imageNamed:@"copy.png"];
+			[button setFrame:CGRectMake(0, 0, image.size.width, image.size.height)];
+			[button setImage:image forState:UIControlStateNormal];
+			
+			cell.accessoryView = button;
+		}
+	}
+
+	// These might change when the cell is reused.
 	cell.textLabel.text = name;
 	cell.detailTextLabel.text = [NSString stringWithUTF8String:value->c_str()];
-	cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
-	if (copyAction)
-	{
-		UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-		[button addTarget:self action:copyAction forControlEvents:UIControlEventTouchUpInside];
-
-		UIImage *image = [UIImage imageNamed:@"copy.png"];
-		[button setFrame:CGRectMake(0, 0, image.size.width, image.size.height)];
-		[button setImage:image forState:UIControlStateNormal];
-		
-		cell.accessoryView = button;
-	}
-    
-    return cell;
+	return cell;
 }
 
 - (void)copyToClipboard:(std::string const &)text
