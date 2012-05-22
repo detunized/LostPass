@@ -56,6 +56,14 @@ NSTimeInterval const MESSAGE_SHOW_DURATION = 1;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+	static NSString const *const cellIdentifier = @"cell";
+
+	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+	if (!cell)
+	{
+		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:cellIdentifier] autorelease];
+	}
+
 	SEL copyAction = nil;
 	NSString *name = nil;
 	std::string const *value = 0;
@@ -77,32 +85,26 @@ NSTimeInterval const MESSAGE_SHOW_DURATION = 1;
 		copyAction = @selector(copyPassword:);
 		break;
 	}
-	
-	NSString *cellType = copyAction ? @"cell-with-copy-button" : @"cell";
-	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellType];
-	if (!cell)
-	{
-		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:cellType] autorelease];
-		
-		// These things are permanent and are set only once.
-		cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
-		if (copyAction)
-		{
-			UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-			[button addTarget:self action:copyAction forControlEvents:UIControlEventTouchUpInside];
-
-			UIImage *image = [UIImage imageNamed:@"copy.png"];
-			[button setFrame:CGRectMake(0, 0, image.size.width, image.size.height)];
-			[button setImage:image forState:UIControlStateNormal];
-			
-			cell.accessoryView = button;
-		}
-	}
-
-	// These might change when the cell is reused.
 	cell.textLabel.text = name;
 	cell.detailTextLabel.text = [NSString stringWithUTF8String:value->c_str()];
+	cell.selectionStyle = UITableViewCellSelectionStyleNone;
+
+	if (copyAction)
+	{
+		UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+		[button addTarget:self action:copyAction forControlEvents:UIControlEventTouchUpInside];
+
+		UIImage *image = [UIImage imageNamed:@"copy.png"];
+		[button setFrame:CGRectMake(0, 0, image.size.width, image.size.height)];
+		[button setImage:image forState:UIControlStateNormal];
+		
+		cell.accessoryView = button;
+	}
+	else
+	{
+		cell.accessoryView = nil;
+	}
 
 	return cell;
 }
