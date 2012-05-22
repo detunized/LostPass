@@ -1,4 +1,5 @@
 #import "AccountViewController.h"
+#import "Utilities.h"
 
 namespace
 {
@@ -12,9 +13,13 @@ enum TableRows
 	TableRowCount
 };
 
+NSTimeInterval const MESSAGE_SHOW_DURATION = 1;
+
 }
 
 @implementation AccountViewController
+
+@synthesize message = message_;
 
 + (AccountViewController *)accountScreen:(LastPass::Parser::Account const *)account
 {
@@ -23,6 +28,20 @@ enum TableRows
 		bundle:nil] autorelease];
 	controller->account_ = account;
 	return controller;
+}
+
+- (void)dealloc
+{
+	self.message = nil;
+
+	[super dealloc];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+	[super viewWillAppear:animated];
+
+	self.message = @"";
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -88,19 +107,37 @@ enum TableRows
 	return cell;
 }
 
-- (void)copyToClipboard:(std::string const &)text
+- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
+{
+	return self.message;
+}
+
+- (void)updateMessage:(NSString *)message
+{
+	if (![message isEqualToString:self.message])
+	{
+		self.message = message;
+		[self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
+	}
+}
+
+- (void)copyToClipboard:(std::string const &)text description:(NSString *)description
 {
 	[UIPasteboard generalPasteboard].string = [NSString stringWithUTF8String:text.c_str()];
+	
+	// Show a message for a short period of time.
+	[self updateMessage:[NSString stringWithFormat:NSLocalizedString(@"%@ is copied to clipboard", 0), description]];
+	callAfter(MESSAGE_SHOW_DURATION, ^{ [self updateMessage:@""]; });
 }
 
 - (void)copyUsername:(id)sender
 {
-	[self copyToClipboard:account_->username()];
+	[self copyToClipboard:account_->username() description:NSLocalizedString(@"Username", 0)];
 }
 
 - (void)copyPassword:(id)sender
 {
-	[self copyToClipboard:account_->password()];
+	[self copyToClipboard:account_->password() description:NSLocalizedString(@"Password", 0)];
 }
 
 @end
