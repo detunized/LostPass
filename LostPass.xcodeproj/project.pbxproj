@@ -17,6 +17,7 @@
 		28F335F11007B36200424DE2 /* RootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28F335F01007B36200424DE2 /* RootViewController.xib */; };
 		603578A015559E3200C3651E /* SmokeScreenView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6035789F15559E3200C3651E /* SmokeScreenView.mm */; };
 		603578CD1555B6BD00C3651E /* SmokeScreenView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 603578CC1555B6BD00C3651E /* SmokeScreenView.xib */; };
+		6035842D156B706600C3651E /* Utilities.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6035842C156B706600C3651E /* Utilities.mm */; };
 		603B255D154F28700016B0F6 /* UnlockViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 603B255B154F28700016B0F6 /* UnlockViewController.mm */; };
 		603B255E154F28700016B0F6 /* UnlockViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 603B255C154F28700016B0F6 /* UnlockViewController.xib */; };
 		603B2583155005100016B0F6 /* unlock-background.png in Resources */ = {isa = PBXBuildFile; fileRef = 603B2581155005100016B0F6 /* unlock-background.png */; };
@@ -62,6 +63,8 @@
 		6035789E15559E3200C3651E /* SmokeScreenView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SmokeScreenView.h; sourceTree = "<group>"; };
 		6035789F15559E3200C3651E /* SmokeScreenView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SmokeScreenView.mm; sourceTree = "<group>"; };
 		603578CC1555B6BD00C3651E /* SmokeScreenView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SmokeScreenView.xib; sourceTree = "<group>"; };
+		6035842B156B706600C3651E /* Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utilities.h; sourceTree = "<group>"; };
+		6035842C156B706600C3651E /* Utilities.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Utilities.mm; sourceTree = "<group>"; };
 		603B255A154F28700016B0F6 /* UnlockViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnlockViewController.h; sourceTree = "<group>"; };
 		603B255B154F28700016B0F6 /* UnlockViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UnlockViewController.mm; sourceTree = "<group>"; };
 		603B255C154F28700016B0F6 /* UnlockViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UnlockViewController.xib; sourceTree = "<group>"; };
@@ -136,6 +139,8 @@
 				6035789F15559E3200C3651E /* SmokeScreenView.mm */,
 				603B255A154F28700016B0F6 /* UnlockViewController.h */,
 				603B255B154F28700016B0F6 /* UnlockViewController.mm */,
+				6035842B156B706600C3651E /* Utilities.h */,
+				6035842C156B706600C3651E /* Utilities.mm */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -310,6 +315,7 @@
 				60903F40154D50C5003E742C /* Settings.mm in Sources */,
 				603B255D154F28700016B0F6 /* UnlockViewController.mm in Sources */,
 				603578A015559E3200C3651E /* SmokeScreenView.mm in Sources */,
+				6035842D156B706600C3651E /* Utilities.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

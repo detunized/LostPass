@@ -1,4 +1,5 @@
 #import "UnlockViewController.h"
+#import "Utilities.h"
 
 namespace
 {
@@ -15,21 +16,6 @@ NSString *ENTER_CODE_TITLE = @"Enter Unlock Code";
 
 NSTimeInterval const RESTART_DELAY = 1.0;
 NSTimeInterval const STAR_ANIMATION_DURATION = 0.4;
-
-void disableInput()
-{
-	[[UIApplication sharedApplication] beginIgnoringInteractionEvents];
-}
-
-void enableInput()
-{
-	[[UIApplication sharedApplication] endIgnoringInteractionEvents];
-}
-
-void callAfter(NSTimeInterval seconds, void (^block)())
-{
-	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, seconds * NSEC_PER_SEC), dispatch_get_current_queue(), block);
-}
 
 }
 
@@ -197,7 +183,7 @@ void callAfter(NSTimeInterval seconds, void (^block)())
 	[self clearCode];
 	[self setText:title subtitle:subtitle];
 	[self resetAnimation];
-	enableInput();
+	enableApplicationInput();
 }
 
 - (void)restartAfter:(NSTimeInterval)seconds title:(NSString *)title subtitle:(NSString *)subtitle
@@ -236,7 +222,7 @@ void callAfter(NSTimeInterval seconds, void (^block)())
 			subtitle:@"" 
 			subtitleAnimationStyle:SubtitleAnimationStyleSlideIn
 			onCompletion:^(BOOL) {
-				enableInput();
+				enableApplicationInput();
 				assert(self.onCodeSet);
 				self.onCodeSet(code);
 			}];
@@ -285,7 +271,7 @@ void callAfter(NSTimeInterval seconds, void (^block)())
 		subtitle:@""
 		subtitleAnimationStyle:SubtitleAnimationStyleSlideOut
 		onCompletion:^(BOOL) {
-			enableInput();
+			enableApplicationInput();
 			assert(self.onCodeAccepted);
 			self.onCodeAccepted();
 		}];
@@ -324,7 +310,7 @@ void callAfter(NSTimeInterval seconds, void (^block)())
 			subtitle:@""
 			subtitleAnimationStyle:SubtitleAnimationStyleSlideOut
 			onCompletion:^(BOOL) {
-				enableInput();
+				enableApplicationInput();
 				assert(self.onCodeRejected);
 				self.onCodeRejected();
 			}];
@@ -345,7 +331,7 @@ void callAfter(NSTimeInterval seconds, void (^block)())
 
 - (void)processCode:(NSString *)code
 {
-	disableInput();
+	disableApplicationInput();
 	
 	switch (self.mode)
 	{
