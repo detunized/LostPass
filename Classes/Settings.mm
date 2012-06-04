@@ -14,6 +14,7 @@ NSString *const FIRST_TIME = @"firstTime";
 NSString *const WAS_RESET = @"wasReset";
 NSString *const LAST_EMAIL = @"lastEmail";
 NSString *const DATABASE = @"database";
+NSString *const OPEN_ACCOUNT_INDEX = @"openAccountIndex";
 
 // And these are stored in the keychain.
 NSString *const UNLOCK_CODE = @"unlockCode";
@@ -28,6 +29,18 @@ void setBool(NSString *key, BOOL value)
 {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	[defaults setBool:value forKey:key];
+	[defaults synchronize];
+}
+
+int getInt(NSString *key)
+{
+	return [[NSUserDefaults standardUserDefaults] integerForKey:key];
+}
+
+void setInt(NSString *key, int value)
+{
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	[defaults setInteger:value forKey:key];
 	[defaults synchronize];
 }
 
@@ -77,6 +90,7 @@ void deleteFromKeychain(NSString *key)
 		[NSNumber numberWithBool:NO], WAS_RESET,
 		@"", LAST_EMAIL,
 		@"", DATABASE,
+		[NSNumber numberWithInt:-1], OPEN_ACCOUNT_INDEX,
 		nil];
 
 	[[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
@@ -161,6 +175,16 @@ void deleteFromKeychain(NSString *key)
 	setString(DATABASE, database);
 	storeInKeychain(ENCRYPTION_KEY, key);
 #endif
+}
+
++ (int)openAccountIndex
+{
+	return getInt(OPEN_ACCOUNT_INDEX);
+}
+
++ (void)setOpenAccountIndex:(int)index
+{
+	setInt(OPEN_ACCOUNT_INDEX, index);
 }
 
 @end

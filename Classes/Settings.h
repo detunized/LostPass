@@ -20,4 +20,7 @@
 + (NSString *)encryptionKey;
 + (void)setDatabase:(NSString *)database encryptionKey:(NSString *)key;
 
++ (int)openAccountIndex;
++ (void)setOpenAccountIndex:(int)index;
+
 @end
