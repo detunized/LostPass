@@ -3,6 +3,7 @@
 #import "LoginViewController.h"
 #import "LastPassProxy.h"
 #import "LostPassAppDelegate.h"
+#import "Settings.h"
 
 @implementation RootViewController
 
@@ -39,16 +40,31 @@
 	[self resetView];
 }
 
+- (void)showAccount:(size_t)index animated:(BOOL)animated
+{
+	[self.navigationController
+		pushViewController:[AccountViewController accountScreen:&database_->accounts()[index]]
+		animated:animated];
+}
+
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
 	
+	self.navigationController.delegate = self;
+	
 	self.tableView.tableHeaderView = self.searchBar;
 	self.navigationItem.title = NSLocalizedString(@"Accounts", 0);
-	
+
 	self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh 
 		target:self 
 		action:@selector(onRefresh:)] autorelease];
+
+	size_t index = [Settings openAccountIndex];
+	if (index < database_->accounts().size())
+	{
+		[self showAccount:index animated:NO];
+	}
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -78,9 +94,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	[self.navigationController
-		pushViewController:[AccountViewController accountScreen:&database_->accounts()[displayIndex_[indexPath.row]]]
-		animated:YES];
+	size_t index = displayIndex_[indexPath.row];
+	[self showAccount:index animated:YES];
+	[Settings setOpenAccountIndex:(int)index];
 }
 
 - (void)dealloc
@@ -93,6 +109,20 @@
 - (void)onRefresh:(id)sender
 {
 	[self presentModalViewController:[LoginViewController cancelableLoginScreen] animated:YES];
+}
+
+#pragma mark -
+#pragma mark UINavigationControllerDelegate
+
+- (void)navigationController:(UINavigationController *)navigationController 
+	willShowViewController:(UIViewController *)viewController 
+	animated:(BOOL)animated
+{
+	// This should only happen when we're coming back from the account screen.
+	if (viewController == self && [Settings openAccountIndex] >= 0)
+	{
+		[Settings setOpenAccountIndex:-1];
+	}
 }
 
 #pragma mark -

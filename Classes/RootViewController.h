@@ -1,6 +1,6 @@
 #import "LastPassParser.h"
 
-@interface RootViewController: UITableViewController<UISearchBarDelegate>
+@interface RootViewController: UITableViewController<UINavigationControllerDelegate, UISearchBarDelegate>
 {
 @private
 	std::auto_ptr<LastPass::Parser> database_;
