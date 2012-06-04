@@ -23,6 +23,8 @@ NSString *RESET_MESSAGE =
 	@"Hi, this is LostPass!\n\n"
 	@"You entered the unlock code incorrectly too many times. The app is going to reset itself and you'll have to start over.  See you in a moment.\n\n"
 	@"Tap to continue.";
+	
+BOOL databaseLoaded_ = NO;
 
 }
 
@@ -48,6 +50,7 @@ NSString *RESET_MESSAGE =
 {
 	[self setDatabaseToRoot:std::auto_ptr<LastPass::Parser>(new LastPass::Parser())];
 	[Settings setDatabase:@"" encryptionKey:@""];
+	databaseLoaded_ = NO;
 }
 
 + (void)loadDatabase
@@ -56,6 +59,7 @@ NSString *RESET_MESSAGE =
 	[self setDatabaseToRoot:std::auto_ptr<LastPass::Parser>(new LastPass::Parser(
 		[[Settings database] UTF8String], 
 		[[Settings encryptionKey] UTF8String]))];
+	databaseLoaded_ = YES;
 }
 
 - (void)showBlackScreen
@@ -165,7 +169,11 @@ NSString *RESET_MESSAGE =
 	UnlockViewController *screen = [UnlockViewController verifyScreen:[Settings unlockCode]];
 	
 	screen.onCodeAccepted = ^{
-		[LostPassAppDelegate loadDatabase];
+		if (!databaseLoaded_)
+		{
+			[LostPassAppDelegate loadDatabase];
+		}
+
 		[self popScreenAnimated:YES];
 	};
 	
