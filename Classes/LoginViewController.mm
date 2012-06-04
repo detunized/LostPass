@@ -191,6 +191,7 @@ NSString *const WELCOME_MESSAGE = @"Please login to your LastPass account.";
 
 - (void)parseAndQuit
 {
+	[Settings setOpenAccountIndex:-1];
 	[LostPassAppDelegate loadDatabase];
 	[self quit];
 }
