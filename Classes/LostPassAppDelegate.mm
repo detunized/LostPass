@@ -7,6 +7,8 @@
 namespace
 {
 
+NSTimeInterval const AUTOLOCK_TIME = 15;
+
 NSTimeInterval const SMOKE_SCREEN_ANIMATION_DURATION = 0.4;
 NSTimeInterval const RESET_ANIMATION_DURATION = 2;
 
@@ -26,6 +28,7 @@ NSString *RESET_MESSAGE =
 	@"Tap to continue.";
 	
 BOOL databaseLoaded_ = NO;
+NSTimeInterval becameInactiveAt_ = -AUTOLOCK_TIME;
 
 }
 
@@ -255,14 +258,20 @@ BOOL databaseLoaded_ = NO;
 {
 	NSLog(@"applicationDidBecomeActive");
 
-	[self popAllScreens];
-	[self hideBlackScreen];
-	[self pushScreens];
+	// Only show lock screens when application was inactive for some time.
+	if ([NSDate timeIntervalSinceReferenceDate] - becameInactiveAt_ > AUTOLOCK_TIME)
+	{
+		[self popAllScreens];
+		[self hideBlackScreen];
+		[self pushScreens];
+	}
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
 	NSLog(@"applicationWillResignActive");
+	
+	becameInactiveAt_ = [NSDate timeIntervalSinceReferenceDate];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -280,6 +289,9 @@ BOOL databaseLoaded_ = NO;
 	[self popAllScreens];
 	[self hideSmokeScreen];
 	[self showBlackScreen];
+	
+	// Always lock when go into the background.
+	becameInactiveAt_ = -AUTOLOCK_TIME;
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
