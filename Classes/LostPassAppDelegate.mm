@@ -46,9 +46,14 @@ BOOL databaseLoaded_ = NO;
 	[[self instance].rootController setDatabase:database];
 }
 
-+ (void)resetDatabase
++ (void)setEmptyDatabaseToRoot
 {
 	[self setDatabaseToRoot:std::auto_ptr<LastPass::Parser>(new LastPass::Parser())];
+}
+
++ (void)resetDatabase
+{
+	[self setEmptyDatabaseToRoot];
 	[Settings setDatabase:@"" encryptionKey:@""];
 	databaseLoaded_ = NO;
 }
@@ -235,6 +240,7 @@ BOOL databaseLoaded_ = NO;
 	NSLog(@"didFinishLaunchingWithOptions");
 
 	[Settings initialize];
+	[LostPassAppDelegate setEmptyDatabaseToRoot];
 
 	[self.window addSubview:self.navigationController.view];
 	[self.window makeKeyAndVisible];

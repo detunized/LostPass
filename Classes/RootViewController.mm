@@ -60,6 +60,7 @@
 		target:self 
 		action:@selector(onRefresh:)] autorelease];
 
+	assert(database_.get());
 	size_t index = [Settings openAccountIndex];
 	if (index < database_->accounts().size())
 	{
