@@ -108,11 +108,11 @@ BOOL databaseLoaded_ = NO;
 
 - (void)popAllScreens
 {
-	if ([self.modalScreens count] > 0)
-	{
-		[self.navigationController dismissModalViewControllerAnimated:NO];
-		[self.modalScreens removeAllObjects];
-	}
+	// We need to call this even if the stack it empty.  Root view could have opened
+	// modal views of its own.  They won't be in the stack, but they will be killed
+	// with this call as well.
+	[self.navigationController dismissModalViewControllerAnimated:NO];
+	[self.modalScreens removeAllObjects];
 }
 
 - (void)pushLoginScreen
