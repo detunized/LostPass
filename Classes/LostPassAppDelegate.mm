@@ -2,6 +2,7 @@
 #import "LoginViewController.h"
 #import "UnlockViewController.h"
 #import "Settings.h"
+#import "Utilities.h"
 
 namespace
 {
@@ -262,10 +263,6 @@ BOOL databaseLoaded_ = NO;
 - (void)applicationWillResignActive:(UIApplication *)application
 {
 	NSLog(@"applicationWillResignActive");
-
-	[self popAllScreens];
-	[self hideSmokeScreen];
-	[self showBlackScreen];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -276,6 +273,13 @@ BOOL databaseLoaded_ = NO;
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
 	NSLog(@"applicationDidEnterBackground");
+	
+	// Kill a keyboard if it's shown.
+	[[self.window findFirstResponder] resignFirstResponder];
+
+	[self popAllScreens];
+	[self hideSmokeScreen];
+	[self showBlackScreen];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

@@ -1,3 +1,9 @@
+@interface UIView(FindFirstResponder)
+
+- (UIView *)findFirstResponder;
+
+@end
+
 void disableApplicationInput();
 void enableApplicationInput();
 

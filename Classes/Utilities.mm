@@ -1,5 +1,29 @@
 #import "Utilities.h"
 
+@implementation UIView(FindFirstResponder)
+
+// This code comes from http://stackoverflow.com/questions/1823317/
+// Thanks Thomas Mueller
+- (UIView *)findFirstResponder
+{
+	if (self.isFirstResponder)
+	{
+		return self;
+	}
+
+	for (UIView *view in self.subviews)
+	{
+		if (UIView *responder = [view findFirstResponder])
+		{
+			return responder;
+		}
+	}
+
+	return nil;
+}
+
+@end
+
 void disableApplicationInput()
 {
 	[[UIApplication sharedApplication] beginIgnoringInteractionEvents];
