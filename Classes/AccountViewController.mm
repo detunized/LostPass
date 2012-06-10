@@ -98,6 +98,7 @@ NSTimeInterval const MESSAGE_SHOW_DURATION = 1;
 		UIImage *image = [UIImage imageNamed:@"copy.png"];
 		[button setFrame:CGRectMake(0, 0, image.size.width, image.size.height)];
 		[button setImage:image forState:UIControlStateNormal];
+		[button setImage:[UIImage imageNamed:@"copy-pressed.png"] forState:UIControlStateHighlighted];
 		
 		cell.accessoryView = button;
 	}
