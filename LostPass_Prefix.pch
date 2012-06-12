@@ -32,5 +32,5 @@
 
 #include <curl/curl.h>
 
-#define CONFIG_USE_LOCAL_DATABASE
-#define CONFIG_CONCEAL_PASSWORDS
+//#define CONFIG_USE_LOCAL_DATABASE
+//#define CONFIG_CONCEAL_PASSWORDS
