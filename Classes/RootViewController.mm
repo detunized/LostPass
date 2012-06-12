@@ -121,7 +121,7 @@
 #pragma mark NotifyingNavigationControllerDelegate
 
 - (void)navigationController:(UINavigationController *)navigationController 
-	didPopViewController:(UIViewController *)viewController 
+	willPopViewController:(UIViewController *)viewController 
 	animated:(BOOL)animated
 {
 	[Settings setOpenAccountIndex:-1];
