@@ -28,7 +28,12 @@ NSString *RESET_MESSAGE =
 	@"Tap to continue.";
 	
 BOOL databaseLoaded_ = NO;
-NSTimeInterval becameInactiveAt_ = -AUTOLOCK_TIME;
+NSTimeInterval becameInactiveAt_ = 0;
+
+NSTimeInterval now()
+{
+	return [NSDate timeIntervalSinceReferenceDate];
+}
 
 }
 
@@ -242,6 +247,8 @@ NSTimeInterval becameInactiveAt_ = -AUTOLOCK_TIME;
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 	NSLog(@"didFinishLaunchingWithOptions");
+	
+	becameInactiveAt_ = now() - AUTOLOCK_TIME;
 
 	[Settings initialize];
 	[LostPassAppDelegate setEmptyDatabaseToRoot];
@@ -259,7 +266,7 @@ NSTimeInterval becameInactiveAt_ = -AUTOLOCK_TIME;
 	NSLog(@"applicationDidBecomeActive");
 
 	// Only show lock screens when application was inactive for some time.
-	if ([NSDate timeIntervalSinceReferenceDate] - becameInactiveAt_ > AUTOLOCK_TIME)
+	if (now() - becameInactiveAt_ > AUTOLOCK_TIME)
 	{
 		[self popAllScreens];
 		[self hideBlackScreen];
@@ -271,7 +278,7 @@ NSTimeInterval becameInactiveAt_ = -AUTOLOCK_TIME;
 {
 	NSLog(@"applicationWillResignActive");
 	
-	becameInactiveAt_ = [NSDate timeIntervalSinceReferenceDate];
+	becameInactiveAt_ = now();
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -291,7 +298,7 @@ NSTimeInterval becameInactiveAt_ = -AUTOLOCK_TIME;
 	[self showBlackScreen];
 	
 	// Always lock when go into the background.
-	becameInactiveAt_ = -AUTOLOCK_TIME;
+	becameInactiveAt_ = now() - AUTOLOCK_TIME;
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
