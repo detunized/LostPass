@@ -59,7 +59,12 @@
 	self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh 
 		target:self 
 		action:@selector(onRefresh:)] autorelease];
+}
 
+- (void)viewWillAppear:(BOOL)animated
+{
+	[super viewWillAppear:animated];
+	
 	assert(database_.get());
 	size_t index = [Settings openAccountIndex];
 	if (index < database_->accounts().size())
@@ -113,17 +118,13 @@
 }
 
 #pragma mark -
-#pragma mark UINavigationControllerDelegate
+#pragma mark NotifyingNavigationControllerDelegate
 
 - (void)navigationController:(UINavigationController *)navigationController 
-	willShowViewController:(UIViewController *)viewController 
+	didPopViewController:(UIViewController *)viewController 
 	animated:(BOOL)animated
 {
-	// This should only happen when we're coming back from the account screen.
-	if (viewController == self && [Settings openAccountIndex] >= 0)
-	{
-		[Settings setOpenAccountIndex:-1];
-	}
+	[Settings setOpenAccountIndex:-1];
 }
 
 #pragma mark -
