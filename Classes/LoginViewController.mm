@@ -16,7 +16,7 @@ enum MessageAnimationStyle
 
 NSTimeInterval const MESSAGE_SLIDE_IN_ANIMATION_DURATION = 0.4;
 NSTimeInterval const MESSAGE_SLIDE_OUT_ANIMATION_DURATION = 0.2;
-NSString *const WELCOME_MESSAGE = @"Please login to your LastPass account.";
+NSString *const WELCOME_MESSAGE = @"Please log into your LastPass account.";
 
 }
 
@@ -68,7 +68,7 @@ NSString *const WELCOME_MESSAGE = @"Please login to your LastPass account.";
 
 - (void)viewDidUnload
 {
-    [super viewDidUnload];
+	[super viewDidUnload];
 	
 	self.emailInput = nil;
 	self.passwordInput = nil;
