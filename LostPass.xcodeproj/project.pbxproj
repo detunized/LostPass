@@ -25,6 +25,7 @@
 		603B2595155008E40016B0F6 /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = 603B2593155008E40016B0F6 /* star.png */; };
 		603B2596155008E40016B0F6 /* star@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 603B2594155008E40016B0F6 /* star@2x.png */; };
 		603B263815501CB40016B0F6 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 603B263715501CB40016B0F6 /* AudioToolbox.framework */; };
+		6073D98215880DBF00FF4171 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6073D98115880DBF00FF4171 /* iAd.framework */; };
 		6085ECBD1530D3B800912BE4 /* LastPassParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6085ECBC1530D3B800912BE4 /* LastPassParser.cpp */; };
 		6085ECF11530D6DD00912BE4 /* account.dump in Resources */ = {isa = PBXBuildFile; fileRef = 6085ECF01530D6DD00912BE4 /* account.dump */; };
 		6085ED6B1530E8BA00912BE4 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6085ED6A1530E8BA00912BE4 /* libcrypto.a */; };
@@ -78,6 +79,7 @@
 		603B2593155008E40016B0F6 /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star.png; sourceTree = "<group>"; };
 		603B2594155008E40016B0F6 /* star@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star@2x.png"; sourceTree = "<group>"; };
 		603B263715501CB40016B0F6 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		6073D98115880DBF00FF4171 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		6085ECBB1530D3B800912BE4 /* LastPassParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LastPassParser.h; path = LastPass/LastPassParser.h; sourceTree = "<group>"; };
 		6085ECBC1530D3B800912BE4 /* LastPassParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LastPassParser.cpp; path = LastPass/LastPassParser.cpp; sourceTree = "<group>"; };
 		6085ECF01530D6DD00912BE4 /* account.dump */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = account.dump; sourceTree = "<group>"; };
@@ -127,6 +129,7 @@
 				6085F1A91536406400912BE4 /* libz.dylib in Frameworks */,
 				603B263815501CB40016B0F6 /* AudioToolbox.framework in Frameworks */,
 				60E31E3E156C19FE00ECBD3B /* Security.framework in Frameworks */,
+				6073D98215880DBF00FF4171 /* iAd.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -226,6 +229,7 @@
 				603B263715501CB40016B0F6 /* AudioToolbox.framework */,
 				2892E40F0DC94CBA00A64D0F /* CoreGraphics.framework */,
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
+				6073D98115880DBF00FF4171 /* iAd.framework */,
 				6085ED6A1530E8BA00912BE4 /* libcrypto.a */,
 				6085F19D1536401900912BE4 /* libcurl.a */,
 				6085F1A21536403200912BE4 /* libssl.a */,

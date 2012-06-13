@@ -20,6 +20,7 @@ NSTimeInterval const MESSAGE_SHOW_DURATION = 1;
 @implementation AccountViewController
 
 @synthesize message = message_;
+@synthesize adBannerView = adBannerView_;
 
 + (AccountViewController *)accountScreen:(LastPass::Parser::Account const *)account
 {
@@ -33,6 +34,7 @@ NSTimeInterval const MESSAGE_SHOW_DURATION = 1;
 - (void)dealloc
 {
 	self.message = nil;
+	self.adBannerView = nil;
 
 	[super dealloc];
 }
@@ -141,6 +143,19 @@ NSTimeInterval const MESSAGE_SHOW_DURATION = 1;
 - (void)copyPassword:(id)sender
 {
 	[self copyToClipboard:account_->password() description:NSLocalizedString(@"Password", 0)];
+}
+
+#pragma mark -
+#pragma mark ADBannerViewDelegate
+
+- (void)bannerViewDidLoadAd:(ADBannerView *)banner
+{
+	self.adBannerView.hidden = NO;
+}
+
+- (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error
+{
+	self.adBannerView.hidden = YES;
 }
 
 @end
