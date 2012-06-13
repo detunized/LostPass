@@ -39,9 +39,27 @@ NSTimeInterval const MESSAGE_SHOW_DURATION = 1;
 	[super dealloc];
 }
 
+- (void)viewDidLoad
+{
+	[super viewDidLoad];
+	
+	// Don't allow scrolling to make the banner stay in place.
+	// This will be a problem, once the table grows and would need scrolling.
+	self.tableView.scrollEnabled = NO;
+	[self.tableView addSubview:self.adBannerView];
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
+
+	// Shift the banner to the bottom.
+	CGRect frame = self.adBannerView.frame;
+	self.adBannerView.frame = CGRectMake(
+		0, 
+		self.view.frame.size.height - frame.size.height, 
+		frame.size.width, 
+		frame.size.height);
 
 	self.message = @"";
 }
@@ -150,11 +168,13 @@ NSTimeInterval const MESSAGE_SHOW_DURATION = 1;
 
 - (void)bannerViewDidLoadAd:(ADBannerView *)banner
 {
+	NSLog(@"Add should be visible now");
 	self.adBannerView.hidden = NO;
 }
 
 - (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error
 {
+	NSLog(@"Add should be hidden now");
 	self.adBannerView.hidden = YES;
 }
 
