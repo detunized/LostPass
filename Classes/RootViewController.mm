@@ -143,12 +143,12 @@
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
-	std::string pattern = [searchText UTF8String];
-
 	displayIndex_.clear();
-	for (size_t i = 0, count = database_->count(); i < count; ++i)
+	
+	assert([self.accountNames count] == database_->count());
+	for (size_t i = 0, count = [self.accountNames count]; i < count; ++i)
 	{
-		if (database_->accounts()[i].name().find(pattern) != std::string::npos)
+		if ([[self.accountNames objectAtIndex:i] rangeOfString:searchText options:NSCaseInsensitiveSearch].length > 0)
 		{
 			displayIndex_.push_back(i);
 		}
