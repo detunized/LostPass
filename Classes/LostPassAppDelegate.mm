@@ -28,12 +28,6 @@ NSString *RESET_MESSAGE =
 	@"Tap to continue.";
 	
 BOOL databaseLoaded_ = NO;
-NSTimeInterval becameInactiveAt_ = 0;
-
-NSTimeInterval now()
-{
-	return [NSDate timeIntervalSinceReferenceDate];
-}
 
 }
 
@@ -41,6 +35,7 @@ NSTimeInterval now()
 
 @synthesize modalScreens = modalScreens_;
 @synthesize smokeScreen = smokeScreen_;
+@synthesize curtain = curtain_;
 @synthesize window = window_;
 @synthesize navigationController = navigationController_;
 @synthesize rootController = rootController_;
@@ -76,17 +71,16 @@ NSTimeInterval now()
 	databaseLoaded_ = YES;
 }
 
-- (void)showBlackScreen
+- (void)showCurtain
 {
-	self.smokeScreen = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
-	self.smokeScreen.backgroundColor = [UIColor blackColor];
-	[self.window addSubview:self.smokeScreen];
+	self.curtain = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"curtain.png"]] autorelease];
+	[self.window addSubview:self.curtain];
 }
 
-- (void)hideBlackScreen
+- (void)hideCurtain
 {
-	[self.smokeScreen removeFromSuperview];
-	self.smokeScreen = nil;
+	[self.curtain removeFromSuperview];
+	self.curtain = nil;
 }
 
 - (void)hideSmokeScreen
@@ -248,8 +242,6 @@ NSTimeInterval now()
 {
 	NSLog(@"didFinishLaunchingWithOptions");
 	
-	becameInactiveAt_ = now() - AUTOLOCK_TIME;
-
 	[Settings initialize];
 	[LostPassAppDelegate setEmptyDatabaseToRoot];
 
@@ -265,20 +257,21 @@ NSTimeInterval now()
 {
 	NSLog(@"applicationDidBecomeActive");
 
-	// Only show lock screens when application was inactive for some time.
-	if (now() - becameInactiveAt_ > AUTOLOCK_TIME)
-	{
-		[self popAllScreens];
-		[self hideBlackScreen];
-		[self pushScreens];
-	}
+	[self popAllScreens];
+	[self hideCurtain];
+	[self pushScreens];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
 	NSLog(@"applicationWillResignActive");
 	
-	becameInactiveAt_ = now();
+	// Kill a keyboard if it's shown.
+	[[self.window findFirstResponder] resignFirstResponder];
+
+	[self popAllScreens];
+	[self hideSmokeScreen];
+	[self showCurtain];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -289,16 +282,6 @@ NSTimeInterval now()
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
 	NSLog(@"applicationDidEnterBackground");
-	
-	// Kill a keyboard if it's shown.
-	[[self.window findFirstResponder] resignFirstResponder];
-
-	[self popAllScreens];
-	[self hideSmokeScreen];
-	[self showBlackScreen];
-	
-	// Always lock when go into the background.
-	becameInactiveAt_ = now() - AUTOLOCK_TIME;
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -314,6 +297,7 @@ NSTimeInterval now()
 {
 	self.modalScreens = nil;
 	self.smokeScreen = nil;
+	self.curtain = nil;
 
 	[rootController_ release];
 	[navigationController_ release];

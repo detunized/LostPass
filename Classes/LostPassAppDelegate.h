@@ -7,6 +7,7 @@
 
 @property(nonatomic, retain) NSMutableArray *modalScreens;
 @property(nonatomic, retain) SmokeScreenView *smokeScreen;
+@property(nonatomic, retain) UIImageView *curtain;
 
 @property(nonatomic, retain) IBOutlet UIWindow *window;
 @property(nonatomic, retain) IBOutlet UINavigationController *navigationController;

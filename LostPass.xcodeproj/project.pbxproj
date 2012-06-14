@@ -26,6 +26,8 @@
 		603B2596155008E40016B0F6 /* star@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 603B2594155008E40016B0F6 /* star@2x.png */; };
 		603B263815501CB40016B0F6 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 603B263715501CB40016B0F6 /* AudioToolbox.framework */; };
 		6073D98215880DBF00FF4171 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6073D98115880DBF00FF4171 /* iAd.framework */; };
+		6073DA96158A7AA100FF4171 /* curtain.png in Resources */ = {isa = PBXBuildFile; fileRef = 6073DA94158A7AA100FF4171 /* curtain.png */; };
+		6073DA97158A7AA100FF4171 /* curtain@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6073DA95158A7AA100FF4171 /* curtain@2x.png */; };
 		6085ECBD1530D3B800912BE4 /* LastPassParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6085ECBC1530D3B800912BE4 /* LastPassParser.cpp */; };
 		6085ECF11530D6DD00912BE4 /* account.dump in Resources */ = {isa = PBXBuildFile; fileRef = 6085ECF01530D6DD00912BE4 /* account.dump */; };
 		6085ED6B1530E8BA00912BE4 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6085ED6A1530E8BA00912BE4 /* libcrypto.a */; };
@@ -80,6 +82,8 @@
 		603B2594155008E40016B0F6 /* star@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star@2x.png"; sourceTree = "<group>"; };
 		603B263715501CB40016B0F6 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		6073D98115880DBF00FF4171 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
+		6073DA94158A7AA100FF4171 /* curtain.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = curtain.png; sourceTree = "<group>"; };
+		6073DA95158A7AA100FF4171 /* curtain@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "curtain@2x.png"; sourceTree = "<group>"; };
 		6085ECBB1530D3B800912BE4 /* LastPassParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LastPassParser.h; path = LastPass/LastPassParser.h; sourceTree = "<group>"; };
 		6085ECBC1530D3B800912BE4 /* LastPassParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LastPassParser.cpp; path = LastPass/LastPassParser.cpp; sourceTree = "<group>"; };
 		6085ECF01530D6DD00912BE4 /* account.dump */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = account.dump; sourceTree = "<group>"; };
@@ -203,6 +207,8 @@
 				60DA6845158548FA0038AE8F /* copy-pressed@2x.png */,
 				60903F94154D79A0003E742C /* copy.png */,
 				60903F95154D79A0003E742C /* copy@2x.png */,
+				6073DA94158A7AA100FF4171 /* curtain.png */,
+				6073DA95158A7AA100FF4171 /* curtain@2x.png */,
 				60903D1215475F98003E742C /* icon.png */,
 				60903D1015475F59003E742C /* icon@2x.png */,
 				60903EC8154C886E003E742C /* key.txt */,
@@ -329,6 +335,8 @@
 				603578CD1555B6BD00C3651E /* SmokeScreenView.xib in Resources */,
 				60DA6846158548FB0038AE8F /* copy-pressed@2x.png in Resources */,
 				60DA684C158549930038AE8F /* copy-pressed.png in Resources */,
+				6073DA96158A7AA100FF4171 /* curtain.png in Resources */,
+				6073DA97158A7AA100FF4171 /* curtain@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
