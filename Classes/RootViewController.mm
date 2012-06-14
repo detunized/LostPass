@@ -153,13 +153,15 @@
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
-	displayIndex_.clear();
-	
+	bool showAll = [searchText length] == 0;
+
+	displayIndex_.clear();	
 	assert([self.accountNameToIndexMap count] == database_->count());
 	for (size_t i = 0, count = [self.accountNameToIndexMap count]; i < count; ++i)
 	{
-		if ([[[self.accountNameToIndexMap objectAtIndex:i] objectForKey:@"name"] rangeOfString:searchText 
-			options:NSCaseInsensitiveSearch].length > 0)
+		if (showAll || 
+			[[[self.accountNameToIndexMap objectAtIndex:i] objectForKey:@"name"] rangeOfString:searchText 
+				options:NSCaseInsensitiveSearch].length > 0)
 		{
 			displayIndex_.push_back(i);
 		}
