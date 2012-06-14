@@ -40,6 +40,33 @@ NSTimeInterval const MESSAGE_SHOW_DURATION = 1;
 	[super dealloc];
 }
 
+- (void)showAdBanner
+{
+	// Shift the banner to the bottom.
+	CGRect frame = self.adBannerView.frame;
+	self.adBannerView.frame = CGRectMake(
+		0, 
+		self.view.frame.size.height - frame.size.height, 
+		frame.size.width, 
+		frame.size.height);
+		
+	std::cout << "shown: " << self.adBannerView.frame << std::endl;
+}
+
+- (void)hideAdBanner
+{
+	// Shift the banner right below the screen.
+	CGRect frame = self.adBannerView.frame;
+	self.adBannerView.frame = CGRectMake(
+		0, 
+		self.view.frame.size.height, 
+		frame.size.width, 
+		frame.size.height);
+
+	std::cout << "hidden: " << self.view.frame << std::endl;
+	std::cout << "hidden: " << self.adBannerView.frame << std::endl;
+}
+
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
@@ -48,20 +75,13 @@ NSTimeInterval const MESSAGE_SHOW_DURATION = 1;
 	// This will be a problem, once the table grows and would need scrolling.
 	self.tableView.scrollEnabled = NO;
 	[self.tableView addSubview:self.adBannerView];
+	[self hideAdBanner];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
-
-	// Shift the banner to the bottom.
-	CGRect frame = self.adBannerView.frame;
-	self.adBannerView.frame = CGRectMake(
-		0, 
-		self.view.frame.size.height - frame.size.height, 
-		frame.size.width, 
-		frame.size.height);
-
+	
 	self.message = @"";
 }
 
@@ -170,13 +190,13 @@ NSTimeInterval const MESSAGE_SHOW_DURATION = 1;
 - (void)bannerViewDidLoadAd:(ADBannerView *)banner
 {
 	NSLog(@"Add should be visible now");
-	self.adBannerView.hidden = NO;
+	[self showAdBanner];
 }
 
 - (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error
 {
 	NSLog(@"Add should be hidden now");
-	self.adBannerView.hidden = YES;
+	[self hideAdBanner];
 }
 
 @end
