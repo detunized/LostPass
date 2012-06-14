@@ -38,3 +38,18 @@ void callAfter(NSTimeInterval seconds, void (^block)())
 {
 	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, seconds * NSEC_PER_SEC), dispatch_get_current_queue(), block);
 }
+
+std::ostream &operator <<(std::ostream &stream, CGPoint const &point)
+{
+	return stream << point.x << ", " << point.y;
+}
+
+std::ostream &operator <<(std::ostream &stream, CGSize const &size)
+{
+	return stream << size.width << ", " << size.height;
+}
+
+std::ostream &operator <<(std::ostream &stream, CGRect const &rect)
+{
+	return stream << rect.origin << ", " << rect.size;
+}
