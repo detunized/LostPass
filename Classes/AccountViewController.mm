@@ -34,6 +34,7 @@ NSTimeInterval const MESSAGE_SHOW_DURATION = 1;
 - (void)dealloc
 {
 	self.message = nil;
+	self.adBannerView.delegate = nil;
 	self.adBannerView = nil;
 
 	[super dealloc];
