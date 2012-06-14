@@ -13,7 +13,7 @@ enum TableRows
 	TableRowCount
 };
 
-NSTimeInterval const MESSAGE_SHOW_DURATION = 1;
+NSTimeInterval const MESSAGE_SHOW_DURATION = 2;
 
 }
 
