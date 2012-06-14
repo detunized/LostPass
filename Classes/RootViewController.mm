@@ -4,16 +4,26 @@
 #import "LastPassProxy.h"
 #import "LostPassAppDelegate.h"
 #import "Settings.h"
+#import "Utilities.h"
 
 @implementation RootViewController
 
+@synthesize accountNames = accountNames_;
 @synthesize searchBar = searchBar_;
 
 - (void)setInitialIndex
 {
-	displayIndex_.clear();
-
 	assert(database_.get());
+	
+	// Cache NS strings.
+	self.accountNames = [NSMutableArray arrayWithCapacity:database_->count()];
+	for (size_t i = 0, count = database_->count(); i < count; ++i)
+	{
+		[self.accountNames addObject:toNs(database_->accounts()[i].name())];
+	}
+
+	// Initial index.
+	displayIndex_.clear();
 	displayIndex_.reserve(database_->count());
 	for (size_t i = 0, count = database_->count(); i < count; ++i)
 	{
@@ -92,7 +102,7 @@
 		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
 	}
 
-	cell.textLabel.text = [NSString stringWithUTF8String:database_->accounts()[displayIndex_[indexPath.row]].name().c_str()];
+	cell.textLabel.text = [self.accountNames objectAtIndex:displayIndex_[indexPath.row]];
 	cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 
 	return cell;
@@ -108,6 +118,7 @@
 - (void)dealloc
 {
 	self.searchBar = nil;
+	self.accountNames = nil;
 
 	[super dealloc];
 }
