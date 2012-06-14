@@ -7,7 +7,7 @@
 	std::vector<size_t> displayIndex_;
 }
 
-@property(nonatomic, retain) NSMutableArray *accountNames;
+@property(nonatomic, retain) NSMutableArray *accountNameToIndexMap;
 @property(nonatomic, retain) IBOutlet UISearchBar *searchBar;
 
 - (void)setDatabase:(std::auto_ptr<LastPass::Parser>)database;

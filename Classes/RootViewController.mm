@@ -8,7 +8,7 @@
 
 @implementation RootViewController
 
-@synthesize accountNames = accountNames_;
+@synthesize accountNameToIndexMap = accountNameToIndexMap_;
 @synthesize searchBar = searchBar_;
 
 - (void)setInitialIndex
@@ -16,26 +16,26 @@
 	assert(database_.get());
 	
 	// Cache NS strings.
-	self.accountNames = [NSMutableArray arrayWithCapacity:database_->count()];
+	self.accountNameToIndexMap = [NSMutableArray arrayWithCapacity:database_->count()];
 	for (size_t i = 0, count = database_->count(); i < count; ++i)
 	{
-		[self.accountNames addObject:[NSDictionary dictionaryWithObjectsAndKeys:
+		[self.accountNameToIndexMap addObject:[NSDictionary dictionaryWithObjectsAndKeys:
 				toNs(database_->accounts()[i].name()), @"name",
 				[NSNumber numberWithUnsignedInt:i], @"index",
 				nil]];
 	}
 
 	// Sort by name
-	[self.accountNames sortUsingComparator:^(id left, id right){
+	[self.accountNameToIndexMap sortUsingComparator:^(id left, id right){
 		return [[left objectForKey:@"name"] caseInsensitiveCompare:[right objectForKey:@"name"]];
 	}];
 
 	// Initial index.
 	displayIndex_.clear();
 
-	assert([self.accountNames count] == database_->count());
-	displayIndex_.reserve([self.accountNames count]);
-	for (size_t i = 0, count = [self.accountNames count]; i < count; ++i)
+	assert([self.accountNameToIndexMap count] == database_->count());
+	displayIndex_.reserve([self.accountNameToIndexMap count]);
+	for (size_t i = 0, count = [self.accountNameToIndexMap count]; i < count; ++i)
 	{
 		displayIndex_.push_back(i);
 	}
@@ -112,7 +112,7 @@
 		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
 	}
 
-	cell.textLabel.text = [[self.accountNames objectAtIndex:displayIndex_[indexPath.row]] objectForKey:@"name"];
+	cell.textLabel.text = [[self.accountNameToIndexMap objectAtIndex:displayIndex_[indexPath.row]] objectForKey:@"name"];
 	cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 
 	return cell;
@@ -120,7 +120,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	size_t index = [[[self.accountNames objectAtIndex:displayIndex_[indexPath.row]] objectForKey:@"index"] unsignedIntValue];
+	size_t index = [[[self.accountNameToIndexMap objectAtIndex:displayIndex_[indexPath.row]] objectForKey:@"index"] unsignedIntValue];
 	[self showAccount:index animated:YES];
 	[Settings setOpenAccountIndex:(int)index];
 }
@@ -128,7 +128,7 @@
 - (void)dealloc
 {
 	self.searchBar = nil;
-	self.accountNames = nil;
+	self.accountNameToIndexMap = nil;
 
 	[super dealloc];
 }
@@ -155,10 +155,11 @@
 {
 	displayIndex_.clear();
 	
-	assert([self.accountNames count] == database_->count());
-	for (size_t i = 0, count = [self.accountNames count]; i < count; ++i)
+	assert([self.accountNameToIndexMap count] == database_->count());
+	for (size_t i = 0, count = [self.accountNameToIndexMap count]; i < count; ++i)
 	{
-		if ([[[self.accountNames objectAtIndex:i] objectForKey:@"name"] rangeOfString:searchText options:NSCaseInsensitiveSearch].length > 0)
+		if ([[[self.accountNameToIndexMap objectAtIndex:i] objectForKey:@"name"] rangeOfString:searchText 
+			options:NSCaseInsensitiveSearch].length > 0)
 		{
 			displayIndex_.push_back(i);
 		}
