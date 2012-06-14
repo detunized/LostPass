@@ -19,13 +19,23 @@
 	self.accountNames = [NSMutableArray arrayWithCapacity:database_->count()];
 	for (size_t i = 0, count = database_->count(); i < count; ++i)
 	{
-		[self.accountNames addObject:toNs(database_->accounts()[i].name())];
+		[self.accountNames addObject:[NSDictionary dictionaryWithObjectsAndKeys:
+				toNs(database_->accounts()[i].name()), @"name",
+				[NSNumber numberWithUnsignedInt:i], @"index",
+				nil]];
 	}
+
+	// Sort by name
+	[self.accountNames sortUsingComparator:^(id left, id right){
+		return [[left objectForKey:@"name"] caseInsensitiveCompare:[right objectForKey:@"name"]];
+	}];
 
 	// Initial index.
 	displayIndex_.clear();
-	displayIndex_.reserve(database_->count());
-	for (size_t i = 0, count = database_->count(); i < count; ++i)
+
+	assert([self.accountNames count] == database_->count());
+	displayIndex_.reserve([self.accountNames count]);
+	for (size_t i = 0, count = [self.accountNames count]; i < count; ++i)
 	{
 		displayIndex_.push_back(i);
 	}
@@ -102,7 +112,7 @@
 		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
 	}
 
-	cell.textLabel.text = [self.accountNames objectAtIndex:displayIndex_[indexPath.row]];
+	cell.textLabel.text = [[self.accountNames objectAtIndex:displayIndex_[indexPath.row]] objectForKey:@"name"];
 	cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 
 	return cell;
@@ -110,7 +120,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	size_t index = displayIndex_[indexPath.row];
+	size_t index = [[[self.accountNames objectAtIndex:displayIndex_[indexPath.row]] objectForKey:@"index"] unsignedIntValue];
 	[self showAccount:index animated:YES];
 	[Settings setOpenAccountIndex:(int)index];
 }
@@ -148,7 +158,7 @@
 	assert([self.accountNames count] == database_->count());
 	for (size_t i = 0, count = [self.accountNames count]; i < count; ++i)
 	{
-		if ([[self.accountNames objectAtIndex:i] rangeOfString:searchText options:NSCaseInsensitiveSearch].length > 0)
+		if ([[[self.accountNames objectAtIndex:i] objectForKey:@"name"] rangeOfString:searchText options:NSCaseInsensitiveSearch].length > 0)
 		{
 			displayIndex_.push_back(i);
 		}
