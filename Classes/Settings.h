@@ -7,6 +7,9 @@
 + (BOOL)wasReset;
 + (void)setWasReset:(BOOL)yesNo;
 
++ (int)failedUnlockAttempts;
++ (void)setFailedUnlockAttempts:(int)attempts;
+
 + (NSString *)lastEmail;
 + (void)setLastEmail:(NSString *)email;
 

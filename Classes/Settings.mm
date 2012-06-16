@@ -12,6 +12,7 @@ NSString *const KEYCHAIN_SERVICE_NAME = @"net.detunized.lostpass";
 // These go to the user defaults.
 NSString *const FIRST_TIME = @"firstTime";
 NSString *const WAS_RESET = @"wasReset";
+NSString *const FAILED_UNLOCK_ATTEMPTS = @"failedUnlockAttempts";
 NSString *const LAST_EMAIL = @"lastEmail";
 NSString *const DATABASE = @"database";
 NSString *const OPEN_ACCOUNT_INDEX = @"openAccountIndex";
@@ -88,6 +89,7 @@ void deleteFromKeychain(NSString *key)
 	NSDictionary *defaults = [NSDictionary dictionaryWithObjectsAndKeys:
 		[NSNumber numberWithBool:YES], FIRST_TIME,
 		[NSNumber numberWithBool:NO], WAS_RESET,
+		[NSNumber numberWithInt:0], FAILED_UNLOCK_ATTEMPTS,
 		@"", LAST_EMAIL,
 		@"", DATABASE,
 		[NSNumber numberWithInt:-1], OPEN_ACCOUNT_INDEX,
@@ -114,6 +116,18 @@ void deleteFromKeychain(NSString *key)
 + (void)setWasReset:(BOOL)yesNo
 {
 	setBool(WAS_RESET, yesNo);
+}
+
++ (int)failedUnlockAttempts
+{
+	NSLog(@"Get: %d", getInt(FAILED_UNLOCK_ATTEMPTS));
+	return getInt(FAILED_UNLOCK_ATTEMPTS);
+}
+
++ (void)setFailedUnlockAttempts:(int)attempts
+{
+	NSLog(@"Set: %d", attempts);
+	setInt(FAILED_UNLOCK_ATTEMPTS, attempts);
 }
 
 + (NSString *)lastEmail
