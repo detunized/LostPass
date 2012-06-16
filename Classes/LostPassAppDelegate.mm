@@ -177,6 +177,8 @@ BOOL databaseLoaded_ = NO;
 	UnlockViewController *screen = [UnlockViewController verifyScreen:[Settings unlockCode]];
 	
 	screen.onCodeAccepted = ^{
+		[Settings setFailedUnlockAttempts:0];
+
 		if (!databaseLoaded_)
 		{
 			[LostPassAppDelegate loadDatabase];
@@ -199,6 +201,7 @@ BOOL databaseLoaded_ = NO;
 		[Settings setWasReset:YES];
 		[Settings setUnlockCode:@""];
 		[LostPassAppDelegate resetDatabase];
+		[Settings setFailedUnlockAttempts:0];
 	};
 	
 	[self pushScreen:screen animated:NO];

@@ -1,5 +1,6 @@
 #import "UnlockViewController.h"
 #import "Utilities.h"
+#import "Settings.h"
 
 namespace
 {
@@ -55,6 +56,13 @@ NSTimeInterval const STAR_ANIMATION_DURATION = 0.4;
 	return screen;
 }
 
+- (NSString *)formatLeftAttemptsWarning:(int)attemptsLeft
+{
+	return attemptsLeft == 1
+		? @"Wrong code. You have 1 attempt left."
+		: [NSString stringWithFormat:@"Wrong code. You have %d attempts left.", attemptsLeft];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -65,17 +73,27 @@ NSTimeInterval const STAR_ANIMATION_DURATION = 0.4;
 	{
 	case UnlockViewControllerModeChoose:
 		self.titleLabel.text = CHOOSE_CODE_TITLE;
+		self.subtitleLabel.text = @"";
+		state_ = 0;
 		break;
 	case UnlockViewControllerModeVerify:
 		self.titleLabel.text = ENTER_CODE_TITLE;
+		state_ = [Settings failedUnlockAttempts];
+		if (state_ > 0)
+		{
+			state_ = std::min(state_, (int)UnlockViewControllerVerifyAttempts);
+			self.subtitleLabel.text = [self formatLeftAttemptsWarning:UnlockViewControllerVerifyAttempts - state_];
+		}
+		else
+		{
+			self.subtitleLabel.text = @"";
+		}
+
 		break;
 	default:
 		assert(false);
 		break;
 	}
-	
-	self.subtitleLabel.text = @"";
-	state_ = 0;
 	
 	assert(UnlockViewControllerCodeLength == 4);
 	digits_[0] = self.digit1;
@@ -83,7 +101,7 @@ NSTimeInterval const STAR_ANIMATION_DURATION = 0.4;
 	digits_[2] = self.digit3;
 	digits_[3] = self.digit4;
 	
-	// Check that the code is set
+	// Check that the code is set.
 	if (self.mode == UnlockViewControllerModeVerify)
 	{
 		assert([self.code length] == UnlockViewControllerCodeLength);
@@ -283,14 +301,12 @@ NSTimeInterval const STAR_ANIMATION_DURATION = 0.4;
 
 	AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
 	++state_;
+	[Settings setFailedUnlockAttempts:state_];
 
 	int attemptsLeft = UnlockViewControllerVerifyAttempts - state_;
 	if (attemptsLeft > 0)
 	{
-		NSString *subtitle = attemptsLeft == 1
-			? @"Wrong code. You have 1 attempt left."
-			: [NSString stringWithFormat:@"Wrong code. You have %d attempts left.", attemptsLeft];
-			
+		NSString *subtitle = [self formatLeftAttemptsWarning:attemptsLeft];
 		[self animateStarsFor:STAR_ANIMATION_DURATION
 			transform:CGAffineTransformMakeScale(0.01f, 1) 
 			alpha:0 
