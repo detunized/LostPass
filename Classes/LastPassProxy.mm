@@ -88,7 +88,6 @@ namespace
 	if ([call isEqualToString:@"logged-in"])
 	{
 		state_ = STATE_DOWNLOAD;
-		NSLog(@"Logged in: '%@', '%@'", [self executeJs:@"lastpass.key"], [self executeJs:@"lastpass.hash"]);
 	}
 	else if ([call isEqualToString:@"downloaded"])
 	{

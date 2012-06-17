@@ -243,8 +243,6 @@ BOOL databaseLoaded_ = NO;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-	NSLog(@"didFinishLaunchingWithOptions");
-	
 	[Settings initialize];
 	[LostPassAppDelegate setEmptyDatabaseToRoot];
 
@@ -258,8 +256,6 @@ BOOL databaseLoaded_ = NO;
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-	NSLog(@"applicationDidBecomeActive");
-
 	[self popAllScreens];
 	[self hideCurtain];
 	[self pushScreens];
@@ -267,8 +263,6 @@ BOOL databaseLoaded_ = NO;
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
-	NSLog(@"applicationWillResignActive");
-	
 	// Kill a keyboard if it's shown.
 	[[self.window findFirstResponder] resignFirstResponder];
 
@@ -279,17 +273,14 @@ BOOL databaseLoaded_ = NO;
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-	NSLog(@"applicationWillEnterForeground");
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-	NSLog(@"applicationDidEnterBackground");
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
-	NSLog(@"applicationWillTerminate");
 }
 
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application

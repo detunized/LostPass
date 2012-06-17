@@ -120,13 +120,11 @@ void deleteFromKeychain(NSString *key)
 
 + (int)failedUnlockAttempts
 {
-	NSLog(@"Get: %d", getInt(FAILED_UNLOCK_ATTEMPTS));
 	return getInt(FAILED_UNLOCK_ATTEMPTS);
 }
 
 + (void)setFailedUnlockAttempts:(int)attempts
 {
-	NSLog(@"Set: %d", attempts);
 	setInt(FAILED_UNLOCK_ATTEMPTS, attempts);
 }
 

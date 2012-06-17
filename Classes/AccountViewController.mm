@@ -49,8 +49,6 @@ NSTimeInterval const MESSAGE_SHOW_DURATION = 2;
 		self.view.frame.size.height - frame.size.height, 
 		frame.size.width, 
 		frame.size.height);
-		
-	std::cout << "shown: " << self.adBannerView.frame << std::endl;
 }
 
 - (void)hideAdBanner
@@ -62,9 +60,6 @@ NSTimeInterval const MESSAGE_SHOW_DURATION = 2;
 		self.view.frame.size.height, 
 		frame.size.width, 
 		frame.size.height);
-
-	std::cout << "hidden: " << self.view.frame << std::endl;
-	std::cout << "hidden: " << self.adBannerView.frame << std::endl;
 }
 
 - (void)viewDidLoad
@@ -189,13 +184,11 @@ NSTimeInterval const MESSAGE_SHOW_DURATION = 2;
 
 - (void)bannerViewDidLoadAd:(ADBannerView *)banner
 {
-	NSLog(@"Add should be visible now");
 	[self showAdBanner];
 }
 
 - (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error
 {
-	NSLog(@"Add should be hidden now");
 	[self hideAdBanner];
 }
 
