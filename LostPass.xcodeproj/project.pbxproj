@@ -42,8 +42,8 @@
 		60903BB015471E76003E742C /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60903BAE15471E76003E742C /* LoginViewController.xib */; };
 		60903BCE15472778003E742C /* login-background.png in Resources */ = {isa = PBXBuildFile; fileRef = 60903BCD15472778003E742C /* login-background.png */; };
 		60903CBC154747B8003E742C /* login-background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 60903CBB154747B8003E742C /* login-background@2x.png */; };
-		60903D1115475F59003E742C /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 60903D1015475F59003E742C /* icon@2x.png */; };
-		60903D1315475F98003E742C /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 60903D1215475F98003E742C /* icon.png */; };
+		60903D1115475F59003E742C /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 60903D1015475F59003E742C /* Icon@2x.png */; };
+		60903D1315475F98003E742C /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 60903D1215475F98003E742C /* Icon.png */; };
 		60903EC9154C886E003E742C /* key.txt in Resources */ = {isa = PBXBuildFile; fileRef = 60903EC8154C886E003E742C /* key.txt */; };
 		60903F40154D50C5003E742C /* Settings.mm in Sources */ = {isa = PBXBuildFile; fileRef = 60903F3F154D50C5003E742C /* Settings.mm */; };
 		60903F96154D79A0003E742C /* copy.png in Resources */ = {isa = PBXBuildFile; fileRef = 60903F94154D79A0003E742C /* copy.png */; };
@@ -102,8 +102,8 @@
 		60903BAE15471E76003E742C /* LoginViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
 		60903BCD15472778003E742C /* login-background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login-background.png"; sourceTree = "<group>"; };
 		60903CBB154747B8003E742C /* login-background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login-background@2x.png"; sourceTree = "<group>"; };
-		60903D1015475F59003E742C /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
-		60903D1215475F98003E742C /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
+		60903D1015475F59003E742C /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		60903D1215475F98003E742C /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		60903EC8154C886E003E742C /* key.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = key.txt; sourceTree = "<group>"; };
 		60903F3E154D50C5003E742C /* Settings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Settings.h; sourceTree = "<group>"; };
 		60903F3F154D50C5003E742C /* Settings.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Settings.mm; sourceTree = "<group>"; };
@@ -209,8 +209,8 @@
 				60903F95154D79A0003E742C /* copy@2x.png */,
 				6073DA94158A7AA100FF4171 /* curtain.png */,
 				6073DA95158A7AA100FF4171 /* curtain@2x.png */,
-				60903D1215475F98003E742C /* icon.png */,
-				60903D1015475F59003E742C /* icon@2x.png */,
+				60903D1215475F98003E742C /* Icon.png */,
+				60903D1015475F59003E742C /* Icon@2x.png */,
 				60903EC8154C886E003E742C /* key.txt */,
 				6085F2BF1537797D00912BE4 /* lastpass.js */,
 				60903BCD15472778003E742C /* login-background.png */,
@@ -322,8 +322,8 @@
 				60903BB015471E76003E742C /* LoginViewController.xib in Resources */,
 				60903BCE15472778003E742C /* login-background.png in Resources */,
 				60903CBC154747B8003E742C /* login-background@2x.png in Resources */,
-				60903D1115475F59003E742C /* icon@2x.png in Resources */,
-				60903D1315475F98003E742C /* icon.png in Resources */,
+				60903D1115475F59003E742C /* Icon@2x.png in Resources */,
+				60903D1315475F98003E742C /* Icon.png in Resources */,
 				60903EC9154C886E003E742C /* key.txt in Resources */,
 				60903F96154D79A0003E742C /* copy.png in Resources */,
 				60903F97154D79A0003E742C /* copy@2x.png in Resources */,
