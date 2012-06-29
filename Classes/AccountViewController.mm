@@ -165,7 +165,7 @@ NSTimeInterval const MESSAGE_SHOW_DURATION = 2;
 	[UIPasteboard generalPasteboard].string = [NSString stringWithUTF8String:text.c_str()];
 	
 	// Show a message for a short period of time.
-	[self updateMessage:[NSString stringWithFormat:NSLocalizedString(@"%@ is copied to clipboard", 0), description]];
+	[self updateMessage:[NSString stringWithFormat:NSLocalizedString(@"%@ is copied to the clipboard", 0), description]];
 	callAfter(MESSAGE_SHOW_DURATION, ^{ [self updateMessage:@""]; });
 }
 
