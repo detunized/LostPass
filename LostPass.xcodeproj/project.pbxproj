@@ -415,6 +415,7 @@
 					"cURL-SSL-for-iOS/OpenSSL/include",
 					"cURL-SSL-for-iOS/cURL/include",
 				);
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PREBINDING = NO;
 				SDKROOT = iphoneos;
 			};
@@ -432,6 +433,7 @@
 					"cURL-SSL-for-iOS/OpenSSL/include",
 					"cURL-SSL-for-iOS/cURL/include",
 				);
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PREBINDING = NO;
 				SDKROOT = iphoneos;
