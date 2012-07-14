@@ -1,0 +1,8 @@
+#!/bin/sh
+
+if [ -d ../website ]
+then
+    cd ..
+fi
+
+rsync -avPe ssh website/* detunized@detunized.net:www/detunized.net/lostpass/
