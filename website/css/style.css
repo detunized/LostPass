@@ -1,0 +1,211 @@
+@charset "UTF-8";
+html
+{
+    font-size: 100%;
+    ms-text-size-adjust: 100%;
+    webkit-text-size-adjust: 100%;
+}
+html
+{
+    font-family: sans-serif;
+}
+body
+{
+    margin: 0;
+}
+h1
+{
+    font-size: 2em;
+}
+img
+{
+    border: 0;
+}
+a
+{
+    outline: none !important;
+}
+html,body
+{
+    height: 100%;
+}
+html
+{
+    font-size: 62.5%;
+    webkit-font-smoothing: antialiased;
+}
+body
+{
+    background: #fff;
+}
+a img
+{
+    border: none;
+}
+body
+{
+    color: #222;
+    line-height: 20px;
+}
+body
+{
+    font-size: 1.4rem;
+    font-size: 14px;
+}
+h1
+{
+    font-size: 36px;
+    line-height: 36px;
+}
+h1
+{
+    margin: 40px 0 20px -1px;
+}
+h2
+{
+    margin: 20px 0 10px;
+}
+h1+h2
+{
+    margin-top: 20px;
+}
+h3
+{
+    margin: 20px 0 10px;
+}
+h4
+{
+    margin: 20px 0 10px;
+}
+h1:first-child,h2:first-child
+{
+    margin-top: 0;
+}
+p
+{
+    margin: 0 0 10px;
+}
+.root
+{
+    height: 100%;
+}
+.page,.dialog-outer
+{
+    min-height: 100%;
+    position: relative;
+}
+.page-footer
+{
+    margin-top: -55px;
+    position: relative;
+    z-index: 20;
+}
+.hidden
+{
+    display: none;
+}
+.wrapper
+{
+    margin: 0 auto;
+    padding: 0 15px;
+    position: relative;
+    width: 960px;
+}
+body
+{
+    background-color: #fff;
+}
+#home-bg
+{
+    background-color: #910310;
+    background-position: 50% 50%;
+    height: 340px;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+.wrap
+{
+    margin: 0 auto;
+    width: 860px;
+}
+.iphone
+{
+    float: left;
+    margin-left: 5px;
+    padding-top: 70px;
+    position: relative;
+    width: 310px;
+}
+.content
+{
+    float: left;
+    margin-left: 0px;
+    margin-top: 30px;
+    position: relative;
+    width: 500px;
+}
+.content .logo
+{
+    left: 24px;
+    position: absolute;
+    top: 190px;
+}
+.content .tab
+{
+    height: 380px;
+    margin-top: 230px;
+    padding: 30px 7% 0 7%;
+    width: 86%;
+}
+.content .tab-content
+{
+    padding-top: 10px;
+}
+h1
+{
+    color: #eee;
+    font-size: 1.8em;
+    line-height: 1.0em;
+}
+.content p
+{
+    font-size: 14px;
+    line-height: 1.25em;
+    margin: 0 0 1em 0;
+}
+#iphone-overlay
+{
+    background-size: 212px 317px;
+    left: 28px;
+    position: absolute;
+    top: 164px;
+}
+#iphone-overlay img
+{
+    height: 360px !important;
+    position: absolute;
+    width: 240px !important;
+    z-index: 8;
+}
+#iphone-overlay img.active
+{
+    z-index: 10;
+}
+#iphone-overlay img.last-active
+{
+    z-index: 9;
+}
+.platform-badge-container
+{
+    margin-top: 25px;
+    position: absolute;
+}
+.platform-badge
+{
+    margin-right: 10px;
+}
+.page-home .page
+{
+    min-height: 600px;
+}
