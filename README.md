@@ -12,5 +12,6 @@ http://detunized.net/lostpass/
 
 * Before building it `cd` into `cURL-SSL-for-iOS` and run `build-libraries.sh`. You might need to modify the iOS SDK version in `cURL-SSL-for-iOS/cURL/build-libcurl.sh` and `cURL-SSL-for-iOS/OpenSSL/build-libssl.sh`.
 
-![Screenshot 1](https://raw.github.com/detunized/lostpass/master/website/images/screenshot1.png)
-![Screenshot 2](https://raw.github.com/detunized/lostpass/master/website/images/screenshot2.png)
+![Screenshot 1](https://raw.github.com/detunized/lostpass/master/website/images/screenshot1.png).![Screenshot 2](https://raw.github.com/detunized/lostpass/master/website/images/screenshot2.png)
+
+![Screenshot 3](https://raw.github.com/detunized/lostpass/master/website/images/screenshot3.png).![Screenshot 4](https://raw.github.com/detunized/lostpass/master/website/images/screenshot4.png)
