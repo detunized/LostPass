@@ -1,0 +1,2 @@
+This file should contain a base64 encoded encryption key for offline testing.
+Example: DnDrgtVBS9vTrLmezbU8BbteQPoYYc2ts1kojqI3fes=.
