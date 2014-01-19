@@ -1,7 +1,5 @@
 #import "Settings.h"
 
-#import "../external/SFHFKeychainUtils.h"
-
 @implementation Settings
 
 namespace

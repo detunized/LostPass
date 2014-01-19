@@ -12,6 +12,8 @@
 #import <AudioToolbox/AudioToolbox.h>
 #import <iAd/iAd.h>
 
+#import <SFHFKeychainUtils/SFHFKeychainUtils.h>
+
 #endif
 
 #ifdef __cplusplus

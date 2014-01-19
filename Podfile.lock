@@ -1,10 +1,13 @@
 PODS:
   - OpenSSL (1.0.1)
+  - SFHFKeychainUtils (0.0.1)
 
 DEPENDENCIES:
   - OpenSSL (~> 1.0.1)
+  - SFHFKeychainUtils (~> 0.0.1)
 
 SPEC CHECKSUMS:
   OpenSSL: 9b85178853701b1e9bbf70df695a4c149799e772
+  SFHFKeychainUtils: e828dbd9eaa509486acf95d8de2ebd414c4b7451
 
 COCOAPODS: 0.29.0

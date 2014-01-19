@@ -48,7 +48,6 @@
 		60DA6846158548FB0038AE8F /* copy-pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 60DA6845158548FA0038AE8F /* copy-pressed@2x.png */; };
 		60DA684C158549930038AE8F /* copy-pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 60DA684B158549930038AE8F /* copy-pressed.png */; };
 		60DA68F91586BF040038AE8F /* NotifyingNavigationController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 60DA68F81586BF040038AE8F /* NotifyingNavigationController.mm */; };
-		60E31E36156C19BA00ECBD3B /* SFHFKeychainUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 60E31E35156C19BA00ECBD3B /* SFHFKeychainUtils.m */; };
 		60E31E3E156C19FE00ECBD3B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60E31E3D156C19FE00ECBD3B /* Security.framework */; };
 		D794DB7A7C2E437885EC4A5C /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6ED45C2318834A7DBD3A28BF /* libPods.a */; };
 /* End PBXBuildFile section */
@@ -108,8 +107,6 @@
 		60DA684B158549930038AE8F /* copy-pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "copy-pressed.png"; sourceTree = "<group>"; };
 		60DA68F71586BF040038AE8F /* NotifyingNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotifyingNavigationController.h; sourceTree = "<group>"; };
 		60DA68F81586BF040038AE8F /* NotifyingNavigationController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = NotifyingNavigationController.mm; sourceTree = "<group>"; };
-		60E31E34156C19BA00ECBD3B /* SFHFKeychainUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SFHFKeychainUtils.h; path = external/SFHFKeychainUtils.h; sourceTree = "<group>"; };
-		60E31E35156C19BA00ECBD3B /* SFHFKeychainUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SFHFKeychainUtils.m; path = external/SFHFKeychainUtils.m; sourceTree = "<group>"; };
 		60E31E3D156C19FE00ECBD3B /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		6ED45C2318834A7DBD3A28BF /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D1107310486CEB800E47090 /* LostPass-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "LostPass-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
@@ -175,7 +172,6 @@
 			children = (
 				080E96DDFE201D6D7F000001 /* Classes */,
 				60903DE9154A1789003E742C /* LastPass */,
-				60E31E32156C199400ECBD3B /* external */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
@@ -247,15 +243,6 @@
 				6085ECBC1530D3B800912BE4 /* LastPassParser.cpp */,
 			);
 			name = LastPass;
-			sourceTree = "<group>";
-		};
-		60E31E32156C199400ECBD3B /* external */ = {
-			isa = PBXGroup;
-			children = (
-				60E31E34156C19BA00ECBD3B /* SFHFKeychainUtils.h */,
-				60E31E35156C19BA00ECBD3B /* SFHFKeychainUtils.m */,
-			);
-			name = external;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -389,7 +376,6 @@
 				603B255D154F28700016B0F6 /* UnlockViewController.mm in Sources */,
 				603578A015559E3200C3651E /* SmokeScreenView.mm in Sources */,
 				6035842D156B706600C3651E /* Utilities.mm in Sources */,
-				60E31E36156C19BA00ECBD3B /* SFHFKeychainUtils.m in Sources */,
 				60DA68F91586BF040038AE8F /* NotifyingNavigationController.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
