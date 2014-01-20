@@ -394,11 +394,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = LostPass_Prefix.pch;
 				INFOPLIST_FILE = "LostPass-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/cURL-SSL-for-iOS/OpenSSL\"",
-					"\"$(SRCROOT)/cURL-SSL-for-iOS/cURL\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = LostPass;
 			};
 			name = Debug;
@@ -412,11 +408,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = LostPass_Prefix.pch;
 				INFOPLIST_FILE = "LostPass-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/cURL-SSL-for-iOS/OpenSSL\"",
-					"\"$(SRCROOT)/cURL-SSL-for-iOS/cURL\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = LostPass;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -451,11 +443,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = LostPass_Prefix.pch;
 				INFOPLIST_FILE = "LostPass-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/cURL-SSL-for-iOS/OpenSSL\"",
-					"\"$(SRCROOT)/cURL-SSL-for-iOS/cURL\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = LostPass;
 				VALIDATE_PRODUCT = YES;
 			};

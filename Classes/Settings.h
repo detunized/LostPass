@@ -1,4 +1,4 @@
-@interface Settings
+@interface Settings: NSObject
 {
 }
 
